@@ -1,0 +1,21 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+.env
+
+# LaTeX and figure build outputs
+paper/main.pdf
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/figures/*.png
+
+# weights and data are downloaded, never committed
+ckpt/
+*.pt
+*.safetensors

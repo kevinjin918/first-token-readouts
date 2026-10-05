@@ -1,0 +1,20 @@
+{
+  "ckpt": "/mnt/clt-cache/ckpt_span0/clt_ckpt.pt",
+  "n_layers": 34,
+  "n_features": 2048,
+  "span": 0,
+  "text": {
+    "n": 60,
+    "kl_mean": 4.423945835966657,
+    "kl_median": 4.395850376439767,
+    "top1_agreement": 0.0,
+    "finding_prob_recovery": 0.15181071855204778
+  },
+  "image": {
+    "n": 60,
+    "kl_mean": 0.16065565389929784,
+    "kl_median": 0.06546856009931476,
+    "top1_agreement": 0.9333333333333333,
+    "finding_prob_recovery": 0.6701674777823742
+  }
+}

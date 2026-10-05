@@ -1,0 +1,36 @@
+Loading weights:   0%|          | 0/883 [00:00<?, ?it/s]Loading weights: 100%|██████████| 883/883 [00:00<00:00, 10097.88it/s]
+loaded MedGemma on cuda (with CLT); arms ['base', 'black', 'mean', 'blur', 'border', 'clamp_scale-1', 'clamp_ablate+0', 'clamp_scale-2']
+[transformers] Deprecated: `processor.image_token` will switch from returning `tokenizer.image_token` to `tokenizer.boi_token` in v5.11.
+[1/20 28s] 00000718_001.png  base: 0.91/1.00 YES  black: 0.00/0.00 NO  mean: 0.00/0.02 NO  blur: 0.93/1.00 YES  border: 0.94/1.00 YES  clamp_scale-1: 0.62/1.00 YES  clamp_ablate+0: 0.59/1.00 YES  clamp_scale-2: 0.60/1.00 YES
+[2/20 47s] 00000211_040.png  base: 1.00/1.00 YES  black: 1.00/1.00 YES  mean: 1.00/1.00 YES  blur: 1.00/1.00 YES  border: 1.00/1.00 YES  clamp_scale-1: 0.98/1.00 YES  clamp_ablate+0: 0.99/1.00 YES  clamp_scale-2: 0.97/1.00 YES
+[3/20 71s] 00000929_002.png  base: 0.89/1.00 YES  black: 0.00/0.00 NO  mean: 0.00/0.00 NO  blur: 0.56/1.00 YES  border: 0.90/1.00 YES  clamp_scale-1: 0.62/1.00 YES  clamp_ablate+0: 0.68/1.00 YES  clamp_scale-2: 0.60/1.00 YES
+[4/20 95s] 00001248_029.png  base: 0.96/1.00 YES  black: 0.00/0.00 NONE  mean: 0.00/0.00 NO  blur: 0.79/1.00 YES  border: 0.93/1.00 YES  clamp_scale-1: 0.66/1.00 YES  clamp_ablate+0: 0.80/1.00 YES  clamp_scale-2: 0.64/1.00 YES
+[5/20 120s] 00000766_025.png  base: 0.97/1.00 YES  black: 0.00/0.00 NO  mean: 0.00/0.00 NO  blur: 0.89/1.00 YES  border: 0.97/1.00 YES  clamp_scale-1: 0.41/1.00 NO  clamp_ablate+0: 0.58/1.00 YES  clamp_scale-2: 0.35/1.00 NO
+[6/20 143s] 00001145_002.png  base: 0.97/1.00 YES  black: 0.03/0.38 NO  mean: 0.50/1.00 YES  blur: 0.15/0.90 YES  border: 0.97/1.00 YES  clamp_scale-1: 0.72/1.00 YES  clamp_ablate+0: 0.84/1.00 YES  clamp_scale-2: 0.69/1.00 YES
+[7/20 170s] 00000711_003.png  base: 0.62/1.00 YES  black: 0.00/0.01 NO  mean: 0.01/0.07 NO  blur: 0.06/0.47 NO  border: 0.47/0.99 YES  clamp_scale-1: 0.25/0.96 NO  clamp_ablate+0: 0.25/0.98 NO  clamp_scale-2: 0.17/0.95 NO
+[8/20 190s] 00000013_013.png  base: 0.97/1.00 YES  black: 0.82/1.00 YES  mean: 0.90/1.00 YES  blur: 0.98/1.00 YES  border: 0.98/1.00 YES  clamp_scale-1: 0.80/1.00 YES  clamp_ablate+0: 0.89/1.00 YES  clamp_scale-2: 0.57/1.00 YES
+[9/20 213s] 00000459_005.png  base: 0.98/1.00 YES  black: 0.01/0.03 NO  mean: 0.03/0.29 NO  blur: 0.83/1.00 YES  border: 0.98/1.00 YES  clamp_scale-1: 0.88/1.00 YES  clamp_ablate+0: 0.90/1.00 YES  clamp_scale-2: 0.90/1.00 YES
+[10/20 232s] 00000459_022.png  base: 0.98/1.00 YES  black: 0.65/1.00 YES  mean: 0.68/1.00 YES  blur: 0.87/1.00 YES  border: 0.98/1.00 YES  clamp_scale-1: 0.78/1.00 YES  clamp_ablate+0: 0.87/1.00 YES  clamp_scale-2: 0.72/1.00 YES
+[11/20 256s] 00000655_001.png  base: 0.78/1.00 YES  black: 0.00/0.03 NO  mean: 0.10/0.75 YES  blur: 0.94/1.00 YES  border: 0.83/1.00 YES  clamp_scale-1: 0.10/0.98 NO  clamp_ablate+0: 0.17/0.99 NO  clamp_scale-2: 0.07/0.97 NO
+[12/20 284s] 00001151_003.png  base: 0.88/1.00 YES  black: 0.00/0.02 NO  mean: 0.03/0.35 NONE  blur: 0.50/1.00 YES  border: 0.87/1.00 YES  clamp_scale-1: 0.11/1.00 NO  clamp_ablate+0: 0.33/1.00 NO  clamp_scale-2: 0.14/1.00 NONE
+[13/20 305s] 00001055_001.png  base: 0.93/1.00 YES  black: 0.00/0.00 NO  mean: 0.00/0.00 NO  blur: 0.97/1.00 YES  border: 0.93/1.00 YES  clamp_scale-1: 0.88/1.00 YES  clamp_ablate+0: 0.74/1.00 YES  clamp_scale-2: 0.90/1.00 YES
+[14/20 323s] 00000011_005.png  base: 0.98/1.00 YES  black: 0.90/1.00 YES  mean: 0.90/1.00 YES  blur: 0.98/1.00 YES  border: 0.98/1.00 YES  clamp_scale-1: 0.88/1.00 YES  clamp_ablate+0: 0.90/1.00 YES  clamp_scale-2: 0.84/1.00 YES
+[15/20 347s] 00000251_001.png  base: 0.97/1.00 YES  black: 0.00/0.08 NONE  mean: 0.35/0.99 YES  blur: 0.94/1.00 YES  border: 0.96/1.00 YES  clamp_scale-1: 0.77/1.00 YES  clamp_ablate+0: 0.86/1.00 YES  clamp_scale-2: 0.75/1.00 YES
+[16/20 370s] 00000798_015.png  base: 0.91/1.00 YES  black: 0.00/0.00 NONE  mean: 0.00/0.00 NO  blur: 0.01/0.07 NO  border: 0.93/1.00 YES  clamp_scale-1: 0.59/1.00 YES  clamp_ablate+0: 0.64/1.00 YES  clamp_scale-2: 0.62/1.00 YES
+[17/20 400s] 00000583_047.png  base: 0.77/1.00 YES  black: 0.02/0.18 NONE  mean: 0.54/0.99 YES  blur: 0.42/0.99 YES  border: 0.81/1.00 YES  clamp_scale-1: 0.08/0.99 YES  clamp_ablate+0: 0.16/1.00 NO  clamp_scale-2: 0.04/0.98 YES
+[18/20 419s] 00000935_000.png  base: 0.99/1.00 YES  black: 0.89/1.00 YES  mean: 0.98/1.00 YES  blur: 0.99/1.00 YES  border: 0.99/1.00 YES  clamp_scale-1: 0.94/1.00 YES  clamp_ablate+0: 0.96/1.00 YES  clamp_scale-2: 0.93/1.00 YES
+[19/20 443s] 00000105_002.png  base: 0.93/1.00 YES  black: 0.00/0.00 NO  mean: 0.00/0.00 NO  blur: 0.88/1.00 YES  border: 0.93/1.00 YES  clamp_scale-1: 0.58/1.00 YES  clamp_ablate+0: 0.68/1.00 YES  clamp_scale-2: 0.52/1.00 YES
+[20/20 465s] 00000364_000.png  base: 0.98/1.00 YES  black: 0.01/0.03 NO  mean: 0.37/0.98 NO  blur: 0.95/1.00 YES  border: 0.98/1.00 YES  clamp_scale-1: 0.82/1.00 YES  clamp_ablate+0: 0.84/1.00 YES  clamp_scale-2: 0.82/1.00 YES
+
+=== n=20 films; greedy answer vs each readout's call ===
+  arm               P_raw  P_norm   mass  greedy Y/N/0   =raw  =norm   sampled Y/N/0      verdict
+  base              0.918   1.000  0.919  20/ 0/ 0      20   20    0.98/0.00/0.02   VALIDATED
+  black             0.217   0.288  0.372   5/11/ 4      16   16    0.33/0.46/0.21   MIXED
+  mean              0.320   0.523  0.425   9/10/ 1      17   18    0.44/0.41/0.15   VALIDATED
+  blur              0.732   0.921  0.743  18/ 2/ 0      18   20    0.90/0.06/0.04   VALIDATED
+  border            0.916   0.999  0.916  20/ 0/ 0      19   20    0.97/0.00/0.03   VALIDATED
+  clamp_scale-1     0.624   0.997  0.625  16/ 4/ 0      19   16    0.73/0.14/0.14   DISAGREES
+  clamp_ablate+0    0.684   0.999  0.684  16/ 4/ 0      20   16    0.84/0.12/0.04   DISAGREES
+  clamp_scale-2     0.592   0.995  0.593  16/ 3/ 1      18   16    0.69/0.15/0.16   DISAGREES
+saved /mnt/fast/clt/readout_generation_check.json
+E2B_EXIT 0

@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tracecxr"
+version = "1.0.0"
+description = "Code and results for 'When First-Token Readouts Misread Feature Steering in a Medical Vision-Language Model'."
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Kevin Jin" }]
+dependencies = [
+    "numpy>=1.26",
+    "pillow>=10.0",
+]
+
+[project.optional-dependencies]
+# Regenerating the paper's numbers and statistics from results/.
+analysis = ["scipy>=1.11", "scikit-learn>=1.4", "pandas>=2.0"]
+# Figures.
+viz = ["matplotlib>=3.8"]
+# Running the experiments and training or loading the transcoder (one 80 GB GPU).
+models = ["torch>=2.2", "transformers>=4.50", "accelerate>=0.30", "bitsandbytes>=0.43",
+          "safetensors>=0.4"]
+# NIH ChestX-ray14 download.
+data = ["pandas>=2.0", "huggingface_hub>=0.23"]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[tool.setuptools.packages.find]
+include = ["tracecxr*"]
+
+[tool.setuptools.package-data]
+tracecxr = ["fixtures/**/*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["tracecxr", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "W"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "requires_data: test needs a real dataset on disk (skipped by default)",
+    "requires_gpu: test needs a GPU / real model weights (skipped by default)",
+]
+addopts = "-ra"

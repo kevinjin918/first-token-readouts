@@ -1,0 +1,55 @@
+500 film x finding pairs: cardiomegaly 93 pos, effusion 100 pos, pneumothorax 57 pos
+Loading weights:   0%|          | 0/883 [00:00<?, ?it/s]Loading weights: 100%|██████████| 883/883 [00:00<00:00, 10329.62it/s]
+loaded google/medgemma-1.5-4b-it@registry; yes ids [4443, 8438, 10784, 11262, 26915], no ids [951, 1904, 2301, 3771, 7018]
+[transformers] Deprecated: `processor.image_token` will switch from returning `tokenizer.image_token` to `tokenizer.boi_token` in v5.11.
+  [25/500 70s]
+  [50/500 132s]
+  [75/500 188s]
+  [100/500 255s]
+  [125/500 332s]
+  [150/500 416s]
+  [175/500 501s]
+  [200/500 594s]
+  [225/500 693s]
+  [250/500 805s]
+  [275/500 905s]
+  [300/500 1014s]
+  [325/500 1134s]
+  [350/500 1265s]
+  [375/500 1393s]
+  [400/500 1508s]
+  [425/500 1625s]
+  [450/500 1746s]
+  [475/500 1862s]
+  [500/500 1988s]
+
+  cardiomegaly: 93 pos / 93 neg, mass 0.612, greedy NONE 16
+    AUC raw    0.921 [0.877, 0.957]  acc 0.860
+    AUC norm   0.925 [0.883, 0.959]  acc 0.844
+    AUC s      0.883 [0.831, 0.931]  acc 0.849
+    AUC greedy 0.832 [0.774, 0.885]  acc 0.758
+    raw-s   +0.038 [+0.010, +0.067]
+    norm-s  +0.042 [+0.016, +0.069]
+    calls vs sampled majority: {'raw': 8, 'norm': 3}; vs greedy: {'raw': 8, 'norm': 3}
+
+  effusion: 100 pos / 100 neg, mass 0.553, greedy NONE 1
+    AUC raw    0.857 [0.801, 0.908]  acc 0.760
+    AUC norm   0.851 [0.794, 0.903]  acc 0.780
+    AUC s      0.809 [0.750, 0.866]  acc 0.775
+    AUC greedy 0.799 [0.744, 0.853]  acc 0.795
+    raw-s   +0.048 [+0.021, +0.077]
+    norm-s  +0.042 [+0.013, +0.071]
+    calls vs sampled majority: {'raw': 7, 'norm': 1}; vs greedy: {'raw': 8, 'norm': 6}
+
+  pneumothorax: 57 pos / 57 neg, mass 0.649, greedy NONE 1
+    AUC raw    0.622 [0.507, 0.730]  acc 0.632
+    AUC norm   0.625 [0.512, 0.732]  acc 0.640
+    AUC s      0.685 [0.603, 0.765]  acc 0.640
+    AUC greedy 0.643 [0.573, 0.714]  acc 0.640
+    raw-s   -0.064 [-0.126, -0.002]
+    norm-s  -0.060 [-0.121, +0.002]
+    calls vs sampled majority: {'raw': 1, 'norm': 0}; vs greedy: {'raw': 2, 'norm': 1}
+
+>>> E6: READOUT CHANGES THE EVALUATION
+saved /mnt/fast/clt/readout_eval_answers_medgemma.json
+E6M_EXIT 0

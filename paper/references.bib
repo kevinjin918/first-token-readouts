@@ -1,0 +1,609 @@
+% References for the TraceCXR workshop paper.
+%
+% VERIFICATION STATUS (2026-08-13): every entry CITED by main.tex has been checked against its
+% primary source (arXiv abs page, publisher page, or transformer-circuits.pub article) and the
+% title / author list / venue below reflect that source. Four entries at the bottom are NOT
+% currently cited and have NOT been re-verified; check them before citing.
+%
+% Long author lists are truncated with "and others" (rendered "et al." by plainnat); the named
+% authors are in source order.
+
+% ---------------------------------------------------------------------------
+% Verified, cited by main.tex
+% ---------------------------------------------------------------------------
+
+% Verified: arxiv.org/abs/2401.12208. NOTE the paper was RETITLED on arXiv; v1 was
+% "CheXagent: Towards a Foundation Model for Chest X-Ray Interpretation" (the title still used
+% on the GitHub repo). The CheXagent-2-3b model card points at this arXiv ID.
+@article{chexagent2024,
+  title   = {A {V}ision-{L}anguage Foundation Model to Enhance Efficiency of Chest X-ray Interpretation},
+  author  = {Chen, Zhihong and Varma, Maya and Xu, Justin and Paschali, Magdalini and
+             Van Veen, Dave and Johnston, Andrew and Youssef, Alaa and Blankemeier, Louis and
+             Bluethgen, Christian and others},
+  journal = {arXiv preprint arXiv:2401.12208},
+  year    = {2024},
+  url     = {https://arxiv.org/abs/2401.12208}
+}
+
+% Verified: transformer-circuits.pub/2025/attribution-graphs/methods.html, 27 March 2025.
+@article{ameisen2025circuit,
+  title   = {Circuit Tracing: Revealing Computational Graphs in {L}anguage {M}odels},
+  author  = {Ameisen, Emmanuel and Lindsey, Jack and Pearce, Adam and Gurnee, Wes and
+             Turner, Nicholas L. and Chen, Brian and Citro, Craig and others},
+  journal = {Transformer Circuits Thread},
+  year    = {2025},
+  url     = {https://transformer-circuits.pub/2025/attribution-graphs/methods.html}
+}
+
+% Verified: aclanthology.org/2025.blackboxnlp-1.14, 4 October 2026. The first-token-only scope of
+% feature_intervention_generate is from the library's docstrings (decoderesearch/circuit-tracer).
+@inproceedings{hanna2025circuittracer,
+  title     = {Circuit-Tracer: A New Library for Finding Feature Circuits},
+  author    = {Hanna, Michael and Piotrowski, Mateusz and Lindsey, Jack and Ameisen, Emmanuel},
+  booktitle = {Proceedings of the 8th BlackboxNLP Workshop: Analyzing and Interpreting Neural
+               Networks for NLP},
+  pages     = {239--249},
+  year      = {2025},
+  doi       = {10.18653/v1/2025.blackboxnlp-1.14}
+}
+
+% Verified: arxiv.org/abs/2601.08058 (v2, 31 Aug 2026), abstract: steering reasoning-related SAE
+% features "can substantially induce reasoning behavior without explicit CoT prompting".
+@article{he2026triggering,
+  title   = {Triggering Chain-of-Thought via Latent Feature Interventions in Large Language Models},
+  author  = {He, Zhenghao and Xiong, Guangzhi and Liu, Bohan and Sinha, Sanchit and Zhang, Aidong},
+  journal = {arXiv preprint arXiv:2601.08058},
+  year    = {2026}
+}
+
+% Verified: transformer-circuits.pub/2025/attribution-graphs/biology.html, 27 March 2025.
+@article{lindsey2025biology,
+  title   = {On the Biology of a Large Language Model},
+  author  = {Lindsey, Jack and Gurnee, Wes and Ameisen, Emmanuel and Chen, Brian and
+             Pearce, Adam and Turner, Nicholas L. and Citro, Craig and others},
+  journal = {Transformer Circuits Thread},
+  year    = {2025},
+  url     = {https://transformer-circuits.pub/2025/attribution-graphs/biology.html}
+}
+
+% Verified: transformer-circuits.pub/2024/crosscoders/index.html, 25 October 2024.
+@article{lindsey2024crosscoders,
+  title   = {Sparse Crosscoders for Cross-Layer Features and Model Diffing},
+  author  = {Lindsey, Jack and Templeton, Adly and Marcus, Jonathan and Conerly, Thomas and
+             Batson, Joshua and Olah, Christopher},
+  journal = {Transformer Circuits Thread},
+  year    = {2024},
+  url     = {https://transformer-circuits.pub/2024/crosscoders/index.html}
+}
+
+% Verified: transformer-circuits.pub/2024/scaling-monosemanticity/.
+@article{templeton2024scaling,
+  title   = {Scaling Monosemanticity: Extracting Interpretable Features from {C}laude 3 Sonnet},
+  author  = {Templeton, Adly and Conerly, Tom and Marcus, Jonathan and Lindsey, Jack and
+             Bricken, Trenton and Chen, Brian and Pearce, Adam and Citro, Craig and
+             Ameisen, Emmanuel and Olah, Chris and Henighan, Tom and others},
+  journal = {Transformer Circuits Thread},
+  year    = {2024},
+  url     = {https://transformer-circuits.pub/2024/scaling-monosemanticity/}
+}
+
+% Verified: arxiv.org/abs/2507.05201. Lead author Sellergren (previously stubbed as a
+% corporate author, which was wrong).
+@article{medgemma2025,
+  title   = {{MedGemma} Technical Report},
+  author  = {Sellergren, Andrew and Kazemzadeh, Sahar and Jaroensri, Tiam and Kiraly, Atilla and
+             Traverse, Madeleine and Kohlberger, Timo and Xu, Shawn and Jamil, Fayaz and others},
+  journal = {arXiv preprint arXiv:2507.05201},
+  year    = {2025},
+  url     = {https://arxiv.org/abs/2507.05201}
+}
+
+% Verified: arxiv.org/abs/2410.03334, submitted 4 October 2024.
+@article{saerad2024,
+  title   = {An X-Ray Is Worth 15 Features: {S}parse {A}utoencoders for Interpretable Radiology
+             Report Generation},
+  author  = {Abdulaal, Ahmed and Fry, Hugo and Monta{\~n}a-Brown, Nina and Ijishakin, Ayodeji and
+             Gao, Jack and Hyland, Stephanie and Alexander, Daniel C. and Castro, Daniel C.},
+  journal = {arXiv preprint arXiv:2410.03334},
+  year    = {2024},
+  url     = {https://arxiv.org/abs/2410.03334}
+}
+
+% Verified: arxiv.org/abs/2510.26411, submitted 30 October 2025.
+@article{medsae2025,
+  title   = {MedSAE: Dissecting MedCLIP Representations with {S}parse {A}utoencoders},
+  author  = {Renzulli, Riccardo and Lepoutre, Colas and Cassano, Enrico and Grangetto, Marco},
+  journal = {arXiv preprint arXiv:2510.26411},
+  year    = {2025},
+  url     = {https://arxiv.org/abs/2510.26411}
+}
+
+% Verified: arxiv.org/abs/2605.22902, submitted 21 May 2026.
+@article{vlmcircuit2026,
+  title   = {Circuit Tracing in {V}ision-{L}anguage Models: Understanding the Internal Mechanisms
+             of Multimodal Thinking},
+  author  = {Yang, Jingcheng and Xiong, Tianhu and Qian, Shengyi and Nahrstedt, Klara and
+             Wu, Mingyuan},
+  journal = {arXiv preprint arXiv:2602.20330},
+  year    = {2026},
+  note    = {Findings of CVPR 2026},
+  url     = {https://arxiv.org/abs/2602.20330}
+}
+
+% Verified: PLoS Med 15(11):e1002683, 6 November 2018.
+@article{zech2018,
+  title   = {Variable generalization performance of a deep learning model to detect pneumonia
+             in chest radiographs: A cross-sectional study},
+  author  = {Zech, John R. and Badgeley, Marcus A. and Liu, Manway and Costa, Anthony B. and
+             Titano, Joseph J. and Oermann, Eric Karl},
+  journal = {PLoS Medicine},
+  volume  = {15},
+  number  = {11},
+  pages   = {e1002683},
+  year    = {2018},
+  doi     = {10.1371/journal.pmed.1002683}
+}
+
+% Verified: Nature Machine Intelligence 3(7):610-619, 2021.
+@article{degrave2021,
+  title   = {AI for radiographic COVID-19 detection selects shortcuts over signal},
+  author  = {DeGrave, Alex J. and Janizek, Joseph D. and Lee, Su-In},
+  journal = {Nature Machine Intelligence},
+  volume  = {3},
+  number  = {7},
+  pages   = {610--619},
+  year    = {2021},
+  doi     = {10.1038/s42256-021-00338-7}
+}
+
+% Verified: Proc. ACM CHIL 2020, pages 151-159; arXiv:1909.12475.
+@inproceedings{oakdenrayner2020,
+  title     = {Hidden Stratification Causes Clinically Meaningful Failures in Machine Learning
+               for Medical Imaging},
+  author    = {Oakden-Rayner, Luke and Dunnmon, Jared and Carneiro, Gustavo and R{\'e}, Christopher},
+  booktitle = {Proceedings of the ACM Conference on Health, Inference, and Learning (CHIL)},
+  pages     = {151--159},
+  year      = {2020},
+  doi       = {10.1145/3368555.3384468}
+}
+
+% Verified: arxiv.org/abs/2403.19647; ICLR 2025.
+@inproceedings{marks2024shift,
+  title     = {Sparse Feature Circuits: Discovering and Editing Interpretable Causal Graphs in
+               {L}anguage {M}odels},
+  author    = {Marks, Samuel and Rager, Can and Michaud, Eric J. and Belinkov, Yonatan and
+               Bau, David and Mueller, Aaron},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2025},
+  note      = {arXiv:2403.19647}
+}
+
+% ---------------------------------------------------------------------------
+% NOT cited by main.tex and NOT re-verified. Check the primary source before citing.
+% ---------------------------------------------------------------------------
+
+@article{chexthought2026,
+  title   = {CheXthought: A Global Multimodal Dataset of Clinical Chain-of-Thought Reasoning and
+             Visual Attention for Chest X-ray Interpretation},
+  author  = {Sharma, Sonali and Long, Jin and Shih, George and Eid, Sarah and
+             Bluethgen, Christian and Jacobson, Francine L. and Tsai, Emily B. and
+             Alaa, Ahmed M. and Langlotz, Curtis P.},
+  journal = {arXiv preprint arXiv:2604.26288},
+  year    = {2026},
+  note    = {UNVERIFIED}
+}
+
+@article{huh2024platonic,
+  title   = {The Platonic Representation Hypothesis},
+  author  = {Huh, Minyoung and Cheung, Brian and Wang, Tongzhou and Isola, Phillip},
+  journal = {International Conference on Machine Learning (ICML)},
+  year    = {2024},
+  note    = {arXiv:2405.07987. UNVERIFIED}
+}
+
+@article{usae2025,
+  title   = {Universal {S}parse {A}utoencoders: Interpretable Cross-Model Concept Alignment},
+  author  = {Thasarathan, Harrish and others},
+  journal = {International Conference on Machine Learning (ICML)},
+  year    = {2025},
+  note    = {arXiv:2502.03714. UNVERIFIED}
+}
+
+@article{lan2024featureuniv,
+  title   = {{S}parse {A}utoencoders Reveal Universal Feature Spaces Across Large {L}anguage {M}odels},
+  author  = {Lan, Michael and Torr, Philip and Meek, Austin and Khakzar, Ashkan and
+             Krueger, David and Barez, Fazl},
+  journal = {arXiv preprint arXiv:2410.06981},
+  year    = {2024},
+  note    = {UNVERIFIED}
+}
+
+% ---------------------------------------------------------------------------
+% Added 2026-08-17. Metadata fetched from the arXiv abs page for each entry.
+% NOTE on walsh2026realization: an earlier reading of this paper in our notes was WRONG. It is not
+% a general interpretability paper about a "readout/control gap"; the realization effect is a
+% behavioural-economics phenomenon (risk-taking after actual vs hypothetical gains) used as the
+% test case. Its readout-vs-control conclusion is real and quoted below, but do NOT attribute to it
+% any statement about causal ground truth or intervention targeting -- that came from a leading
+% prompt to a summarizer and is not verified against the paper.
+
+@article{walsh2026realization,
+  title   = {Representation Without Control: Testing the Realization Effect in {L}anguage {M}odels},
+  author  = {Walsh, Ciar{\'a}n and Barkett, Emilio},
+  journal = {arXiv preprint arXiv:2605.25151},
+  year    = {2026}
+}
+
+@article{nooralahzadeh2026universal,
+  title   = {Universal Boosts, Specific Suppressors: {S}parse {A}utoencoder Steering of Medical
+             {V}ision-{L}anguage Models},
+  author  = {Nooralahzadeh, Farhad and Gundersen, Benjamin and Deperrois, Nicolas and
+             Matsuo, Hidetoshi and Nishio, Mizuho and Frauenfelder, Thomas and Allam, Ahmed and
+             Bl{\"u}thgen, Christian and Moor, Michael and Krauthammer, Michael},
+  journal = {arXiv preprint arXiv:2605.24977},
+  year    = {2026}
+}
+
+@article{sadanandan2026attention,
+  title   = {Attention Without Grounding: Causal Evaluation of Visual Explanations in {M}edical {VLM}s},
+  author  = {Sadanandan, Binesh and Behzadan, Vahid},
+  journal = {arXiv preprint arXiv:2607.18577},
+  year    = {2026}
+}
+
+% Verified: arxiv.org/abs/2405.19538, title and author list, 5 October 2026.
+@article{chambon2024chexpertplus,
+  title   = {{CheXpert Plus}: Augmenting a Large Chest X-ray Dataset with Text Radiology Reports,
+             Patient Demographics and Additional Image Formats},
+  author  = {Chambon, Pierre and Delbrouck, Jean-Benoit and Sounack, Thomas and Huang, Shih-Cheng
+             and Chen, Zhihong and Varma, Maya and Truong, Steven QH and Chuong, Chu The and
+             Langlotz, Curtis P.},
+  journal = {arXiv preprint arXiv:2405.19538},
+  year    = {2024},
+  url     = {https://arxiv.org/abs/2405.19538}
+}
+
+@inproceedings{wang2017chestxray,
+  title     = {{ChestX-ray8}: Hospital-scale Chest X-ray Database and Benchmarks on
+               Weakly-Supervised Classification and Localization of Common Thorax Diseases},
+  author    = {Wang, Xiaosong and Peng, Yifan and Lu, Le and Lu, Zhiyong and
+               Bagheri, Mohammadhadi and Summers, Ronald M.},
+  booktitle = {IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+  year      = {2017}
+}
+
+@article{lim2026geometry,
+  title   = {Geometry-Adaptive Explainer for Faithful Dictionary-Based Interpretability under
+             Distribution Shift},
+  author  = {Lim, Sungjun and Kim, Heedong and Lee, Andrew and Song, Kyungwoo},
+  journal = {arXiv preprint arXiv:2605.21849},
+  year    = {2026}
+}
+
+@article{holtzman2021surface,
+  title   = {Surface Form Competition: Why the Highest Probability Answer Isn't Always Right},
+  author  = {Holtzman, Ari and West, Peter and Shwartz, Vered and Choi, Yejin and
+             Zettlemoyer, Luke},
+  journal = {arXiv preprint arXiv:2104.08315},
+  year    = {2021}
+}
+
+% Verified 2026-10-04: NeurIPS 2024 proceedings and Crossref.
+@inproceedings{dunefsky2024transcoders,
+  title     = {Transcoders Find Interpretable {LLM} Feature Circuits},
+  author    = {Dunefsky, Jacob and Chlenski, Philippe and Nanda, Neel},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume    = {37},
+  pages     = {24375--24410},
+  year      = {2024},
+  doi       = {10.52202/079017-0768}
+}
+
+@article{medgemma2026,
+  title   = {{MedGemma} 1.5 Technical Report},
+  author  = {Sellergren, Andrew and Gao, Chufan and others},
+  journal = {arXiv preprint arXiv:2604.05081},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2604.05081}
+}
+
+@inproceedings{meng2022rome,
+  author    = {Meng, Kevin and Bau, David and Andonian, Alex and Belinkov, Yonatan},
+  title     = {Locating and Editing Factual Associations in {GPT}},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume    = {35},
+  pages     = {17359--17372},
+  year      = {2022},
+  doi       = {10.52202/068431-1262}
+}
+
+@inproceedings{todd2024function,
+  author    = {Todd, Eric and Li, Millicent L. and Sen Sharma, Arnab and Mueller, Aaron and Wallace, Byron C. and Bau, David},
+  title     = {Function Vectors in Large Language Models},
+  booktitle = {International Conference on Learning Representations ({ICLR})},
+  pages     = {17282--17333},
+  year      = {2024}
+}
+
+@inproceedings{basu2024storage,
+  author    = {Basu, Samyadeep and Grayson, Martin and Morrison, Cecily and Nushi, Besmira and Feizi, Soheil and Massiceti, Daniela},
+  title     = {Understanding Information Storage and Transfer in Multi-Modal Large Language Models},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume    = {37},
+  pages     = {7400--7426},
+  year      = {2024},
+  doi       = {10.52202/079017-0237}
+}
+
+@inproceedings{palit2023blip,
+  author    = {Palit, Vedant and Pandey, Rohan and Arora, Aryaman and Liang, Paul Pu},
+  title     = {Towards Vision-Language Mechanistic Interpretability: A Causal Tracing Tool for {BLIP}},
+  booktitle = {Proceedings of the {IEEE/CVF} International Conference on Computer Vision Workshops ({ICCVW})},
+  pages     = {2848--2853},
+  year      = {2023},
+  doi       = {10.1109/ICCVW60793.2023.00307}
+}
+
+@inproceedings{zhang2025crossmodal,
+  author    = {Zhang, Zhi and Yadav, Srishti and Han, Fengze and Shutova, Ekaterina},
+  title     = {Cross-modal Information Flow in Multimodal Large Language Models},
+  booktitle = {Proceedings of the {IEEE/CVF} Conference on Computer Vision and Pattern Recognition ({CVPR})},
+  pages     = {19781--19791},
+  year      = {2025}
+}
+
+@inproceedings{golovanevsky2025notice,
+  author    = {Golovanevsky, Michal and Rudman, William and Palit, Vedant and Eickhoff, Carsten and Singh, Ritambhara},
+  title     = {What Do {VLM}s {NOTICE}? A Mechanistic Interpretability Pipeline for {G}aussian-Noise-free Text-Image Corruption and Evaluation},
+  booktitle = {Proceedings of the 2025 Conference of the Nations of the Americas Chapter of the Association for Computational Linguistics: Human Language Technologies (Volume 1: Long Papers)},
+  pages     = {11462--11482},
+  publisher = {Association for Computational Linguistics},
+  year      = {2025},
+  doi       = {10.18653/v1/2025.naacl-long.571}
+}
+
+@inproceedings{lin2024vqascore,
+  author    = {Lin, Zhiqiu and Pathak, Deepak and Li, Baiqi and Li, Jiayao and Xia, Xide and Neubig, Graham and Zhang, Pengchuan and Ramanan, Deva},
+  title     = {Evaluating Text-to-Visual Generation with Image-to-Text Generation},
+  booktitle = {European Conference on Computer Vision ({ECCV})},
+  series    = {Lecture Notes in Computer Science},
+  pages     = {366--384},
+  publisher = {Springer},
+  year      = {2024},
+  doi       = {10.1007/978-3-031-72673-6_20}
+}
+
+@inproceedings{zhang2024patching,
+  author    = {Zhang, Fred and Nanda, Neel},
+  title     = {Towards Best Practices of Activation Patching in Language Models: Metrics and Methods},
+  booktitle = {International Conference on Learning Representations ({ICLR})},
+  pages     = {1651--1678},
+  year      = {2024}
+}
+
+@article{heimersheim2024patching,
+  author  = {Heimersheim, Stefan and Nanda, Neel},
+  title   = {How to Use and Interpret Activation Patching},
+  journal = {arXiv preprint arXiv:2404.15255},
+  year    = {2024}
+}
+
+@inproceedings{tan2024steering,
+  author    = {Tan, Daniel and Chanin, David and Lynch, Aengus and Paige, Brooks and Kanoulas, Dimitrios and Garriga-Alonso, Adri{\`a} and Kirk, Robert},
+  title     = {Analysing the Generalisation and Reliability of Steering Vectors},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume    = {37},
+  pages     = {139179--139212},
+  year      = {2024},
+  doi       = {10.52202/079017-4417}
+}
+
+@inproceedings{wiegreffe2023mass,
+  author    = {Wiegreffe, Sarah and Finlayson, Matthew and Tafjord, Oyvind and Clark, Peter and Sabharwal, Ashish},
+  title     = {Increasing Probability Mass on Answer Choices Does Not Always Improve Accuracy},
+  booktitle = {Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing},
+  pages     = {8392--8417},
+  publisher = {Association for Computational Linguistics},
+  year      = {2023},
+  doi       = {10.18653/v1/2023.emnlp-main.522}
+}
+
+@inproceedings{wang2024answerc,
+  author    = {Wang, Xinpeng and Ma, Bolei and Hu, Chengzhi and Weber-Genzel, Leon and R{\"o}ttger, Paul and Kreuter, Frauke and Hovy, Dirk and Plank, Barbara},
+  title     = {``My Answer is {C}'': First-Token Probabilities Do Not Match Text Answers in Instruction-Tuned Language Models},
+  booktitle = {Findings of the Association for Computational Linguistics: {ACL} 2024},
+  pages     = {7407--7416},
+  publisher = {Association for Computational Linguistics},
+  year      = {2024},
+  doi       = {10.18653/v1/2024.findings-acl.441}
+}
+
+@inproceedings{lyu2024beyond,
+  author    = {Lyu, Chenyang and Wu, Minghao and Aji, Alham Fikri},
+  title     = {Beyond Probabilities: Unveiling the Misalignment in Evaluating Large Language Models},
+  booktitle = {Proceedings of the 1st Workshop on Towards Knowledgeable Language Models (KnowLLM 2024)},
+  pages     = {109--131},
+  publisher = {Association for Computational Linguistics},
+  year      = {2024},
+  doi       = {10.18653/v1/2024.knowllm-1.10}
+}
+
+@inproceedings{hu2024omnimedvqa,
+  author    = {Hu, Yutao and Li, Tianbin and Lu, Quanfeng and Shao, Wenqi and He, Junjun and Qiao, Yu and Luo, Ping},
+  title     = {{OmniMedVQA}: A New Large-Scale Comprehensive Evaluation Benchmark for Medical {LVLM}},
+  booktitle = {Proceedings of the {IEEE/CVF} Conference on Computer Vision and Pattern Recognition ({CVPR})},
+  pages     = {22170--22183},
+  year      = {2024}
+}
+
+@inproceedings{sadanandan2026a,
+  author    = {Sadanandan, Binesh and Behzadan, Vahid},
+  title     = {Mechanistically Guided {LoRA} Improves Paraphrase Consistency in Medical Vision-Language Models},
+  booktitle = {Proceedings of the 7th Conference on Health, Inference, and Learning ({CHIL})},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {333},
+  pages     = {703--720},
+  publisher = {PMLR},
+  year      = {2026}
+}
+
+@article{sadanandan2026b,
+  author  = {Sadanandan, Binesh and Behzadan, Vahid},
+  title   = {{PSF-Med}: Measuring and Explaining Paraphrase Sensitivity in Medical Vision Language Models},
+  journal = {arXiv preprint arXiv:2602.21428},
+  year    = {2026}
+}
+
+@inproceedings{rimsky2024caa,
+  author    = {Rimsky, Nina and Gabrieli, Nick and Schulz, Julian and Tong, Meg and Hubinger, Evan and Turner, Alexander},
+  title     = {Steering {L}lama 2 via Contrastive Activation Addition},
+  booktitle = {Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
+  pages     = {15504--15522},
+  publisher = {Association for Computational Linguistics},
+  year      = {2024},
+  doi       = {10.18653/v1/2024.acl-long.828}
+}
+
+% New entries for references.bib, verified 2026-10-03.
+% Titles and author lists are copied from each paper's arXiv abs page. Venues are used only
+% where confirmed by the arXiv Comments field and/or the venue's own record (NeurIPS
+% proceedings page, OpenReview venue record); everything else is a misc entry with the arXiv id.
+
+% Verified: arxiv.org/abs/2410.17245 (Comments: "Accepted to the NeurIPS 2024 - Workshop on
+% Foundation Model Interventions"); OpenReview record 7xJcX2gbm9, venue MINT at NeurIPS 2024.
+@inproceedings{pres2024reliable,
+  author    = {Pres, Itamar and Ruis, Laura and Lubana, Ekdeep Singh and Krueger, David},
+  title     = {Towards Reliable Evaluation of Behavior Steering Interventions in {LLM}s},
+  booktitle = {NeurIPS 2024 Workshop on Foundation Model Interventions ({MINT})},
+  year      = {2024},
+  note      = {arXiv:2410.17245},
+  url       = {https://arxiv.org/abs/2410.17245}
+}
+
+% Verified: arxiv.org/abs/2606.20852, submitted 18 June 2026. No venue on arXiv.
+@misc{farina2026steering,
+  author        = {Farina, Eduardo Moreno Judice de Mattos and Esmeraldo, Mateus A. and
+                   Matsuoka, Felipe Akio and Kuriki, Paulo Eduardo de Aguiar and
+                   Kitamura, Felipe Campos},
+  title         = {Translating Inference-Time Control to Radiology Vision-Language Models:
+                   Activation Steering for Pneumonia Classification on Chest {X}-rays},
+  year          = {2026},
+  eprint        = {2606.20852},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV},
+  url           = {https://arxiv.org/abs/2606.20852}
+}
+
+% Verified: arxiv.org/abs/2406.11717; NeurIPS 2024 Main Conference Track, proceedings.neurips.cc
+% hash f545448535dfde4f9786555403ab7c49 (vol 37, pp. 136037-136083).
+@inproceedings{arditi2024refusal,
+  author    = {Arditi, Andy and Obeso, Oscar and Syed, Aaquib and Paleka, Daniel and
+               Panickssery, Nina and Gurnee, Wes and Nanda, Neel},
+  title     = {Refusal in Language Models Is Mediated by a Single Direction},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume    = {37},
+  pages     = {136037--136083},
+  year      = {2024},
+  doi       = {10.52202/079017-4322}
+}
+
+% Verified: arxiv.org/abs/2406.00045; NeurIPS 2024 Main Conference Track, proceedings.neurips.cc
+% hash 58cbe393b4254da8966780a40d023c0b (vol 37, pp. 49519-49551).
+@inproceedings{cao2024bipo,
+  author    = {Cao, Yuanpu and Zhang, Tianrong and Cao, Bochuan and Yin, Ziyi and Lin, Lu and
+               Ma, Fenglong and Chen, Jinghui},
+  title     = {Personalized Steering of Large Language Models: Versatile Steering Vectors Through
+               Bi-directional Preference Optimization},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume    = {37},
+  pages     = {49519--49551},
+  year      = {2024},
+  doi       = {10.52202/079017-1567}
+}
+
+% Verified: arxiv.org/abs/2404.08382 (Comments: "COLM 2024"); OpenReview record qHdSA85GyZ,
+% venue colmweb.org/COLM/2024/Conference ("First Conference on Language Modeling").
+@inproceedings{wang2024lookattext,
+  author    = {Wang, Xinpeng and Hu, Chengzhi and Ma, Bolei and R{\"o}ttger, Paul and Plank, Barbara},
+  title     = {Look at the Text: Instruction-Tuned Language Models are More Robust Multiple Choice
+               Selectors than You Think},
+  booktitle = {First Conference on Language Modeling ({COLM})},
+  year      = {2024},
+  note      = {arXiv:2404.08382},
+  url       = {https://arxiv.org/abs/2404.08382}
+}
+
+% Verified: arxiv.org/abs/2402.10200; NeurIPS 2024 Main Conference Track, proceedings.neurips.cc
+% hash 7a8e7fd295aa04eac4b470ae27f8785c (vol 37, pp. 66383-66409).
+@inproceedings{wang2024cotdecoding,
+  author    = {Wang, Xuezhi and Zhou, Denny},
+  title     = {Chain-of-Thought Reasoning Without Prompting},
+  booktitle = {Advances in Neural Information Processing Systems},
+  volume    = {37},
+  pages     = {66383--66409},
+  year      = {2024},
+  doi       = {10.52202/079017-2123}
+}
+
+% Verified: arxiv.org/abs/2409.14026 (Comments: "This work was presented at the Workshop on
+% Neural Network Weights as a New Data Modality at ICLR 2025"); OpenReview record ICuIdJzBPm,
+% venue ICLR.cc/2025/Workshop/WSL. NOTE the OpenReview workshop version is titled "...in Large
+% Language Models"; the title below is the arXiv one. Key says 2024 (arXiv v1, Sept 2024) but
+% the workshop year is 2025.
+@inproceedings{zhang2024steeringcot,
+  author    = {Zhang, Jason and Viteri, Scott},
+  title     = {Uncovering Latent Chain of Thought Vectors in Language Models},
+  booktitle = {ICLR 2025 Workshop on Neural Network Weights as a New Data Modality},
+  year      = {2025},
+  note      = {arXiv:2409.14026},
+  url       = {https://arxiv.org/abs/2409.14026}
+}
+
+% Verified: arxiv.org/abs/2603.01437, v1 2 March 2026 (v2 23 July 2026). No venue on arXiv.
+@misc{cox2026precommit,
+  author        = {Cox, Kyle and Kianersi, Darius and Garriga-Alonso, Adri{\`a}},
+  title         = {Post-Hoc Reasoning in Chain of Thought: Decoding and Steering Pre-Committed Answers},
+  year          = {2026},
+  eprint        = {2603.01437},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2603.01437}
+}
+
+% Verified: arxiv.org/abs/2307.13702, submitted 17 July 2023. No venue on arXiv.
+@misc{lanham2023faithfulness,
+  author        = {Lanham, Tamera and Chen, Anna and Radhakrishnan, Ansh and Steiner, Benoit and others},
+  title         = {Measuring Faithfulness in Chain-of-Thought Reasoning},
+  year          = {2023},
+  eprint        = {2307.13702},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2307.13702}
+}
+
+% Verified: arxiv.org/abs/2502.11177 and Crossref (ACL 2025 long, pp. 15336-15354); abstract:
+% 38.5% vs. 96.8% success, teacher forcing the main cause.
+@inproceedings{yang2025mirage,
+  author    = {Yang, Wanli and Sun, Fei and Tan, Jiajun and Ma, Xinyu and Cao, Qi and Yin, Dawei and
+               Shen, Huawei and Cheng, Xueqi},
+  title     = {The Mirage of Model Editing: Revisiting Evaluation in the Wild},
+  booktitle = {Proceedings of the 63rd Annual Meeting of the Association for Computational
+               Linguistics (Volume 1: Long Papers)},
+  pages     = {15336--15354},
+  year      = {2025},
+  doi       = {10.18653/v1/2025.acl-long.745}
+}
+
+% Verified: arxiv.org/html/2609.15635v1. MedGemma-27B; under an explicit yes/no instruction the
+% first-token readout agrees with generated answers on 98.8% (report present) and 91-93% (absent).
+@misc{cajas2026modalens,
+  author        = {Cajas Ord{\'o}{\~n}ez, Sebasti{\'a}n Andr{\'e}s and Lange, Maximin and Bui, Quang and
+                   Li, Anqi Peter and Ocampo Osorio, Felipe and Al Attrach, Rafi and
+                   Palakala, Kushul Reddy and Kapadia, Sahil and Laouabdia Sellami, Zakaria and
+                   Zhang, Xinyue and Zhang, Ashley and Celi, Leo Anthony},
+  title         = {{ModaLens}: Measuring Image Sensitivity in Report-Conditioned Medical {VLM}s},
+  year          = {2026},
+  eprint        = {2609.15635},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV}
+}

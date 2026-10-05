@@ -1,0 +1,180 @@
+Loading weights:   0%|          | 0/883 [00:00<?, ?it/s]Loading weights: 100%|██████████| 883/883 [00:00<00:00, 9835.74it/s]
+loaded MedGemma + CLT (34 layers); groups ['fp_banked', 'fp_fresh', 'tp_cardiomegaly', 'tp_effusion', 'tp_pneumothorax']
+4999 local films; 19 E2 patients excluded
+[transformers] Deprecated: `processor.image_token` will switch from returning `tokenizer.image_token` to `tokenizer.boi_token` in v5.11.
+  fp_fresh: 20 films accepted of 99 eligible candidates scanned
+  tp_cardiomegaly: 20 films accepted of 21 eligible candidates scanned
+  tp_effusion: 20 films accepted of 27 eligible candidates scanned
+  tp_pneumothorax: 20 films accepted of 63 eligible candidates scanned
+[1/100 40s] fp_banked 00000718_001.png  base: 0.91/1.00 s=1.00  border: 0.94/1.00 s=0.98  blur: 0.93/1.00 s=0.98  mean: 0.00/0.02 s=0.00  black: 0.00/0.00 s=0.08  clamp_scale-1: 0.62/1.00 s=0.82  clamp_ablate+0: 0.59/1.00 s=0.82  clamp_scale-2: 0.60/1.00 s=0.86
+[2/100 71s] fp_banked 00000211_040.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  blur: 1.00/1.00 s=1.00  mean: 1.00/1.00 s=1.00  black: 1.00/1.00 s=1.00  clamp_scale-1: 0.98/1.00 s=1.00  clamp_ablate+0: 0.99/1.00 s=1.00  clamp_scale-2: 0.97/1.00 s=1.00
+[3/100 112s] fp_banked 00000929_002.png  base: 0.89/1.00 s=1.00  border: 0.90/1.00 s=1.00  blur: 0.56/1.00 s=0.98  mean: 0.00/0.00 s=0.02  black: 0.00/0.00 s=0.02  clamp_scale-1: 0.62/1.00 s=0.74  clamp_ablate+0: 0.68/1.00 s=0.96  clamp_scale-2: 0.60/1.00 s=0.66
+[4/100 155s] fp_banked 00001248_029.png  base: 0.96/1.00 s=1.00  border: 0.93/1.00 s=1.00  blur: 0.79/1.00 s=0.96  mean: 0.00/0.00 s=0.06  black: 0.00/0.00 s=0.06  clamp_scale-1: 0.66/1.00 s=0.88  clamp_ablate+0: 0.80/1.00 s=0.82  clamp_scale-2: 0.64/1.00 s=0.82
+[5/100 196s] fp_banked 00000766_025.png  base: 0.97/1.00 s=1.00  border: 0.97/1.00 s=1.00  blur: 0.89/1.00 s=0.98  mean: 0.00/0.00 s=0.00  black: 0.00/0.00 s=0.02  clamp_scale-1: 0.41/1.00 s=0.54  clamp_ablate+0: 0.58/1.00 s=0.76  clamp_scale-2: 0.35/1.00 s=0.40
+[6/100 234s] fp_banked 00001145_002.png  base: 0.97/1.00 s=0.98  border: 0.97/1.00 s=0.98  blur: 0.15/0.90 s=0.90  mean: 0.50/1.00 s=0.92  black: 0.03/0.38 s=0.48  clamp_scale-1: 0.72/1.00 s=0.86  clamp_ablate+0: 0.84/1.00 s=1.00  clamp_scale-2: 0.69/1.00 s=0.78
+[7/100 284s] fp_banked 00000711_003.png  base: 0.62/1.00 s=0.92  border: 0.47/0.99 s=0.86  blur: 0.06/0.47 s=0.48  mean: 0.01/0.07 s=0.20  black: 0.00/0.01 s=0.08  clamp_scale-1: 0.25/0.96 s=0.40  clamp_ablate+0: 0.25/0.98 s=0.44  clamp_scale-2: 0.17/0.95 s=0.38
+[8/100 316s] fp_banked 00000013_013.png  base: 0.97/1.00 s=1.00  border: 0.98/1.00 s=1.00  blur: 0.98/1.00 s=1.00  mean: 0.90/1.00 s=0.98  black: 0.82/1.00 s=0.92  clamp_scale-1: 0.80/1.00 s=0.80  clamp_ablate+0: 0.89/1.00 s=0.96  clamp_scale-2: 0.57/1.00 s=0.62
+[9/100 355s] fp_banked 00000459_005.png  base: 0.98/1.00 s=1.00  border: 0.98/1.00 s=1.00  blur: 0.83/1.00 s=0.98  mean: 0.03/0.29 s=0.48  black: 0.01/0.03 s=0.22  clamp_scale-1: 0.88/1.00 s=0.96  clamp_ablate+0: 0.90/1.00 s=1.00  clamp_scale-2: 0.90/1.00 s=0.98
+[10/100 393s] fp_banked 00000459_022.png  base: 0.98/1.00 s=1.00  border: 0.98/1.00 s=1.00  blur: 0.87/1.00 s=0.98  mean: 0.68/1.00 s=0.86  black: 0.65/1.00 s=0.96  clamp_scale-1: 0.78/1.00 s=0.86  clamp_ablate+0: 0.87/1.00 s=0.94  clamp_scale-2: 0.72/1.00 s=0.72
+[11/100 440s] fp_banked 00000655_001.png  base: 0.78/1.00 s=0.98  border: 0.83/1.00 s=0.98  blur: 0.94/1.00 s=1.00  mean: 0.10/0.75 s=0.64  black: 0.00/0.03 s=0.18  clamp_scale-1: 0.10/0.98 s=0.56  clamp_ablate+0: 0.17/0.99 s=0.36  clamp_scale-2: 0.07/0.97 s=0.28
+[12/100 490s] fp_banked 00001151_003.png  base: 0.88/1.00 s=1.00  border: 0.87/1.00 s=1.00  blur: 0.50/1.00 s=0.90  mean: 0.03/0.35 s=0.34  black: 0.00/0.02 s=0.08  clamp_scale-1: 0.11/1.00 s=0.26  clamp_ablate+0: 0.33/1.00 s=0.54  clamp_scale-2: 0.14/1.00 s=0.40
+[13/100 527s] fp_banked 00001055_001.png  base: 0.93/1.00 s=1.00  border: 0.93/1.00 s=1.00  blur: 0.97/1.00 s=1.00  mean: 0.00/0.00 s=0.00  black: 0.00/0.00 s=0.00  clamp_scale-1: 0.88/1.00 s=0.92  clamp_ablate+0: 0.74/1.00 s=0.96  clamp_scale-2: 0.90/1.00 s=0.96
+[14/100 560s] fp_banked 00000011_005.png  base: 0.98/1.00 s=1.00  border: 0.98/1.00 s=1.00  blur: 0.98/1.00 s=1.00  mean: 0.90/1.00 s=1.00  black: 0.90/1.00 s=1.00  clamp_scale-1: 0.88/1.00 s=0.96  clamp_ablate+0: 0.90/1.00 s=0.98  clamp_scale-2: 0.84/1.00 s=0.94
+[15/100 600s] fp_banked 00000251_001.png  base: 0.97/1.00 s=1.00  border: 0.96/1.00 s=1.00  blur: 0.94/1.00 s=1.00  mean: 0.35/0.99 s=0.82  black: 0.00/0.08 s=0.24  clamp_scale-1: 0.77/1.00 s=0.94  clamp_ablate+0: 0.86/1.00 s=0.98  clamp_scale-2: 0.75/1.00 s=0.90
+[16/100 638s] fp_banked 00000798_015.png  base: 0.91/1.00 s=1.00  border: 0.93/1.00 s=1.00  blur: 0.01/0.07 s=0.08  mean: 0.00/0.00 s=0.00  black: 0.00/0.00 s=0.02  clamp_scale-1: 0.59/1.00 s=0.68  clamp_ablate+0: 0.64/1.00 s=0.66  clamp_scale-2: 0.62/1.00 s=0.80
+[17/100 688s] fp_banked 00000583_047.png  base: 0.77/1.00 s=0.98  border: 0.81/1.00 s=0.98  blur: 0.42/0.99 s=0.84  mean: 0.54/0.99 s=0.80  black: 0.02/0.18 s=0.32  clamp_scale-1: 0.08/0.99 s=0.54  clamp_ablate+0: 0.16/1.00 s=0.40  clamp_scale-2: 0.04/0.98 s=0.24
+[18/100 719s] fp_banked 00000935_000.png  base: 0.99/1.00 s=1.00  border: 0.99/1.00 s=1.00  blur: 0.99/1.00 s=1.00  mean: 0.98/1.00 s=1.00  black: 0.89/1.00 s=1.00  clamp_scale-1: 0.94/1.00 s=1.00  clamp_ablate+0: 0.96/1.00 s=1.00  clamp_scale-2: 0.93/1.00 s=0.96
+[19/100 759s] fp_banked 00000105_002.png  base: 0.93/1.00 s=1.00  border: 0.93/1.00 s=0.98  blur: 0.88/1.00 s=1.00  mean: 0.00/0.00 s=0.08  black: 0.00/0.00 s=0.08  clamp_scale-1: 0.58/1.00 s=0.82  clamp_ablate+0: 0.68/1.00 s=1.00  clamp_scale-2: 0.52/1.00 s=0.74
+[20/100 792s] fp_banked 00000364_000.png  base: 0.98/1.00 s=1.00  border: 0.98/1.00 s=1.00  blur: 0.95/1.00 s=1.00  mean: 0.37/0.98 s=0.50  black: 0.01/0.03 s=0.04  clamp_scale-1: 0.82/1.00 s=1.00  clamp_ablate+0: 0.84/1.00 s=1.00  clamp_scale-2: 0.82/1.00 s=0.96
+[21/100 843s] fp_fresh 00000468_013.png  base: 0.10/0.90 s=0.74  border: 0.11/0.90 s=0.76  blur: 0.41/0.99 s=0.88  mean: 0.00/0.00 s=0.02  black: 0.00/0.00 s=0.04  clamp_scale-1: 0.00/0.15 s=0.10  clamp_ablate+0: 0.01/0.53 s=0.18  clamp_scale-2: 0.00/0.04 s=0.16
+[22/100 880s] fp_fresh 00000248_009.png  base: 0.99/1.00 s=1.00  border: 0.99/1.00 s=1.00  blur: 0.98/1.00 s=1.00  mean: 0.01/0.05 s=0.24  black: 0.00/0.01 s=0.08  clamp_scale-1: 0.92/1.00 s=0.98  clamp_ablate+0: 0.96/1.00 s=0.98  clamp_scale-2: 0.89/1.00 s=0.90
+[23/100 931s] fp_fresh 00001278_012.png  base: 0.23/0.90 s=0.56  border: 0.14/0.82 s=0.56  blur: 0.15/0.75 s=0.64  mean: 0.00/0.00 s=0.00  black: 0.00/0.00 s=0.02  clamp_scale-1: 0.25/0.85 s=0.44  clamp_ablate+0: 0.10/0.78 s=0.18  clamp_scale-2: 0.14/0.71 s=0.20
+[24/100 978s] fp_fresh 00001206_001.png  base: 0.83/1.00 s=0.98  border: 0.79/1.00 s=0.94  blur: 0.39/0.97 s=0.80  mean: 0.00/0.02 s=0.06  black: 0.00/0.00 s=0.00  clamp_scale-1: 0.52/1.00 s=0.72  clamp_ablate+0: 0.58/1.00 s=0.68  clamp_scale-2: 0.41/1.00 s=0.60
+[25/100 1014s] fp_fresh 00000870_011.png  base: 0.99/1.00 s=1.00  border: 1.00/1.00 s=1.00  blur: 0.99/1.00 s=1.00  mean: 0.92/1.00 s=1.00  black: 0.79/1.00 s=0.92  clamp_scale-1: 0.92/1.00 s=0.96  clamp_ablate+0: 0.97/1.00 s=1.00  clamp_scale-2: 0.91/1.00 s=0.94
+[26/100 1057s] fp_fresh 00000135_001.png  base: 0.65/1.00 s=0.86  border: 0.75/1.00 s=0.94  blur: 0.94/1.00 s=0.98  mean: 0.29/0.97 s=0.72  black: 0.01/0.08 s=0.14  clamp_scale-1: 0.07/0.99 s=0.46  clamp_ablate+0: 0.15/1.00 s=0.32  clamp_scale-2: 0.04/0.99 s=0.26
+[27/100 1088s] fp_fresh 00001122_013.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  blur: 1.00/1.00 s=1.00  mean: 0.99/1.00 s=1.00  black: 0.99/1.00 s=1.00  clamp_scale-1: 0.96/1.00 s=1.00  clamp_ablate+0: 0.97/1.00 s=1.00  clamp_scale-2: 0.94/1.00 s=0.98
+[28/100 1119s] fp_fresh 00000144_001.png  base: 0.99/1.00 s=1.00  border: 0.99/1.00 s=1.00  blur: 0.98/1.00 s=0.98  mean: 0.96/1.00 s=1.00  black: 0.75/1.00 s=0.94  clamp_scale-1: 0.89/1.00 s=0.94  clamp_ablate+0: 0.93/1.00 s=1.00  clamp_scale-2: 0.89/1.00 s=0.98
+[29/100 1159s] fp_fresh 00001250_011.png  base: 0.96/1.00 s=1.00  border: 0.96/1.00 s=1.00  blur: 0.00/0.00 s=0.04  mean: 0.00/0.00 s=0.06  black: 0.00/0.00 s=0.04  clamp_scale-1: 0.66/1.00 s=0.84  clamp_ablate+0: 0.78/1.00 s=0.90  clamp_scale-2: 0.60/1.00 s=0.82
+[30/100 1207s] fp_fresh 00000418_001.png  base: 0.79/1.00 s=1.00  border: 0.85/1.00 s=1.00  blur: 0.72/1.00 s=0.98  mean: 0.00/0.00 s=0.06  black: 0.00/0.00 s=0.06  clamp_scale-1: 0.13/0.98 s=0.38  clamp_ablate+0: 0.26/1.00 s=0.58  clamp_scale-2: 0.09/0.98 s=0.28
+[31/100 1252s] fp_fresh 00000344_002.png  base: 0.94/1.00 s=1.00  border: 0.94/1.00 s=1.00  blur: 0.17/0.84 s=0.64  mean: 0.00/0.00 s=0.02  black: 0.00/0.00 s=0.02  clamp_scale-1: 0.45/1.00 s=0.74  clamp_ablate+0: 0.61/1.00 s=0.82  clamp_scale-2: 0.40/1.00 s=0.42
+[32/100 1288s] fp_fresh 00000888_000.png  base: 0.96/1.00 s=1.00  border: 0.97/1.00 s=1.00  blur: 0.85/1.00 s=1.00  mean: 0.06/0.56 s=0.16  black: 0.00/0.01 s=0.02  clamp_scale-1: 0.88/1.00 s=0.94  clamp_ablate+0: 0.89/1.00 s=0.96  clamp_scale-2: 0.91/1.00 s=0.96
+[33/100 1339s] fp_fresh 00000857_009.png  base: 0.79/1.00 s=0.96  border: 0.77/1.00 s=1.00  blur: 0.75/1.00 s=0.96  mean: 0.06/0.62 s=0.52  black: 0.00/0.01 s=0.04  clamp_scale-1: 0.36/1.00 s=0.80  clamp_ablate+0: 0.44/1.00 s=0.60  clamp_scale-2: 0.26/1.00 s=0.44
+[34/100 1387s] fp_fresh 00000534_000.png  base: 0.32/0.97 s=0.82  border: 0.17/0.87 s=0.78  blur: 0.04/0.27 s=0.64  mean: 0.00/0.00 s=0.00  black: 0.00/0.00 s=0.00  clamp_scale-1: 0.05/0.73 s=0.48  clamp_ablate+0: 0.07/0.84 s=0.06  clamp_scale-2: 0.02/0.53 s=0.24
+[35/100 1443s] fp_fresh 00000772_005.png  base: 0.02/0.29 s=0.52  border: 0.00/0.01 s=0.24  blur: 0.00/0.00 s=0.10  mean: 0.00/0.00 s=0.04  black: 0.00/0.00 s=0.10  clamp_scale-1: 0.01/0.10 s=0.20  clamp_ablate+0: 0.00/0.10 s=0.14  clamp_scale-2: 0.01/0.06 s=0.12
+[36/100 1483s] fp_fresh 00000108_001.png  base: 0.89/1.00 s=0.96  border: 0.87/1.00 s=1.00  blur: 0.98/1.00 s=1.00  mean: 0.19/0.89 s=0.58  black: 0.05/0.44 s=0.18  clamp_scale-1: 0.47/1.00 s=0.74  clamp_ablate+0: 0.49/1.00 s=0.66  clamp_scale-2: 0.42/1.00 s=0.62
+[37/100 1527s] fp_fresh 00000368_003.png  base: 0.84/1.00 s=1.00  border: 0.83/1.00 s=1.00  blur: 0.83/1.00 s=0.94  mean: 0.01/0.16 s=0.56  black: 0.00/0.02 s=0.18  clamp_scale-1: 0.34/1.00 s=0.60  clamp_ablate+0: 0.33/1.00 s=0.78  clamp_scale-2: 0.32/1.00 s=0.52
+[38/100 1571s] fp_fresh 00001286_003.png  base: 0.31/0.98 s=0.68  border: 0.45/0.99 s=0.76  blur: 0.26/0.97 s=0.70  mean: 0.00/0.00 s=0.00  black: 0.00/0.00 s=0.00  clamp_scale-1: 0.02/0.59 s=0.32  clamp_ablate+0: 0.03/0.88 s=0.08  clamp_scale-2: 0.01/0.44 s=0.20
+[39/100 1609s] fp_fresh 00000381_001.png  base: 0.99/1.00 s=1.00  border: 0.99/1.00 s=1.00  blur: 0.99/1.00 s=1.00  mean: 0.96/1.00 s=0.96  black: 0.01/0.10 s=0.12  clamp_scale-1: 0.89/1.00 s=1.00  clamp_ablate+0: 0.96/1.00 s=1.00  clamp_scale-2: 0.89/1.00 s=0.98
+[40/100 1636s] fp_fresh 00001285_003.png  base: 0.99/1.00 s=1.00  border: 0.99/1.00 s=1.00  blur: 0.99/1.00 s=1.00  mean: 0.99/1.00 s=1.00  black: 0.98/1.00 s=0.98  clamp_scale-1: 0.95/1.00 s=1.00  clamp_ablate+0: 0.96/1.00 s=1.00  clamp_scale-2: 0.95/1.00 s=0.98
+[41/100 1653s] tp_cardiomegaly 00000116_031.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 1.00/1.00 s=1.00  clamp_scale-1: 0.98/1.00 s=0.98
+[42/100 1669s] tp_cardiomegaly 00000787_002.png  base: 0.99/1.00 s=1.00  border: 0.99/1.00 s=1.00  black: 0.96/1.00 s=1.00  clamp_scale-1: 0.96/1.00 s=1.00
+[43/100 1682s] tp_cardiomegaly 00000032_060.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 1.00/1.00 s=1.00  clamp_scale-1: 0.96/1.00 s=1.00
+[44/100 1695s] tp_cardiomegaly 00000156_001.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 1.00/1.00 s=1.00  clamp_scale-1: 0.99/1.00 s=1.00
+[45/100 1708s] tp_cardiomegaly 00000457_002.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 1.00/1.00 s=1.00  clamp_scale-1: 0.99/1.00 s=1.00
+[46/100 1721s] tp_cardiomegaly 00000790_000.png  base: 0.99/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 0.98/1.00 s=1.00  clamp_scale-1: 0.97/1.00 s=1.00
+[47/100 1734s] tp_cardiomegaly 00000661_000.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 1.00/1.00 s=1.00  clamp_scale-1: 0.98/1.00 s=1.00
+[48/100 1751s] tp_cardiomegaly 00000131_001.png  base: 0.99/1.00 s=1.00  border: 0.99/1.00 s=1.00  black: 0.54/1.00 s=0.88  clamp_scale-1: 0.93/1.00 s=0.94
+[49/100 1764s] tp_cardiomegaly 00000897_001.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 1.00/1.00 s=1.00  clamp_scale-1: 0.99/1.00 s=1.00
+[50/100 1780s] tp_cardiomegaly 00000008_000.png  base: 0.98/1.00 s=1.00  border: 0.99/1.00 s=1.00  black: 0.00/0.00 s=0.00  clamp_scale-1: 0.97/1.00 s=1.00
+[51/100 1796s] tp_cardiomegaly 00001096_001.png  base: 0.94/1.00 s=1.00  border: 0.96/1.00 s=1.00  black: 0.00/0.04 s=0.00  clamp_scale-1: 0.72/1.00 s=0.88
+[52/100 1811s] tp_cardiomegaly 00000845_001.png  base: 0.99/1.00 s=1.00  border: 0.99/1.00 s=1.00  black: 0.96/1.00 s=0.98  clamp_scale-1: 0.90/1.00 s=0.98
+[53/100 1824s] tp_cardiomegaly 00000377_003.png  base: 1.00/1.00 s=1.00  border: 0.99/1.00 s=1.00  black: 0.99/1.00 s=1.00  clamp_scale-1: 0.98/1.00 s=1.00
+[54/100 1842s] tp_cardiomegaly 00000683_002.png  base: 0.82/1.00 s=0.90  border: 0.78/1.00 s=1.00  black: 0.00/0.00 s=0.02  clamp_scale-1: 0.83/1.00 s=0.88
+[55/100 1861s] tp_cardiomegaly 00001026_000.png  base: 0.89/1.00 s=1.00  border: 0.91/1.00 s=1.00  black: 0.00/0.00 s=0.04  clamp_scale-1: 0.54/1.00 s=0.78
+[56/100 1876s] tp_cardiomegaly 00000740_000.png  base: 0.98/1.00 s=1.00  border: 0.98/1.00 s=1.00  black: 0.56/1.00 s=0.96  clamp_scale-1: 0.89/1.00 s=0.98
+[57/100 1894s] tp_cardiomegaly 00000432_000.png  base: 0.97/1.00 s=1.00  border: 0.97/1.00 s=1.00  black: 0.02/0.12 s=0.28  clamp_scale-1: 0.66/1.00 s=0.84
+[58/100 1908s] tp_cardiomegaly 00000864_000.png  base: 0.99/1.00 s=1.00  border: 0.99/1.00 s=1.00  black: 0.98/1.00 s=1.00  clamp_scale-1: 0.95/1.00 s=0.98
+[59/100 1921s] tp_cardiomegaly 00000001_001.png  base: 0.99/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 0.99/1.00 s=1.00  clamp_scale-1: 0.96/1.00 s=1.00
+[60/100 1938s] tp_cardiomegaly 00001157_001.png  base: 0.93/1.00 s=1.00  border: 0.91/1.00 s=1.00  black: 0.01/0.04 s=0.04  clamp_scale-1: 0.70/1.00 s=0.82
+[61/100 1961s] tp_effusion 00000937_003.png  base: 0.98/1.00 s=1.00  border: 0.98/1.00 s=0.98  black: 0.77/0.99 s=0.94  clamp_scale-1: 0.89/1.00 s=0.96
+[62/100 1985s] tp_effusion 00000180_000.png  base: 0.76/1.00 s=0.98  border: 0.80/1.00 s=0.94  black: 0.00/0.00 s=0.00  clamp_scale-1: 0.30/0.98 s=0.44
+[63/100 2001s] tp_effusion 00001301_023.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 1.00/1.00 s=1.00  clamp_scale-1: 0.96/1.00 s=0.98
+[64/100 2019s] tp_effusion 00000761_011.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 0.99/1.00 s=1.00  clamp_scale-1: 0.99/1.00 s=1.00
+[65/100 2043s] tp_effusion 00000491_009.png  base: 0.91/1.00 s=0.98  border: 0.95/1.00 s=1.00  black: 0.01/0.05 s=0.08  clamp_scale-1: 0.08/0.97 s=0.30
+[66/100 2073s] tp_effusion 00000179_006.png  base: 0.04/0.29 s=0.24  border: 0.03/0.25 s=0.26  black: 0.00/0.01 s=0.00  clamp_scale-1: 0.00/0.02 s=0.08
+[67/100 2098s] tp_effusion 00000261_003.png  base: 0.94/1.00 s=1.00  border: 0.93/1.00 s=1.00  black: 0.01/0.02 s=0.12  clamp_scale-1: 0.76/1.00 s=0.98
+[68/100 2122s] tp_effusion 00001075_016.png  base: 0.95/1.00 s=1.00  border: 0.95/1.00 s=1.00  black: 0.73/1.00 s=0.96  clamp_scale-1: 0.40/1.00 s=0.56
+[69/100 2144s] tp_effusion 00000506_018.png  base: 1.00/1.00 s=1.00  border: 0.99/1.00 s=1.00  black: 0.99/1.00 s=1.00  clamp_scale-1: 0.93/1.00 s=0.94
+[70/100 2164s] tp_effusion 00000148_001.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 0.99/1.00 s=1.00  clamp_scale-1: 0.95/1.00 s=1.00
+[71/100 2190s] tp_effusion 00001200_013.png  base: 0.89/1.00 s=1.00  border: 0.91/1.00 s=0.96  black: 0.03/0.29 s=0.26  clamp_scale-1: 0.23/0.99 s=0.20
+[72/100 2210s] tp_effusion 00000061_007.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 1.00/1.00 s=1.00  clamp_scale-1: 0.98/1.00 s=1.00
+[73/100 2234s] tp_effusion 00000938_006.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 1.00/1.00 s=1.00  clamp_scale-1: 0.98/1.00 s=1.00
+[74/100 2252s] tp_effusion 00000591_014.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 0.99/1.00 s=1.00  clamp_scale-1: 0.95/1.00 s=0.98
+[75/100 2275s] tp_effusion 00000096_002.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 1.00/1.00 s=1.00  clamp_scale-1: 0.99/1.00 s=1.00
+[76/100 2292s] tp_effusion 00000117_000.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 1.00/1.00 s=1.00  clamp_scale-1: 0.99/1.00 s=0.98
+[77/100 2315s] tp_effusion 00001226_002.png  base: 0.90/1.00 s=0.98  border: 0.90/1.00 s=0.96  black: 0.53/0.99 s=0.82  clamp_scale-1: 0.55/1.00 s=0.68
+[78/100 2333s] tp_effusion 00000322_013.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 0.99/1.00 s=1.00  clamp_scale-1: 0.97/1.00 s=1.00
+[79/100 2354s] tp_effusion 00000742_000.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 1.00/1.00 s=1.00  clamp_scale-1: 0.99/1.00 s=1.00
+[80/100 2376s] tp_effusion 00000592_001.png  base: 0.97/1.00 s=1.00  border: 0.97/1.00 s=1.00  black: 0.28/0.78 s=0.68  clamp_scale-1: 0.66/1.00 s=0.78
+[81/100 2394s] tp_pneumothorax 00001170_036.png  base: 0.99/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 0.99/1.00 s=1.00  clamp_scale-1: 0.99/1.00 s=1.00
+[82/100 2417s] tp_pneumothorax 00000118_010.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 1.00/1.00 s=0.98  clamp_scale-1: 0.92/1.00 s=0.96
+[83/100 2440s] tp_pneumothorax 00000467_013.png  base: 0.96/1.00 s=1.00  border: 0.97/1.00 s=1.00  black: 0.89/1.00 s=0.98  clamp_scale-1: 0.58/1.00 s=0.64
+[84/100 2466s] tp_pneumothorax 00000643_005.png  base: 0.83/0.99 s=0.96  border: 0.87/1.00 s=0.96  black: 0.34/0.80 s=0.58  clamp_scale-1: 0.22/0.89 s=0.44
+[85/100 2486s] tp_pneumothorax 00000859_002.png  base: 0.98/1.00 s=1.00  border: 0.97/1.00 s=1.00  black: 0.96/1.00 s=1.00  clamp_scale-1: 0.88/1.00 s=0.90
+[86/100 2514s] tp_pneumothorax 00000090_009.png  base: 0.17/0.41 s=0.44  border: 0.18/0.44 s=0.48  black: 0.01/0.01 s=0.06  clamp_scale-1: 0.04/0.10 s=0.12
+[87/100 2538s] tp_pneumothorax 00000416_003.png  base: 0.85/0.99 s=0.98  border: 0.91/1.00 s=1.00  black: 0.27/0.59 s=0.48  clamp_scale-1: 0.27/0.87 s=0.50
+[88/100 2561s] tp_pneumothorax 00000041_002.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 1.00/1.00 s=1.00  clamp_scale-1: 0.99/1.00 s=1.00
+[89/100 2583s] tp_pneumothorax 00001104_005.png  base: 0.98/1.00 s=1.00  border: 0.99/1.00 s=0.98  black: 0.65/0.96 s=0.96  clamp_scale-1: 0.85/1.00 s=0.92
+[90/100 2607s] tp_pneumothorax 00001006_015.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 0.00/0.01 s=0.02  clamp_scale-1: 0.95/1.00 s=0.94
+[91/100 2627s] tp_pneumothorax 00000372_002.png  base: 0.98/1.00 s=1.00  border: 0.99/1.00 s=1.00  black: 0.98/1.00 s=1.00  clamp_scale-1: 0.76/1.00 s=0.86
+[92/100 2648s] tp_pneumothorax 00000631_003.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 1.00/1.00 s=1.00  clamp_scale-1: 0.95/1.00 s=1.00
+[93/100 2669s] tp_pneumothorax 00000827_019.png  base: 0.99/1.00 s=1.00  border: 0.99/1.00 s=1.00  black: 0.98/1.00 s=1.00  clamp_scale-1: 0.91/1.00 s=0.98
+[94/100 2693s] tp_pneumothorax 00000744_007.png  base: 0.85/0.99 s=0.94  border: 0.90/1.00 s=0.98  black: 0.16/0.38 s=0.22  clamp_scale-1: 0.19/0.82 s=0.28
+[95/100 2715s] tp_pneumothorax 00000296_000.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 0.97/1.00 s=1.00  clamp_scale-1: 0.98/1.00 s=0.98
+[96/100 2743s] tp_pneumothorax 00000376_005.png  base: 0.75/0.99 s=0.92  border: 0.75/0.99 s=0.88  black: 0.01/0.02 s=0.04  clamp_scale-1: 0.06/0.71 s=0.18
+[97/100 2768s] tp_pneumothorax 00000103_004.png  base: 0.99/1.00 s=0.98  border: 0.99/1.00 s=1.00  black: 0.01/0.03 s=0.04  clamp_scale-1: 0.77/1.00 s=0.90
+[98/100 2793s] tp_pneumothorax 00000732_004.png  base: 0.99/1.00 s=1.00  border: 0.99/1.00 s=1.00  black: 0.99/1.00 s=1.00  clamp_scale-1: 0.98/1.00 s=0.96
+[99/100 2812s] tp_pneumothorax 00000963_018.png  base: 1.00/1.00 s=1.00  border: 1.00/1.00 s=1.00  black: 0.99/1.00 s=1.00  clamp_scale-1: 0.93/1.00 s=0.94
+[100/100 2838s] tp_pneumothorax 00000315_001.png  base: 0.96/1.00 s=1.00  border: 0.97/1.00 s=1.00  black: 0.01/0.02 s=0.04  clamp_scale-1: 0.41/0.97 s=0.52
+
+=== fp (n=40) ===
+  arm              P_raw P_norm      s         s drop [95% CI]            raw-s           norm-s
+  base             0.824  0.976  0.948                        
+  border           0.822  0.964  0.943  +0.005 [-0.008,+0.023]  -0.003    TRACKS  +0.007    TRACKS
+  blur             0.677  0.880  0.859  +0.090 [+0.029,+0.169]  +0.057  MISREADS  +0.006    TRACKS
+  mean             0.296  0.469  0.443  +0.506 [+0.389,+0.625]  +0.021 UNRESOLVED  +0.001 UNRESOLVED
+  black            0.198  0.261  0.292  +0.656 [+0.542,+0.764]  -0.031 UNRESOLVED  +0.059  MISREADS
+  clamp_scale-1    0.555  0.933  0.730  +0.219 [+0.160,+0.281]  +0.049 UNRESOLVED  -0.176  MISREADS
+  clamp_ablate+0   0.604  0.952  0.738  +0.211 [+0.143,+0.283]  +0.008 UNRESOLVED  -0.187  MISREADS
+  clamp_scale-2    0.523  0.916  0.650  +0.299 [+0.224,+0.373]  +0.002    TRACKS  -0.238  MISREADS
+
+=== fp_banked (n=20) ===
+  arm              P_raw P_norm      s         s drop [95% CI]            raw-s           norm-s
+  base             0.918  1.000  0.993                        
+  border           0.916  0.999  0.988  +0.005 [+0.000,+0.012]  -0.002    TRACKS  -0.005    TRACKS
+  blur             0.732  0.921  0.903  +0.090 [+0.017,+0.200]  +0.097  MISREADS  -0.011    TRACKS
+  mean             0.320  0.523  0.485  +0.508 [+0.330,+0.685]  +0.090  MISREADS  -0.031 UNRESOLVED
+  black            0.217  0.288  0.340  +0.653 [+0.475,+0.813]  +0.049 UNRESOLVED  +0.059  MISREADS
+  clamp_scale-1    0.624  0.997  0.777  +0.216 [+0.133,+0.310]  +0.078  MISREADS  -0.213  MISREADS
+  clamp_ablate+0   0.684  0.999  0.829  +0.164 [+0.076,+0.261]  +0.071  MISREADS  -0.163  MISREADS
+  clamp_scale-2    0.592  0.995  0.720  +0.273 [+0.174,+0.381]  +0.053  MISREADS  -0.268  MISREADS
+
+=== fp_fresh (n=20) ===
+  arm              P_raw P_norm      s         s drop [95% CI]            raw-s           norm-s
+  base             0.729  0.953  0.904                        
+  border           0.728  0.930  0.899  +0.005 [-0.020,+0.040]  -0.004    TRACKS  +0.018    TRACKS
+  blur             0.622  0.840  0.814  +0.090 [-0.001,+0.211]  +0.017 UNRESOLVED  +0.023 UNRESOLVED
+  mean             0.272  0.415  0.400  +0.504 [+0.346,+0.658]  -0.047 UNRESOLVED  +0.034 UNRESOLVED
+  black            0.180  0.233  0.244  +0.660 [+0.499,+0.801]  -0.111  MISREADS  +0.059  MISREADS
+  clamp_scale-1    0.487  0.869  0.682  +0.222 [+0.142,+0.309]  +0.020 UNRESOLVED  -0.138  MISREADS
+  clamp_ablate+0   0.525  0.905  0.646  +0.258 [+0.158,+0.364]  -0.054 UNRESOLVED  -0.211  MISREADS
+  clamp_scale-2    0.454  0.837  0.580  +0.324 [+0.220,+0.427]  -0.049 UNRESOLVED  -0.208  MISREADS
+
+=== tp_cardiomegaly (n=20) ===
+  arm              P_raw P_norm      s         s drop [95% CI]            raw-s           norm-s
+  base             0.973  1.000  0.995                        
+  border           0.973  1.000  1.000  -0.005 [-0.015,+0.000]  +0.005    TRACKS  +0.005    TRACKS
+  black            0.649  0.710  0.710  +0.285 [+0.108,+0.476]  +0.039 UNRESOLVED  +0.005    TRACKS
+  clamp_scale-1    0.893  1.000  0.953  +0.042 [+0.015,+0.074]  +0.038 UNRESOLVED  -0.042 UNRESOLVED
+
+=== tp_effusion (n=20) ===
+  arm              P_raw P_norm      s         s drop [95% CI]            raw-s           norm-s
+  base             0.916  0.964  0.959                        
+  border           0.920  0.962  0.955  +0.004 [-0.002,+0.011]  -0.008    TRACKS  -0.002    TRACKS
+  black            0.665  0.757  0.743  +0.216 [+0.074,+0.373]  +0.035 UNRESOLVED  -0.009    TRACKS
+  clamp_scale-1    0.727  0.948  0.793  +0.166 [+0.068,+0.278]  +0.022 UNRESOLVED  -0.150  MISREADS
+
+=== tp_pneumothorax (n=20) ===
+  arm              P_raw P_norm      s         s drop [95% CI]            raw-s           norm-s
+  base             0.914  0.969  0.961                        
+  border           0.922  0.971  0.964  -0.003 [-0.011,+0.004]  -0.006    TRACKS  +0.001    TRACKS
+  black            0.610  0.690  0.670  +0.291 [+0.133,+0.466]  +0.013 UNRESOLVED  -0.013    TRACKS
+  clamp_scale-1    0.681  0.917  0.751  +0.210 [+0.110,+0.320]  +0.022 UNRESOLVED  -0.159  MISREADS
+
+=== verdicts ===
+  V1_raw_s: PARTIAL
+  V1_raw_s_arms: ['UNRESOLVED', 'UNRESOLVED', 'TRACKS']
+  V1_norm_s: SUPPORTED
+  V1_norm_s_arms: ['MISREADS', 'MISREADS', 'MISREADS']
+  V3_s: INCONCLUSIVE
+  V3_s_detail: {'tp_cardiomegaly': {'effect': True, 'norm': 'UNRESOLVED'}, 'tp_effusion': {'effect': True, 'norm': 'MISREADS'}, 'tp_pneumothorax': {'effect': True, 'norm': 'MISREADS'}}
+  V1_raw_c: PARTIAL
+  V1_raw_c_arms: ['MISREADS', 'UNRESOLVED', 'MISREADS']
+  V1_norm_c: SUPPORTED
+  V1_norm_c_arms: ['MISREADS', 'MISREADS', 'MISREADS']
+  V3_c: DOES NOT GENERALISE
+  V3_c_detail: {'tp_cardiomegaly': {'effect': True, 'norm': 'TRACKS'}, 'tp_effusion': {'effect': True, 'norm': 'MISREADS'}, 'tp_pneumothorax': {'effect': True, 'norm': 'MISREADS'}}
+  V2: REPLICATES
+  V2_arms: ['DISAGREES', 'DISAGREES', 'DISAGREES']
+saved /mnt/fast/clt/readout_sampled_answers.json
+E4_EXIT 0

@@ -1,0 +1,168 @@
+{
+  "name": "fixture",
+  "description": "Synthetic CXR fixture for offline tests. Not real radiographs.",
+  "image_size": 64,
+  "focus_findings": [
+    "Pleural Effusion",
+    "Pneumothorax"
+  ],
+  "records": [
+    {
+      "id": "fx_eff_pos",
+      "image": "fx_eff_pos.npy",
+      "report": "There is a moderate right pleural effusion.",
+      "findings": {
+        "Pleural Effusion": 1,
+        "Pneumothorax": 0
+      },
+      "bboxes": {
+        "Pleural Effusion": [
+          {
+            "x": 40,
+            "y": 44,
+            "w": 18,
+            "h": 16
+          }
+        ]
+      },
+      "metadata": {
+        "synthetic": true
+      }
+    },
+    {
+      "id": "fx_ptx_pos",
+      "image": "fx_ptx_pos.npy",
+      "report": "Large left apical pneumothorax.",
+      "findings": {
+        "Pleural Effusion": 0,
+        "Pneumothorax": 1
+      },
+      "bboxes": {
+        "Pneumothorax": [
+          {
+            "x": 6,
+            "y": 6,
+            "w": 16,
+            "h": 20
+          }
+        ]
+      },
+      "metadata": {
+        "synthetic": true
+      }
+    },
+    {
+      "id": "fx_both_pos",
+      "image": "fx_both_pos.npy",
+      "report": "Right effusion with associated pneumothorax.",
+      "findings": {
+        "Pleural Effusion": 1,
+        "Pneumothorax": 1
+      },
+      "bboxes": {
+        "Pleural Effusion": [
+          {
+            "x": 42,
+            "y": 46,
+            "w": 16,
+            "h": 14
+          }
+        ],
+        "Pneumothorax": [
+          {
+            "x": 8,
+            "y": 8,
+            "w": 14,
+            "h": 18
+          }
+        ]
+      },
+      "metadata": {
+        "synthetic": true
+      }
+    },
+    {
+      "id": "fx_normal_1",
+      "image": "fx_normal_1.npy",
+      "report": "No acute cardiopulmonary process.",
+      "findings": {
+        "Pleural Effusion": 0,
+        "Pneumothorax": 0
+      },
+      "bboxes": {},
+      "metadata": {
+        "synthetic": true
+      }
+    },
+    {
+      "id": "fx_normal_2",
+      "image": "fx_normal_2.npy",
+      "report": "Clear lungs. No effusion or pneumothorax.",
+      "findings": {
+        "Pleural Effusion": 0,
+        "Pneumothorax": 0
+      },
+      "bboxes": {},
+      "metadata": {
+        "synthetic": true
+      }
+    },
+    {
+      "id": "fx_eff_neg_ptx_pos",
+      "image": "fx_eff_neg_ptx_pos.npy",
+      "report": "Apical pneumothorax, no effusion.",
+      "findings": {
+        "Pleural Effusion": 0,
+        "Pneumothorax": 1
+      },
+      "bboxes": {
+        "Pneumothorax": [
+          {
+            "x": 40,
+            "y": 6,
+            "w": 16,
+            "h": 18
+          }
+        ]
+      },
+      "metadata": {
+        "synthetic": true
+      }
+    },
+    {
+      "id": "fx_eff_pos_2",
+      "image": "fx_eff_pos_2.npy",
+      "report": "Small left pleural effusion at the base.",
+      "findings": {
+        "Pleural Effusion": 1,
+        "Pneumothorax": 0
+      },
+      "bboxes": {
+        "Pleural Effusion": [
+          {
+            "x": 8,
+            "y": 46,
+            "w": 18,
+            "h": 14
+          }
+        ]
+      },
+      "metadata": {
+        "synthetic": true
+      }
+    },
+    {
+      "id": "fx_normal_3",
+      "image": "fx_normal_3.npy",
+      "report": "Unremarkable chest radiograph.",
+      "findings": {
+        "Pleural Effusion": 0,
+        "Pneumothorax": 0
+      },
+      "bboxes": {},
+      "metadata": {
+        "synthetic": true
+      }
+    }
+  ]
+}

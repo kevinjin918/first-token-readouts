@@ -1,0 +1,15 @@
+{
+  "n_films": 20,
+  "n_samples": 200,
+  "auc_features": 0.88105,
+  "auc_shuffled_mean": 0.4801500000000001,
+  "null_sd": 0.0569616537681272,
+  "null_ci95": [
+    0.3645775,
+    0.5543899999999999
+  ],
+  "p_empirical": 0.0,
+  "n_shuffles": 20,
+  "auc_pixels": 0.6241000000000001,
+  "verdict": "FEATURES SEPARATE causal from inert patches: the information is present, so the partial specificity of anchored clamping is a property of the intervention, not of the representation."
+}

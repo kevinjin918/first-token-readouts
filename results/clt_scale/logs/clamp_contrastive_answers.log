@@ -1,0 +1,130 @@
+Loading weights:   0%|          | 0/883 [00:00<?, ?it/s]Loading weights: 100%|██████████| 883/883 [00:00<00:00, 9854.64it/s]
+loaded MedGemma + CLT; 80 test films from /mnt/fast/clt/readout_sampled_answers.json
+4999 local films; 99 E2/E4 patients excluded
+[transformers] Deprecated: `processor.image_token` will switch from returning `tokenizer.image_token` to `tokenizer.boi_token` in v5.11.
+  card_pos: 16 donors
+  card_neg: 16 donors
+  eff_pos: 16 donors
+  eff_neg: 16 donors
+  contrast sets: Jaccard(card, eff) = 0.231
+[1/80 33s] fp 00000718_001.png  base: 1.00 s=1.00  top: 1.00 s=0.83  con_card: 1.00 s=0.97  con_eff: 1.00 s=0.97  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.73  anch_border: 1.00 s=0.97
+[2/80 53s] fp 00000211_040.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[3/80 88s] fp 00000929_002.png  base: 1.00 s=0.97  top: 1.00 s=0.70  con_card: 1.00 s=0.83  con_eff: 1.00 s=0.97  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.93  anch_border: 1.00 s=0.80
+[4/80 115s] fp 00001248_029.png  base: 1.00 s=1.00  top: 1.00 s=0.83  con_card: 1.00 s=1.00  con_eff: 1.00 s=0.97  rand_act: 1.00 s=0.97  anch_evid: 1.00 s=0.80  anch_border: 1.00 s=0.53
+[5/80 144s] fp 00000766_025.png  base: 1.00 s=1.00  top: 1.00 s=0.47  con_card: 1.00 s=1.00  con_eff: 1.00 s=0.93  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.50  anch_border: 1.00 s=0.63
+[6/80 174s] fp 00001145_002.png  base: 1.00 s=1.00  top: 1.00 s=0.87  con_card: 1.00 s=0.97  con_eff: 1.00 s=0.97  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.93  anch_border: 1.00 s=0.90
+[7/80 216s] fp 00000711_003.png  base: 1.00 s=0.87  top: 0.96 s=0.43  con_card: 0.99 s=0.30  con_eff: 1.00 s=1.00  rand_act: 1.00 s=0.80  anch_evid: 0.96 s=0.70  anch_border: 0.82 s=0.30
+[8/80 248s] fp 00000013_013.png  base: 1.00 s=1.00  top: 1.00 s=0.93  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[9/80 271s] fp 00000459_005.png  base: 1.00 s=0.97  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=0.97  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[10/80 301s] fp 00000459_022.png  base: 1.00 s=0.97  top: 1.00 s=0.87  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=0.97  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=0.97
+[11/80 335s] fp 00000655_001.png  base: 1.00 s=0.97  top: 0.98 s=0.43  con_card: 1.00 s=0.93  con_eff: 1.00 s=0.87  rand_act: 1.00 s=0.93  anch_evid: 0.98 s=0.57  anch_border: 0.99 s=0.33
+[12/80 371s] fp 00001151_003.png  base: 1.00 s=1.00  top: 1.00 s=0.20  con_card: 1.00 s=0.97  con_eff: 1.00 s=0.90  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.37  anch_border: 1.00 s=0.40
+[13/80 398s] fp 00001055_001.png  base: 1.00 s=1.00  top: 1.00 s=0.93  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.73  anch_border: 1.00 s=1.00
+[14/80 419s] fp 00000011_005.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=0.97
+[15/80 448s] fp 00000251_001.png  base: 1.00 s=1.00  top: 1.00 s=0.90  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.77  anch_border: 1.00 s=1.00
+[16/80 476s] fp 00000798_015.png  base: 1.00 s=1.00  top: 1.00 s=0.63  con_card: 1.00 s=0.90  con_eff: 1.00 s=0.93  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.90  anch_border: 1.00 s=0.70
+[17/80 512s] fp 00000583_047.png  base: 1.00 s=0.90  top: 0.99 s=0.50  con_card: 1.00 s=0.77  con_eff: 1.00 s=0.80  rand_act: 1.00 s=0.90  anch_evid: 1.00 s=0.47  anch_border: 1.00 s=0.57
+[18/80 536s] fp 00000935_000.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=0.97  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[19/80 566s] fp 00000105_002.png  base: 1.00 s=1.00  top: 1.00 s=0.83  con_card: 1.00 s=1.00  con_eff: 1.00 s=0.97  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.87  anch_border: 1.00 s=0.63
+[20/80 589s] fp 00000364_000.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=0.97  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=0.97
+[21/80 631s] fp 00000468_013.png  base: 0.90 s=0.63  top: 0.15 s=0.03  con_card: 0.95 s=0.20  con_eff: 0.93 s=0.47  rand_act: 0.88 s=0.67  anch_evid: 0.03 s=0.07  anch_border: 0.53 s=0.20
+[22/80 656s] fp 00000248_009.png  base: 1.00 s=1.00  top: 1.00 s=0.97  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.43  anch_border: 1.00 s=1.00
+[23/80 701s] fp 00001278_012.png  base: 0.90 s=0.70  top: 0.85 s=0.37  con_card: 0.95 s=0.43  con_eff: 0.93 s=0.53  rand_act: 0.82 s=0.47  anch_evid: 0.59 s=0.13  anch_border: 0.68 s=0.37
+[24/80 738s] fp 00001206_001.png  base: 1.00 s=0.97  top: 1.00 s=0.70  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=0.97  anch_evid: 1.00 s=0.60  anch_border: 1.00 s=0.87
+[25/80 767s] fp 00000870_011.png  base: 1.00 s=1.00  top: 1.00 s=0.97  con_card: 1.00 s=0.93  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.10  anch_border: 1.00 s=0.97
+[26/80 804s] fp 00000135_001.png  base: 1.00 s=0.97  top: 0.99 s=0.67  con_card: 1.00 s=0.83  con_eff: 1.00 s=0.87  rand_act: 1.00 s=0.97  anch_evid: 0.99 s=0.10  anch_border: 0.99 s=0.67
+[27/80 832s] fp 00001122_013.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[28/80 855s] fp 00000144_001.png  base: 1.00 s=1.00  top: 1.00 s=0.97  con_card: 1.00 s=0.97  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[29/80 881s] fp 00001250_011.png  base: 1.00 s=1.00  top: 1.00 s=0.97  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=0.97  anch_evid: 1.00 s=0.93  anch_border: 1.00 s=1.00
+[30/80 921s] fp 00000418_001.png  base: 1.00 s=0.97  top: 0.98 s=0.20  con_card: 1.00 s=0.90  con_eff: 1.00 s=0.93  rand_act: 1.00 s=0.97  anch_evid: 0.96 s=0.03  anch_border: 0.99 s=0.53
+[31/80 954s] fp 00000344_002.png  base: 1.00 s=1.00  top: 1.00 s=0.77  con_card: 1.00 s=0.97  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.73  anch_border: 1.00 s=0.87
+[32/80 978s] fp 00000888_000.png  base: 1.00 s=1.00  top: 1.00 s=0.97  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.97  anch_border: 1.00 s=0.93
+[33/80 1012s] fp 00000857_009.png  base: 1.00 s=1.00  top: 1.00 s=0.77  con_card: 1.00 s=0.93  con_eff: 1.00 s=0.93  rand_act: 1.00 s=0.83  anch_evid: 1.00 s=0.70  anch_border: 1.00 s=0.90
+[34/80 1059s] fp 00000534_000.png  base: 0.97 s=0.80  top: 0.73 s=0.57  con_card: 0.99 s=0.57  con_eff: 0.99 s=0.60  rand_act: 0.97 s=0.70  anch_evid: 0.02 s=0.13  anch_border: 0.78 s=0.20
+[35/80 1107s] fp 00000772_005.png  base: 0.29 s=0.53  top: 0.10 s=0.10  con_card: 0.11 s=0.13  con_eff: 0.50 s=0.30  rand_act: 0.27 s=0.13  anch_evid: 0.01 s=0.00  anch_border: 0.09 s=0.17
+[36/80 1145s] fp 00000108_001.png  base: 1.00 s=1.00  top: 1.00 s=0.80  con_card: 1.00 s=1.00  con_eff: 1.00 s=0.93  rand_act: 1.00 s=0.90  anch_evid: 1.00 s=0.83  anch_border: 1.00 s=0.93
+[37/80 1194s] fp 00000368_003.png  base: 1.00 s=1.00  top: 1.00 s=0.63  con_card: 1.00 s=0.93  con_eff: 1.00 s=0.97  rand_act: 1.00 s=0.93  anch_evid: 1.00 s=0.87  anch_border: 1.00 s=0.87
+[38/80 1236s] fp 00001286_003.png  base: 0.98 s=0.73  top: 0.59 s=0.17  con_card: 0.99 s=0.77  con_eff: 0.98 s=0.57  rand_act: 0.97 s=0.30  anch_evid: 0.73 s=0.47  anch_border: 0.73 s=0.20
+[39/80 1274s] fp 00000381_001.png  base: 1.00 s=1.00  top: 1.00 s=0.97  con_card: 1.00 s=0.97  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.80  anch_border: 1.00 s=1.00
+[40/80 1309s] fp 00001285_003.png  base: 1.00 s=1.00  top: 1.00 s=0.97  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.97  anch_border: 1.00 s=1.00
+[41/80 1337s] tp_cardiomegaly 00000116_031.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[42/80 1380s] tp_cardiomegaly 00000787_002.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.97  anch_border: 1.00 s=1.00
+[43/80 1420s] tp_cardiomegaly 00000032_060.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.17  anch_border: 1.00 s=1.00
+[44/80 1449s] tp_cardiomegaly 00000156_001.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[45/80 1478s] tp_cardiomegaly 00000457_002.png  base: 1.00 s=1.00  top: 1.00 s=0.97  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[46/80 1512s] tp_cardiomegaly 00000790_000.png  base: 1.00 s=1.00  top: 1.00 s=0.97  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.97  anch_border: 1.00 s=0.97
+[47/80 1544s] tp_cardiomegaly 00000661_000.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[48/80 1577s] tp_cardiomegaly 00000131_001.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.97  anch_border: 1.00 s=1.00
+[49/80 1602s] tp_cardiomegaly 00000897_001.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.97  anch_border: 1.00 s=0.97
+[50/80 1635s] tp_cardiomegaly 00000008_000.png  base: 1.00 s=1.00  top: 1.00 s=0.97  con_card: 1.00 s=0.97  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=0.97
+[51/80 1672s] tp_cardiomegaly 00001096_001.png  base: 1.00 s=1.00  top: 1.00 s=0.90  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.93  anch_border: 1.00 s=0.90
+[52/80 1720s] tp_cardiomegaly 00000845_001.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[53/80 1757s] tp_cardiomegaly 00000377_003.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[54/80 1802s] tp_cardiomegaly 00000683_002.png  base: 1.00 s=0.93  top: 1.00 s=0.90  con_card: 1.00 s=0.93  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 0.99 s=0.43  anch_border: 1.00 s=0.97
+[55/80 1846s] tp_cardiomegaly 00001026_000.png  base: 1.00 s=0.97  top: 1.00 s=0.77  con_card: 1.00 s=0.97  con_eff: 1.00 s=0.90  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.87  anch_border: 1.00 s=0.87
+[56/80 1881s] tp_cardiomegaly 00000740_000.png  base: 1.00 s=1.00  top: 1.00 s=0.93  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=0.93
+[57/80 1922s] tp_cardiomegaly 00000432_000.png  base: 1.00 s=1.00  top: 1.00 s=0.93  con_card: 1.00 s=1.00  con_eff: 1.00 s=0.97  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=0.97
+[58/80 1955s] tp_cardiomegaly 00000864_000.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.97  anch_border: 1.00 s=1.00
+[59/80 1988s] tp_cardiomegaly 00000001_001.png  base: 1.00 s=1.00  top: 1.00 s=0.93  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[60/80 2026s] tp_cardiomegaly 00001157_001.png  base: 1.00 s=1.00  top: 1.00 s=0.83  con_card: 1.00 s=0.97  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.93  anch_border: 1.00 s=0.93
+[61/80 2071s] tp_effusion 00000937_003.png  base: 1.00 s=1.00  top: 1.00 s=0.97  con_card: 1.00 s=0.97  con_eff: 1.00 s=1.00  rand_act: 1.00 s=0.97  anch_evid: 1.00 s=0.93  anch_border: 1.00 s=0.93
+[62/80 2126s] tp_effusion 00000180_000.png  base: 1.00 s=1.00  top: 0.98 s=0.53  con_card: 1.00 s=0.90  con_eff: 1.00 s=0.77  rand_act: 1.00 s=0.60  anch_evid: 0.99 s=0.87  anch_border: 0.99 s=0.70
+[63/80 2162s] tp_effusion 00001301_023.png  base: 1.00 s=1.00  top: 1.00 s=0.97  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.93  anch_border: 1.00 s=0.97
+[64/80 2207s] tp_effusion 00000761_011.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.13  anch_border: 1.00 s=1.00
+[65/80 2261s] tp_effusion 00000491_009.png  base: 1.00 s=0.93  top: 0.97 s=0.03  con_card: 1.00 s=0.83  con_eff: 1.00 s=0.83  rand_act: 1.00 s=0.97  anch_evid: 0.99 s=0.23  anch_border: 0.94 s=0.23
+[66/80 2319s] tp_effusion 00000179_006.png  base: 0.29 s=0.23  top: 0.02 s=0.00  con_card: 0.50 s=0.13  con_eff: 0.47 s=0.33  rand_act: 0.27 s=0.13  anch_evid: 0.04 s=0.03  anch_border: 0.06 s=0.03
+[67/80 2369s] tp_effusion 00000261_003.png  base: 1.00 s=0.97  top: 1.00 s=0.90  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.03  anch_border: 1.00 s=1.00
+[68/80 2425s] tp_effusion 00001075_016.png  base: 1.00 s=0.93  top: 1.00 s=0.27  con_card: 1.00 s=0.97  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.23  anch_border: 1.00 s=0.60
+[69/80 2472s] tp_effusion 00000506_018.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=0.97  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[70/80 2515s] tp_effusion 00000148_001.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.57  anch_border: 1.00 s=1.00
+[71/80 2555s] tp_effusion 00001200_013.png  base: 1.00 s=1.00  top: 0.99 s=0.23  con_card: 1.00 s=0.83  con_eff: 1.00 s=0.87  rand_act: 1.00 s=0.90  anch_evid: 1.00 s=0.33  anch_border: 1.00 s=0.80
+[72/80 2585s] tp_effusion 00000061_007.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[73/80 2625s] tp_effusion 00000938_006.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=0.93  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.00  anch_border: 1.00 s=1.00
+[74/80 2653s] tp_effusion 00000591_014.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[75/80 2693s] tp_effusion 00000096_002.png  base: 1.00 s=1.00  top: 1.00 s=0.97  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[76/80 2734s] tp_effusion 00000117_000.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=0.90  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.70  anch_border: 1.00 s=1.00
+[77/80 2775s] tp_effusion 00001226_002.png  base: 1.00 s=1.00  top: 1.00 s=0.80  con_card: 1.00 s=1.00  con_eff: 1.00 s=0.83  rand_act: 1.00 s=0.90  anch_evid: 1.00 s=0.67  anch_border: 1.00 s=0.77
+[78/80 2808s] tp_effusion 00000322_013.png  base: 1.00 s=1.00  top: 1.00 s=0.97  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.93  anch_border: 1.00 s=1.00
+[79/80 2840s] tp_effusion 00000742_000.png  base: 1.00 s=1.00  top: 1.00 s=1.00  con_card: 1.00 s=1.00  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=1.00  anch_border: 1.00 s=1.00
+[80/80 2879s] tp_effusion 00000592_001.png  base: 1.00 s=1.00  top: 1.00 s=0.97  con_card: 1.00 s=0.97  con_eff: 1.00 s=1.00  rand_act: 1.00 s=1.00  anch_evid: 1.00 s=0.07  anch_border: 1.00 s=0.93
+
+=== fp (n=40) ===
+  arm                  s drop [95% CI]  P_raw P_norm active  ∩top  raw / norm verdicts
+  top           +0.226 [+0.160,+0.296]  0.555  0.933   80.0  80.0  UNRESOLVED / MISREADS
+  con_card      +0.069 [+0.032,+0.114]  0.814  0.974   80.0  24.9  MISREADS / MISREADS
+  con_eff       +0.040 [+0.019,+0.062]  0.882  0.983   79.6  25.0  MISREADS / UNRESOLVED
+  rand_act      +0.041 [+0.013,+0.075]  0.780  0.973   80.0   4.4  TRACKS / UNRESOLVED
+  anch_evid     +0.270 [+0.189,+0.356]  0.545  0.906   80.0  68.0  UNRESOLVED / MISREADS
+  anch_border   +0.190 [+0.127,+0.258]  0.625  0.940   80.0  68.5  UNRESOLVED / MISREADS
+
+=== tp_cardiomegaly (n=20) ===
+  arm                  s drop [95% CI]  P_raw P_norm active  ∩top  raw / norm verdicts
+  top           +0.040 [+0.018,+0.067]  0.893  1.000   80.0  80.0  UNRESOLVED / UNRESOLVED
+  con_card      +0.003 [+0.000,+0.008]  0.973  1.000   79.7  24.2  TRACKS / TRACKS
+  con_eff       +0.002 [-0.008,+0.012]  0.985  1.000   78.7  23.6  TRACKS / TRACKS
+  rand_act      -0.005 [-0.013,+0.000]  0.962  1.000   80.0   4.5  TRACKS / TRACKS
+  anch_evid     +0.087 [+0.017,+0.190]  0.837  0.999   80.0  65.3  UNRESOLVED / MISREADS
+  anch_border   +0.022 [+0.007,+0.038]  0.919  1.000   80.0  70.3  UNRESOLVED / TRACKS
+
+=== tp_effusion (n=20) ===
+  arm                  s drop [95% CI]  P_raw P_norm active  ∩top  raw / norm verdicts
+  top           +0.173 [+0.060,+0.305]  0.727  0.948   80.0  80.0  UNRESOLVED / MISREADS
+  con_card      +0.033 [+0.012,+0.057]  0.869  0.975   79.6  24.4  TRACKS / UNRESOLVED
+  con_eff       +0.022 [-0.008,+0.057]  0.908  0.973   79.1  26.3  UNRESOLVED / UNRESOLVED
+  rand_act      +0.030 [-0.003,+0.078]  0.893  0.963   80.0   5.0  TRACKS / UNRESOLVED
+  anch_evid     +0.370 [+0.215,+0.532]  0.554  0.951   80.0  65.3  UNRESOLVED / MISREADS
+  anch_border   +0.105 [+0.037,+0.190]  0.790  0.949   80.0  67.2  UNRESOLVED / MISREADS
+
+=== verdicts ===
+  S1: CONTRASTIVE SETS INERT
+  S1_detail: {'a': (0.0016666666666666663, -0.008333333333333331, 0.011666666666666664), 'b': (-0.011666666666666664, -0.04333333333333332, 0.019999999999999997), 'con_card_minus_rand': (0.008333333333333331, 0.0016666666666666663, 0.016666666666666663), 'con_eff_minus_rand': (-0.008333333333333338, -0.038333333333333344, 0.01833333333333333)}
+  S2: CONTRAST INERT ON FP
+  S2_ci: [0.02833333333333333, -0.015000000000000003, 0.07333333333333333]
+  S3: UNRESOLVED
+  S3_ci: [0.08000000000000002, 0.009166666666666679, 0.15666666666666665]
+  S3_tp_cardiomegaly: UNRESOLVED
+  S3_tp_cardiomegaly_ci: [0.06499999999999999, -0.008333333333333331, 0.1716666666666667]
+  S3_tp_effusion: LOCATION MATTERS
+  S3_tp_effusion_ci: [0.265, 0.11333333333333333, 0.43166666666666675]
+saved /mnt/fast/clt/clamp_contrastive_answers.json
+E5_EXIT 0

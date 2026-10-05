@@ -1,0 +1,59 @@
+600 film x finding pairs: cardiomegaly 100 pos, effusion 100 pos, pneumothorax 100 pos
+Loading weights:   0%|          | 0/883 [00:00<?, ?it/s]Loading weights:  75%|███████▍  | 660/883 [00:00<00:00, 6539.87it/s]Loading weights: 100%|██████████| 883/883 [00:00<00:00, 6948.09it/s]
+loaded google/medgemma-1.5-4b-it@registry; yes ids [4443, 8438, 10784, 11262, 26915], no ids [951, 1904, 2301, 3771, 7018]
+[transformers] Deprecated: `processor.image_token` will switch from returning `tokenizer.image_token` to `tokenizer.boi_token` in v5.11.
+  [25/600 133s]
+  [50/600 260s]
+  [75/600 393s]
+  [100/600 515s]
+  [125/600 673s]
+  [150/600 833s]
+  [175/600 994s]
+  [200/600 1148s]
+  [225/600 1341s]
+  [250/600 1512s]
+  [275/600 1689s]
+  [300/600 1887s]
+  [325/600 2094s]
+  [350/600 2301s]
+  [375/600 2512s]
+  [400/600 2727s]
+  [425/600 2927s]
+  [450/600 3133s]
+  [475/600 3339s]
+  [500/600 3542s]
+  [525/600 3694s]
+  [550/600 3840s]
+  [575/600 3985s]
+  [600/600 4132s]
+
+  cardiomegaly: 100 pos / 100 neg, mass 0.574, greedy NONE 12
+    AUC raw    0.886 [0.832, 0.931]  acc 0.815
+    AUC norm   0.885 [0.832, 0.932]  acc 0.845
+    AUC s      0.854 [0.796, 0.907]  acc 0.830
+    AUC greedy 0.828 [0.771, 0.882]  acc 0.780
+    raw-s   +0.032 [+0.006, +0.061]
+    norm-s  +0.031 [+0.003, +0.062]
+    calls vs sampled majority: {'raw': 7, 'norm': 5}; vs greedy: {'raw': 7, 'norm': 5}
+
+  effusion: 100 pos / 100 neg, mass 0.532, greedy NONE 2
+    AUC raw    0.825 [0.767, 0.879]  acc 0.745
+    AUC norm   0.812 [0.753, 0.868]  acc 0.750
+    AUC s      0.784 [0.719, 0.842]  acc 0.755
+    AUC greedy 0.752 [0.693, 0.809]  acc 0.745
+    raw-s   +0.041 [+0.011, +0.074]
+    norm-s  +0.028 [-0.003, +0.060]
+    calls vs sampled majority: {'raw': 6, 'norm': 1}; vs greedy: {'raw': 9, 'norm': 5}
+
+  pneumothorax: 100 pos / 100 neg, mass 0.569, greedy NONE 0
+    AUC raw    0.672 [0.598, 0.743]  acc 0.595
+    AUC norm   0.666 [0.592, 0.737]  acc 0.590
+    AUC s      0.629 [0.561, 0.695]  acc 0.600
+    AUC greedy 0.595 [0.556, 0.638]  acc 0.595
+    raw-s   +0.043 [-0.023, +0.105]
+    norm-s  +0.037 [-0.028, +0.099]
+    calls vs sampled majority: {'raw': 1, 'norm': 2}; vs greedy: {'raw': 2, 'norm': 3}
+
+>>> E6: READOUT CHANGES THE EVALUATION
+saved results/clt_scale/readout_eval_matched_medgemma.json
+E7M_EXIT 0
