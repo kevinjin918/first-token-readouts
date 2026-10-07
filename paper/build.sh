@@ -9,8 +9,7 @@ export SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH:-0}
 
 out=$($PY paper/make_numbers.py 2>&1); echo "$out"
 if grep -q WARNING <<<"$out"; then echo "FAILED: a result file is missing or partial"; exit 1; fi
-for f in paper/figures/make_fig_split.py paper/figures/make_fig_location.py \
-         paper/figures/make_fig2.py; do
+for f in paper/figures/make_fig_split.py paper/figures/make_fig_location.py; do
   $PY "$f" >/dev/null
 done
 if git rev-parse --git-dir >/dev/null 2>&1; then

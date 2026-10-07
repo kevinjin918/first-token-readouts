@@ -14,15 +14,14 @@ number, and the script that regenerates the paper's numbers, tables and figures 
 **Transcoder weights.** 34 layers, 2,048 features per layer, full cross-layer span, trained on
 MedGemma 1.5-4b-it.
 
-- Hugging Face, [`kevinjin918/medgemma-1.5-cxr-clt`](https://huggingface.co/kevinjin918/medgemma-1.5-cxr-clt):
-  `clt.safetensors`, the 3.30B trained parameters only, no pickle.
-- Zenodo, [10.5281/zenodo.22105454](https://doi.org/10.5281/zenodo.22105454): `clt_ckpt.pt`, the
-  training checkpoint (6.24B allocated parameters plus optimizer state; 37,630,140,293 bytes, MD5
-  `4c2747c75e4ce368bd48ccd194f9b8ef`).
+Zenodo, [10.5281/zenodo.22105454](https://doi.org/10.5281/zenodo.22105454) (CC BY 4.0):
+`clt_ckpt.pt`, the training checkpoint (6.24B allocated parameters, 3.30B of them trained, plus
+optimizer state; 37,630,140,293 bytes, MD5 `4c2747c75e4ce368bd48ccd194f9b8ef`).
 
-`CrossLayerTranscoder.load_checkpoint` reads either file, and
-[`scripts/export_clt_safetensors.py`](scripts/export_clt_safetensors.py) makes the first from the
-second and checks every tensor is bitwise equal.
+`CrossLayerTranscoder.load_checkpoint` reads the checkpoint directly.
+[`scripts/export_clt_safetensors.py`](scripts/export_clt_safetensors.py) optionally writes the
+trained parameters to a weights-only `.safetensors` file (no pickle), checks every tensor is
+bitwise equal, and `load_checkpoint` reads that file too.
 
 ## Reproduce the paper from the result files (CPU, minutes)
 
@@ -44,8 +43,9 @@ regeneration on every push and fails if any number changes.
 ```bash
 pip install -e ".[models,data,analysis]"
 python scripts/download_nih.py --sample      # NIH ChestX-ray14 images_001: 4,999 images, 1,335 patients
-hf download kevinjin918/medgemma-1.5-cxr-clt clt.safetensors --local-dir ckpt
-python scripts/readout_sampled_answers.py --ckpt ckpt/clt.safetensors \
+mkdir -p ckpt && curl -L -o ckpt/clt_ckpt.pt \
+    "https://zenodo.org/records/22105454/files/clt_ckpt.pt?download=1"   # 37.6 GB
+python scripts/readout_sampled_answers.py --ckpt ckpt/clt_ckpt.pt \
     --out results/clt_scale/readout_sampled_answers.json
 ```
 
@@ -60,15 +60,15 @@ released) needs the full ChestX-ray14 set (`--full`) and the CheXpert Plus repor
 
 | Paper | Script | Result file (`results/clt_scale/`) |
 |---|---|---|
-| §3, occlusion as the reference effect | `occlusion_readout_audit.py` | `occlusion_readout_audit.json` |
-| §4, suppression and the written answers (E4) | `readout_sampled_answers.py` | `readout_sampled_answers.json` |
-| §4.1, App. C, the two routes; parsing | `answer_text_checks.py`, `parse_audit_sheet.py` | `answer_text_checks.json`, `hand_reading_scored.json` |
-| §4.2, App. F, the edit on the live model (E8, E9) | `clamp_live_mlp.py`, `clamp_live_dose.py` | `clamp_live_mlp.json`, `clamp_live_dose.json` |
-| §5, App. G, other findings and views | `causal_map_general.py`, `attn_causal_map.py` | `causal_map_*.json`, `attn_causal_map.json` |
-| §5, App. I, evaluation without an intervention (E6, E7) | `readout_eval_answers.py`, `readout_eval_matched.py`, `readout_eval_matched_power.py`, `readout_eval_resolution.py`, `readout_prompt_confound.py` | `readout_eval_*.json`, `readout_prompt_confound.json` |
-| §6, App. H, donor sets (E3, E5) | `donor_sets_patient_disjoint.py`, `clamp_contrastive_answers.py`, `clamp_amplify_donor_specificity.py` | `donor_sets_patient_disjoint.json`, `clamp_contrastive_answers.json`, `clamp_amplify_donor_specificity.json` |
-| App. D, the transcoder | `clt_live.py` (the released run), `clt_scale.py` and `clt_cache.py` (cached and per-layer baselines), `clt_replacement.py`, `clt_fair_eval.py`, `clt_fvu_by_prompt.py`, `clt_metric_transfer.py`, `feats_causal_vs_inert.py`, `stage1_train_transcoder.py` | `clt_live_result.json`, `clt_scale_result.json`, `clt_span0_result.json`, `replacement_live.json`, `clt_replacement*.json`, `fair_eval.json`, `clt_fvu_by_prompt.json`, `clt_prompt_battery.json`, `feats_causal_vs_inert_norm.json`, `../a1_fidelity.json` |
-| App. E, reproducing the suppression measurement (E2) | `readout_generation_check.py` | `readout_generation_check.json` |
+| §3, Figure 2a,b, occlusion as the reference effect | `occlusion_readout_audit.py` | `occlusion_readout_audit.json` |
+| §4, §5, suppression and the written answers, false and correct calls (E4) | `readout_sampled_answers.py` | `readout_sampled_answers.json` |
+| §4.1, App. B, the two routes; parsing | `answer_text_checks.py`, `parse_audit_sheet.py` | `answer_text_checks.json`, `hand_reading_scored.json` |
+| §4.2, App. D, the edit on the live model (E8, E9) | `clamp_live_mlp.py`, `clamp_live_dose.py` | `clamp_live_mlp.json`, `clamp_live_dose.json` |
+| §3, Figure 2c, evidence locations for other findings | `causal_map_general.py`, `attn_causal_map.py` | `causal_map_*.json`, `attn_causal_map.json` |
+| Not in the paper: evaluation without an intervention (E6, E7); rules and outcomes in the docstrings and result files | `readout_eval_answers.py`, `readout_eval_matched.py`, `readout_eval_matched_power.py`, `readout_eval_resolution.py`, `readout_prompt_confound.py` | `readout_eval_*.json`, `readout_prompt_confound.json` |
+| §5, App. E, donor sets (E3, E5) | `donor_sets_patient_disjoint.py`, `clamp_contrastive_answers.py`, `clamp_amplify_donor_specificity.py` | `donor_sets_patient_disjoint.json`, `clamp_contrastive_answers.json`, `clamp_amplify_donor_specificity.json` |
+| App. C, the transcoder | `clt_live.py` (the released run), `clt_scale.py` and `clt_cache.py` (cached and per-layer baselines), `clt_replacement.py`, `clt_fair_eval.py`, `clt_fvu_by_prompt.py`, `clt_metric_transfer.py`, `feats_causal_vs_inert.py`, `stage1_train_transcoder.py` | `clt_live_result.json`, `clt_scale_result.json`, `clt_span0_result.json`, `replacement_live.json`, `clt_replacement*.json`, `fair_eval.json`, `clt_fvu_by_prompt.json`, `clt_prompt_battery.json`, `feats_causal_vs_inert_norm.json`, `../a1_fidelity.json` |
+| §4, App. C, the first check and reproducing the suppression (E2) | `readout_generation_check.py` | `readout_generation_check.json` |
 
 `results/clt_scale/logs/` holds the generation runs' logs, which the paper's compute times come from.
 
