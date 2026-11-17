@@ -177,6 +177,20 @@ figcaption b { color: var(--ink); font-weight: 600; }
 .mk .m-yes, .mk .m-no, .mk .m-none { stroke: none; }
 @media (max-width: 640px) { .films { grid-template-columns: 1fr; gap: 20px; } }
 
+/* ---------- how it works */
+.steps { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 22px 0 0; }
+.step { border: 1px solid var(--rule); border-radius: 12px; padding: 18px 18px 16px; }
+.glyph { display: block; width: 44px; height: 32px; margin-bottom: 14px; color: var(--ink-3); }
+.glyph text { font-family: var(--sans); font-size: 13px; font-weight: 600; fill: var(--ink-2); }
+.g-line { fill: none; stroke: currentColor; stroke-width: 1.4; }
+.g-off { fill: var(--tint-2); } .g-on { fill: var(--yes); } .g-mid { fill: var(--mid); } .g-no { fill: var(--no); }
+.g-cut { fill: none; stroke: var(--yes); stroke-width: 1.5; stroke-dasharray: 2.2 1.6; }
+.step .k { display: block; font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink); margin-bottom: 6px; }
+.post .step p { font-family: var(--sans); font-size: 14.5px; line-height: 1.6; margin: 0; }
+.step .m { font-size: 15.5px; }
+@media (max-width: 640px) { .steps { grid-template-columns: 1fr; } }
+
 /* ---------- key findings */
 .finding { display: grid; grid-template-columns: 32px 1fr; gap: 0 18px; margin: 34px 0 0; }
 .fn { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--rule-2); display: grid; place-items: center;

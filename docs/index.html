@@ -27,6 +27,7 @@
       <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3"/></svg></button>
     <ul class="toc" id="toc" hidden>
       <li><a href="#summary">Summary</a></li>
+      <li><a href="#how">How it works</a></li>
       <li><a href="#findings">Key findings</a></li>
       <li><a href="#release">Code and weights</a></li>
       <li><a href="#citation">Citation</a></li>
@@ -62,7 +63,69 @@
 
 <main class="post" id="main">
 
-  <figure class="wide" id="f1">
+  <section id="summary">
+    <h2>Summary</h2>
+    <p class="lede">To find out what an AI model relies on, researchers turn parts of it down and watch what
+      changes. On yes/no questions, that change is usually scored from the first word the model would write.
+      In a medical model that reads chest <span class="nw">X-rays</span>, we show that this score can miss most of the change in the
+      answers the model actually writes.</p>
+    <p>In interpretability terms, the score is <span class="m">P<sub>norm</sub></span>, the probability of “yes”
+      normalized over “yes” and “no”: the probability form of the logit difference recommended for activation
+      patching.</p>
+  </section>
+
+  <section id="how">
+    <h2>How it works</h2>
+    <ol class="steps">
+      <li class="step">
+        <svg class="glyph" viewBox="0 0 44 32" aria-hidden="true"><path class="g-line" d="M8 2.5h27a5 5 0 0 1 5 5v11a5 5 0 0 1-5 5H18l-7 6v-6H8a5 5 0 0 1-5-5v-11a5 5 0 0 1 5-5z"/><text x="21.5" y="18" text-anchor="middle">?</text></svg>
+        <span class="k">Step 1 · Ask</span>
+        <p>We show MedGemma 1.5 (4B), Google's open medical vision–language model, a chest <span class="nw">X-ray</span> and ask:
+          “Does this chest <span class="nw">X-ray</span> show cardiomegaly? Answer yes or no.” Cardiomegaly is an enlarged heart. We use
+          40 <span class="nw">X-rays</span> that the model calls enlarged although their labels say they are not.</p>
+      </li>
+      <li class="step">
+        <svg class="glyph" viewBox="0 0 44 32" aria-hidden="true"><g class="g-off"><rect x="3" y="2" width="8" height="8" rx="2"/><rect x="24" y="2" width="8" height="8" rx="2"/><rect x="34" y="2" width="8" height="8" rx="2"/><rect x="3" y="12" width="8" height="8" rx="2"/><rect x="13" y="12" width="8" height="8" rx="2"/><rect x="24" y="12" width="8" height="8" rx="2"/><rect x="13" y="22" width="8" height="8" rx="2"/><rect x="24" y="22" width="8" height="8" rx="2"/><rect x="34" y="22" width="8" height="8" rx="2"/></g><g class="g-on"><rect x="13" y="2" width="8" height="8" rx="2"/><rect x="34" y="12" width="8" height="8" rx="2"/><rect x="3" y="22" width="8" height="8" rx="2"/></g></svg>
+        <span class="k">Step 2 · Find features</span>
+        <p>A transcoder is a second network, trained to rewrite what each layer of the model computes as a sparse
+          set of features that can be read and edited one at a time. Ours covers all 34 layers, with 2,048
+          features per layer. On each <span class="nw">X-ray</span> we take the 80 features most active on the image.</p>
+      </li>
+      <li class="step">
+        <svg class="glyph" viewBox="0 0 44 32" aria-hidden="true"><g class="g-off"><rect x="3" y="2" width="8" height="8" rx="2"/><rect x="24" y="2" width="8" height="8" rx="2"/><rect x="34" y="2" width="8" height="8" rx="2"/><rect x="3" y="12" width="8" height="8" rx="2"/><rect x="13" y="12" width="8" height="8" rx="2"/><rect x="24" y="12" width="8" height="8" rx="2"/><rect x="13" y="22" width="8" height="8" rx="2"/><rect x="24" y="22" width="8" height="8" rx="2"/><rect x="34" y="22" width="8" height="8" rx="2"/></g><g class="g-cut"><rect x="13.75" y="2.75" width="6.5" height="6.5" rx="1.5"/><rect x="34.75" y="12.75" width="6.5" height="6.5" rx="1.5"/><rect x="3.75" y="22.75" width="6.5" height="6.5" rx="1.5"/></g></svg>
+        <span class="k">Step 3 · Turn them down</span>
+        <p>We reverse or zero those 80 features while the model reads the image, applying the edit the way
+          circuit-tracing tools do. Every comparison is between the same model with and without the edit.</p>
+      </li>
+      <li class="step">
+        <svg class="glyph" viewBox="0 0 44 32" aria-hidden="true"><rect class="g-on" x="3" y="6" width="34" height="7" rx="2"/><rect class="g-mid" x="38" y="6" width="3" height="7" rx="1"/><rect class="g-on" x="3" y="19" width="22" height="7" rx="2"/><rect class="g-mid" x="26" y="19" width="4" height="7" rx="1"/><rect class="g-no" x="31" y="19" width="10" height="7" rx="2"/></svg>
+        <span class="k">Step 4 · Score it two ways</span>
+        <p>The usual score reads only the first word the model would write: the probability of “Yes” as a share of
+          “Yes” plus “No”, <span class="m">P<sub>norm</sub></span>. We also let the model write 50 full answers per
+          <span class="nw">X-ray</span> and count the share that say yes, <span class="m">s</span>.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section id="findings">
+    <h2>Key findings</h2>
+
+    <div class="finding">
+      <div class="fn">1</div>
+      <div class="fbody">
+        <h3>The answers move; the score barely does</h3>
+        <p>Turning the features down (<code>scale −1</code>) barely moves the first-token score
+          <span class="m">P<sub>norm</sub></span>. The share of written answers that say yes falls much further.</p>
+        <div class="stats">
+          <div class="stat"><div class="num">0.976<span class="arrow">→</span>0.933</div>
+            <div class="lbl">first-token score, <span class="m">P<sub>norm</sub></span></div></div>
+          <div class="stat"><div class="num">0.95<span class="arrow">→</span>0.73</div>
+            <div class="lbl">share of answers that say yes, <span class="m">s</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <figure class="wide" id="f1">
     <div class="fig-box">
       <div class="f1-top">
         <div>
@@ -96,36 +159,7 @@
       <span class="m">P<sub>norm</sub></span>, the “yes” share of “yes” plus “no”, misses both. Covering
       the evidence also moves the first token to “no”, so <span class="m">P<sub>norm</sub></span> falls with
       the answers. Hover a segment for its value.</figcaption>
-  </figure>
-
-  <section id="summary">
-    <h2>Summary</h2>
-    <p class="lede">Interventions on vision–language models are commonly scored on yes/no questions by the
-      model's first output token. We show that this score can miss most of an intervention's effect on the
-      answer the model writes.</p>
-    <p>We train a transcoder for MedGemma 1.5 (4B) and use it to suppress the 80 most active features on 40
-      chest radiographs that the model calls positive for cardiomegaly although they are labelled negative.
-      The first-token score barely moves; the written answers do.</p>
-  </section>
-
-  <section id="findings">
-    <h2>Key findings</h2>
-
-    <div class="finding">
-      <div class="fn">1</div>
-      <div class="fbody">
-        <h3>The answers move; the score barely does</h3>
-        <p>Suppressing the features (<code>scale −1</code>) barely moves the normalized first-token score
-          <span class="m">P<sub>norm</sub></span>, the “yes” share of “yes” plus “no”. The share of sampled answers that
-          say yes falls much further.</p>
-        <div class="stats">
-          <div class="stat"><div class="num">0.976<span class="arrow">→</span>0.933</div>
-            <div class="lbl">first-token score, <span class="m">P<sub>norm</sub></span></div></div>
-          <div class="stat"><div class="num">0.95<span class="arrow">→</span>0.73</div>
-            <div class="lbl">share of answers that say yes, <span class="m">s</span></div></div>
-        </div>
-      </div>
-    </div>
+    </figure>
 
     <div class="finding">
       <div class="fn">2</div>
@@ -167,11 +201,11 @@
         <div class="transcript">
           <div class="tcard">
             <div class="thead"><span>Unedited</span></div>
-            <div class="tq">Yes, the chest X-ray shows cardiomegaly. The heart appears enlarged.</div>
+            <div class="tq">Yes, the chest <span class="nw">X-ray</span> shows cardiomegaly. The heart appears enlarged.</div>
           </div>
           <div class="tcard after">
             <div class="thead"><span>After suppression</span><span class="badge"><span class="m">P<sub>norm</sub></span> = 0.982</span></div>
-            <div class="tq">Based on the image, the chest X-ray shows a normal heart size. Therefore, the answer is <span class="ans-no">**No**</span>.</div>
+            <div class="tq">Based on the image, the chest <span class="nw">X-ray</span> shows a normal heart size. Therefore, the answer is <span class="ans-no">**No**</span>.</div>
           </div>
         </div>
       </div>
