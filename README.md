@@ -14,14 +14,15 @@ number, and the script that regenerates the paper's numbers, tables and figures 
 **Transcoder weights.** 34 layers, 2,048 features per layer, full cross-layer span, trained on
 MedGemma 1.5-4b-it.
 
-Zenodo, [10.5281/zenodo.22105454](https://doi.org/10.5281/zenodo.22105454) (CC BY 4.0):
+Hugging Face, [kevinjin918/medgemma-1.5-cxr-clt](https://huggingface.co/kevinjin918/medgemma-1.5-cxr-clt) (CC BY 4.0):
+`clt.safetensors`, the 3.30B trained parameters, weights only (no pickle; 13,191,716,168 bytes), and
 `clt_ckpt.pt`, the training checkpoint (6.24B allocated parameters, 3.30B of them trained, plus
-optimizer state; 37,630,140,293 bytes, MD5 `4c2747c75e4ce368bd48ccd194f9b8ef`).
+optimizer state; 37,630,140,293 bytes, MD5 `4c2747c75e4ce368bd48ccd194f9b8ef`). The checkpoint is
+archived on Zenodo, [10.5281/zenodo.22105454](https://doi.org/10.5281/zenodo.22105454).
 
-`CrossLayerTranscoder.load_checkpoint` reads the checkpoint directly.
-[`scripts/export_clt_safetensors.py`](scripts/export_clt_safetensors.py) optionally writes the
-trained parameters to a weights-only `.safetensors` file (no pickle), checks every tensor is
-bitwise equal, and `load_checkpoint` reads that file too.
+`CrossLayerTranscoder.load_checkpoint` reads either file.
+[`scripts/export_clt_safetensors.py`](scripts/export_clt_safetensors.py) wrote `clt.safetensors`
+from the checkpoint and checks every tensor is bitwise equal.
 
 ## Reproduce the paper from the result files (CPU, minutes)
 
@@ -43,9 +44,8 @@ regeneration on every push and fails if any number changes.
 ```bash
 pip install -e ".[models,data,analysis]"
 python scripts/download_nih.py --sample      # NIH ChestX-ray14 images_001: 4,999 images, 1,335 patients
-mkdir -p ckpt && curl -L -o ckpt/clt_ckpt.pt \
-    "https://zenodo.org/records/22105454/files/clt_ckpt.pt?download=1"   # 37.6 GB
-python scripts/readout_sampled_answers.py --ckpt ckpt/clt_ckpt.pt \
+hf download kevinjin918/medgemma-1.5-cxr-clt clt.safetensors --local-dir ckpt   # 13.2 GB
+python scripts/readout_sampled_answers.py --ckpt ckpt/clt.safetensors \
     --out results/clt_scale/readout_sampled_answers.json
 ```
 
