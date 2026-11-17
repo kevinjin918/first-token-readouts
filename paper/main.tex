@@ -12,7 +12,11 @@
 \usepackage{microtype}
 \usepackage{xcolor}
 \usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\hypersetup{pdftitle={When First-Token Readouts Misread Feature Steering in a Medical Vision-Language Model},
+  pdfauthor={Kevin Jin}}
 \graphicspath{{figures/}}
+% The style's \flushbottom stretches the gaps around floats and paragraphs to fill each page.
+\raggedbottom
 
 % Every result number comes from \val{key} or a table under tables/, both written by
 % paper/make_numbers.py from the result files; none is typed here. An unknown key prints red.
@@ -36,23 +40,22 @@
 \maketitle
 
 \begin{abstract}
-Interventions on vision--language models are often scored on yes/no questions by the model's first
-output token. A common score is the probability of ``yes'' normalized over ``yes'' and ``no'', the
+Interventions on vision--language models are commonly scored on yes/no questions by the model's
+first output token, often as the probability of ``yes'' normalized over ``yes'' and ``no'', the
 probability form of the logit difference that interpretability work recommends. We show that this
-score can miss most of an intervention's effect on the answer the model writes. In MedGemma 1.5
-(4B), we train a transcoder, a sparse dictionary of the model's internal features with
-\val{clt.used}B trained parameters, and suppress its $80$ most active features, by reversing their sign, on \val{n.fp} chest
-radiographs that the model calls positive for cardiomegaly although their labels are negative. The
-normalized score barely moves (\val{fp.base.norm} to \val{fp.scale1.norm}), but the share of sampled
-answers that say yes falls from \val{fp.base.s} to \val{fp.scale1.s}. Across three versions of the
-edit, the greedy answer switches to ``no'' \val{pf.clamp.gno} times, and the score still
-says yes on \val{pf.clamp.gnoyes} of them. Three ways of occluding the image region the call depends on
-switch \val{pf.occ.gno} answers, and the score misses only \val{pf.occ.gnoyes}. The generated text shows why: after
-suppression, the model more often opens with ``Based on the image, \ldots'' instead of ``Yes'', and
-that reasoning more often ends in ``no''. The first-token score sees neither change. The gap
-replicates on radiographs selected by their written answer rather than the score, and on correct
-effusion and pneumothorax calls
-(correct cardiomegaly calls barely respond to the edit). We hypothesize that it comes from how
+score can miss most of an intervention's effect on the model's written answer. We train a
+transcoder for MedGemma 1.5 (4B) and use it to suppress the $80$ most active features on \val{n.fp}
+chest radiographs that the model calls positive for cardiomegaly although they are labelled
+negative. The normalized score barely moves (\val{fp.base.norm} to \val{fp.scale1.norm}), but the
+share of sampled answers saying yes falls from \val{fp.base.s} to \val{fp.scale1.s}. Of the greedy
+answers the edit turns to ``no'' at three strengths, the score still says yes on
+\val{pf.clamp.misspct}\%. When we instead cover the part of the image the model relies on, the score
+still says yes on only \val{pf.occ.misspct}\% of the answers that flip. The generated text shows
+why. After suppression the model more often opens with ``Based on the image, \ldots'' as opposed to
+``Yes'', and that reasoning more often ends in ``No'', but its first token almost never becomes
+``No''. Occlusion often does, so the score sees that edit. The gap replicates on radiographs
+selected by their written answer alone and on correct effusion and pneumothorax calls (correct
+cardiomegaly calls barely respond to the edit). We hypothesize that it comes from how
 circuit-tracing tools apply edits, which constrain the first token but not the rest of the answer.
 An edit that looks inert by this score can still change what the model tells a clinician, so such
 interventions should be scored on sampled answers. We release the transcoder and code.
@@ -63,37 +66,36 @@ interventions should be scored on sampled answers. We release the transcoder and
 
 A simple way to ask a vision--language model (VLM) about an image is a closed question: ``Does this
 chest X-ray show cardiomegaly? Answer yes or no.'' The answer is usually scored from the first output
-token. The probability of ``yes'' is used to score image--text agreement \citep{lin2024vqascore}, and
-interpretability studies score an intervention by how much it changes that probability. Examples
-include causal tracing \citep{meng2022rome,palit2023blip,basu2024storage}, attention knockout in
-multimodal question answering \citep{zhang2025crossmodal}, and, in medical VLMs, activation steering
-\citep{farina2026steering} and sparse-autoencoder feature patching \citep{sadanandan2026b}.
+token, and interpretability studies score an intervention by how much it changes the probability
+of ``yes''. In medical VLMs, examples include activation steering \citep{farina2026steering} and
+sparse-autoencoder feature patching \citep{sadanandan2026b}.
 
-The probability of ``yes'' has a known weakness: a model can put next-token probability on tokens
+The probability of ``yes'' has a known weakness, as a model can put next-token probability on tokens
 that are not answers \citep{wiegreffe2023mass}. An instruction-tuned model may open with ``Sure'' or
-a refusal, and its first-token probabilities can disagree with the answer it writes
-\citep{wang2024answerc,lyu2024beyond}. Interpretability work therefore recommends the logit difference
-between the two answers \citep{zhang2024patching,heimersheim2024patching,tan2024steering}, or its
+a refusal, and its first-token probabilities can disagree with the answer it ends up writing
+\citep{wang2024answerc}. Interpretability work therefore recommends the logit difference
+between the two answers \citep{zhang2024patching,heimersheim2024patching}, or its
 probability form, normalized over the answers \citep{rimsky2024caa}. Both assume that the model
-decides at the answer position. A model that opens with ``Based on the image, \ldots'' decides only
+decides at the answer position. A medical model that opens with ``Based on the image, \ldots'' decides only
 after reasoning, and that answer can differ from a direct one \citep{wang2024cotdecoding}. A
 first-token readout cannot see how such reasoning ends. In a clinical tool, the user reads the
-written answer, so a readout that misses changes to it misreports the behavior that matters.
+written answer, so a readout that misses changes to the answer misreports the behavior that matters.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.96\textwidth]{fig1_split.pdf}
+\includegraphics{fig1_split.pdf}  % drawn at its printed size
 \caption{\textbf{What the first token says, and what the model then writes.} For each intervention,
-the upper bar splits the probability of the first output token into ``yes'' (blue, $\Praw$), ``no''
-(orange) and every other token (grey, mostly ``Based''). $\Pnorm$, printed at right, is blue over
-blue plus orange. The lower bar splits sampled answers by what they conclude and how: solid segments
-answer directly, hatched segments reason first, and dotted segments give neither answer. Suppression
-moves the first token from ``yes'' to reasoning, and the reasoning now often concludes ``no'';
-$\Pnorm$ misses both. Right: films whose greedy answer is no, and those among them on which $\Pnorm$
-still says yes. The evidence block is the image region whose occlusion most lowers the first-token
-readout, and the border block is a control at the image edge (\S\ref{sec:evidence}). Means over
-\val{n.fp} cardiomegaly false positives (labelled negative, called positive), \val{e4.nsamples}
-samples each.}
+the upper bar splits the probability of the first output token into ``yes'' (dark grey, $\Praw$),
+``no'' (red) and every other token (light grey, mostly ``Based''); $\Pnorm$ is the ``yes'' share of
+``yes'' plus ``no''. The lower bar splits sampled answers by what they conclude and how: dark
+segments answer directly, light segments reason first, and white segments give neither answer; $s$ is the share that say
+yes. Suppression moves the first token from ``yes'' to reasoning, and the reasoning now often
+concludes ``no''; $\Pnorm$ misses both. Blacking out the evidence block, the image region whose
+occlusion most lowers the first-token readout (\S\ref{sec:evidence}), does both too, and also moves
+the first token to ``no'', so $\Pnorm$ falls with $s$.
+Means over \val{n.fp} cardiomegaly false positives (labelled negative, called positive),
+\val{e4.nsamples} samples each; the printed $\Pnorm$ is a mean of per-film values, so it can differ from
+the ratio of the mean bars. Table~\ref{tab:main} gives every intervention.}
 \label{fig:split}
 \end{figure}
 
@@ -105,10 +107,9 @@ writes ``\textit{Based on the image, the chest X-ray shows a normal heart size}'
 reference, we occlude the image region that the call depends on, an edit the readouts should
 register. Figure~\ref{fig:split} shows both.
 
-We apply the edit as circuit-tracing tools do \citep{ameisen2025circuit}. While the model reads the
+We apply the edit as circuit-tracing tools do \citep{ameisen2025circuit}. As the model reads the
 prompt, each feed-forward (MLP) block keeps the output it computed on the unedited input, plus the edit's
-decoded change, instead of recomputing from its changed input; we call this the \emph{clamp}. The first answer token is predicted at the last prompt position, where the clamp
-holds the MLP blocks fixed. Every later token is predicted at a new position, whose MLP blocks
+decoded change, instead of recomputing from its changed input. We call this the \emph{clamp}. The first answer token is predicted at the last prompt position, where the MLP blocks are held fixed by the clamp. Every later token is predicted at a new position, whose MLP blocks
 respond to the edit. We hypothesize that this mismatch lets the first token miss what the rest of
 the answer says, and test it by also editing the \emph{live model}, in which every MLP block recomputes from its
 input. Each test's decision rule was
@@ -116,20 +117,23 @@ committed before its run; post hoc comparisons are marked~\dag.
 
 \paragraph{Contributions.}
 \begin{enumerate}\itemsep2pt
-\item \textbf{The readout misses the edit's effect on the answers.} Suppressing the $80$ transcoder
-features most active on the image turns \val{pf.clamp.gno} greedy answers to ``no'', and the
-normalized readout still says yes on \val{pf.clamp.gnoyes}\dag. Occluding the image region the call
-depends on turns \val{pf.occ.gno}, and the readout misses \val{pf.occ.gnoyes}\dag. Pre-registered tests confirm the gap, including on radiographs that no
+\item \textbf{The readout misses the edit's effect on the answers.} Across three strengths of
+suppressing the $80$ transcoder features most active on the image, \val{pf.clamp.gno} of
+\val{pf.clamp.n} greedy answers turn to ``no'', and the normalized readout still says yes on
+\val{pf.clamp.gnoyes} of them\dag. Across three ways of occluding the image region the call depends
+on, \val{pf.occ.gno} of \val{pf.occ.n} turn to ``no'', and the readout still says yes on only
+\val{pf.occ.gnoyes}\dag. Pre-registered tests confirm the gap, including on radiographs that no
 first-token readout selected (\S\ref{sec:clamp}).
 \item \textbf{Two routes, and a candidate cause.} Suppression shifts answers from an immediate
-``Yes'' to reasoning first, and makes the reasoning end in ``no'' more often. The normalized readout
-registers neither, and the raw probability of ``yes'' matches the answers only by coincidence
-(\S\ref{sec:routes}). We hypothesize that the clamp is why. Without it, at the only strength that met
-the pre-registered criteria, the first token moves with the answers, but the test is not conclusive (\S\ref{sec:live}).
+``Yes'' to first reasoning, and makes the reasoning end in ``no'' more often. The normalized readout
+registers neither, and the raw probability of ``yes'' matches the answers only by coincidence\dag\
+(\S\ref{sec:routes}). We hypothesize that the clamp is why. Without it, the original strengths mostly
+stop the model answering; at the only weaker strength that met the pre-registered criteria, the first
+token moves with the answers, but the test is not conclusive (\S\ref{sec:live}).
 \item \textbf{Scope.} The gap recurs on correct effusion and pneumothorax calls. Correct cardiomegaly
 calls barely respond to the edit, so the pre-registered test of generalisation is inconclusive. The
-same selection rule picks nearly the same features for every finding: the edit is a generic perturbation of
-image features, not removal of cardiomegaly evidence (\S\ref{sec:scope}).
+same selection rule picks almost the same features for every finding, so the edit is not specific to
+the finding (\S\ref{sec:scope}).
 \end{enumerate}
 These results come from one model, one transcoder, one dataset and tens of radiographs per group.
 They show that a recommended readout can miss an intervention's effect in a realistic medical
@@ -145,7 +149,7 @@ Transcoder: \url{https://doi.org/10.5281/zenodo.22105454}.}
 in bfloat16 on a $4{,}999$-image subset of NIH ChestX-ray14 \citep{wang2017chestxray} ($1{,}335$
 patients). Each radiograph is presented in a single turn with the question ``Does this chest X-ray
 show \textit{finding}? Answer yes or no.'' ChestX-ray14 labels are mined from radiology reports and
-are noisy. We use them only to select radiographs; every steering comparison compares the model with
+are noisy. We use them only to select radiographs, and every steering comparison compares the model with
 itself.
 
 \paragraph{First-token readouts.} Let $\ell$ be the logits at the position where the answer would
@@ -169,7 +173,7 @@ $0.5$.
 \paragraph{Written answers.} For each radiograph and intervention, we decode greedily and draw
 \val{e4.nsamples} samples at temperature $1$ (no top-$k$ or nucleus truncation), up to
 \val{e4.maxtok} new tokens. A fixed rule removes markdown symbols, lowercases, and takes the first
-whole word ``yes'' or ``no''; a text with neither gives neither answer. The \emph{sampled yes rate}
+whole word ``yes'' or ``no'', and a text with neither gives neither answer. The \emph{sampled yes rate}
 $s$ is the fraction of samples that say yes. A sample \emph{answers directly} if its first word is
 ``yes'' or ``no'', and \emph{reasons first} otherwise. A blind hand reading agreed with the rule on
 \val{hand.e4.agree} of \val{hand.e4.n} random samples. The rule errs toward ``neither'', and counting
@@ -190,9 +194,9 @@ no edit this reproduces the model exactly. With an edit, each MLP output equals 
 plus the decoded change; it is not recomputed from its changed input, while attention is recomputed
 throughout. This is the clamp. The readouts are taken at the last prompt position, a text position
 whose MLP outputs keep their unedited values, so the edit reaches them only through attention.
-Constrained patching \citep{ameisen2025circuit} additionally freezes attention over a range of
+Constrained patching \mbox{\citep{ameisen2025circuit}} additionally freezes attention over a range of
 layers, but likewise leaves the MLP blocks at the readout position unable to respond to the edit,
-the property our hypothesis concerns. The circuit-tracer library \citep{hanna2025circuittracer} likewise applies its constraints
+the property our hypothesis concerns. The circuit-tracer library \citep{hanna2025circuittracer} applies its constraints
 only while predicting the first new token.\footnote{The documentation of
 \texttt{feature\_intervention\_generate} states that the constraints ``will only apply to the very
 first token generated''. Later tokens attend to the cached states of the constrained pass.} The
@@ -222,22 +226,6 @@ Appendix~\ref{app:rules} gives each rule, outcome and amendment.
 \section{A reference effect: occluding the evidence}
 \label{sec:evidence}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.92\textwidth]{fig_location.pdf}
-\caption{\textbf{Where the evidence for each call sits.} \textbf{(a)} For each of the first \val{loc.n}
-false-positive radiographs, the $2\times2$-token block whose black occlusion most lowers $\Praw$,
-counted on the $8\times8$ block grid and drawn over the mean of the \val{loc.n} images. All
-\val{loc.central} fall over the cardiac silhouette and the mediastinum. \textbf{(b)} One of the
-\val{loc.n}: blacking out the outlined block, at the left heart border, takes $\Pnorm$ from
-\val{loc.ex.base} to \val{loc.ex.black}. \textbf{(c)} The most damaging block on a separate set of
-\val{attn.tpeff.n} effusion- and \val{attn.tpptx.n} pneumothorax-positive radiographs from the pilot
-study, which may include several films per patient, for films where one block moves $\Pnorm$ by
-more than $0.15$. Effusion blocks lie at the lung bases; pneumothorax blocks lie in the upper zones
-or, on three films from one patient, over a chest tube.}
-\label{fig:location}
-\end{figure}
-
 To know what a readout should register, we need an edit that changes the call by removing its
 evidence. MedGemma encodes each image as a $16\times16$ grid of tokens. We occlude one $2\times2$
 block of that grid (one sixty-fourth of the image) at a time and record the change in the
@@ -248,19 +236,20 @@ the pilot study; for the films drawn for this paper, the block that most lowers 
 What do these blocks cover? On the false positives, anatomy whose apparent size depends on how the
 film was taken. On \val{loc.central} of the first \val{loc.n} films the block lies in the central
 $4\times4$ blocks, and on \val{loc.leftheart} in the two columns just right of the image midline, the
-patient's left, where most of the cardiac silhouette lies (Figure~\ref{fig:location}a,b). So the call
-rests on the apparent size of the heart, which the AP projection inflates, rather than on an
-abnormality recorded in the label. On other findings the blocks mostly cover the pathology: effusion blocks lie at
-the lung bases and pneumothorax blocks in the upper zones (Figure~\ref{fig:location}c). On $3$
+patient's left, where most of the cardiac silhouette lies (Figure~\ref{fig:location}a,b). This is
+consistent with a call that rests on the apparent size of the heart, which the AP projection inflates. On
+other findings the blocks lie where those findings usually appear: effusion blocks at the lung bases
+and pneumothorax blocks in the upper zones (Figure~\ref{fig:location}c). On $3$
 of the \val{attn.tpptx.nrem} pneumothorax films, all from one patient, the block lies on the curled tip
 of a chest tube, the treatment-device shortcut documented by
 \citet{oakdenrayner2020}.
 
 Occluding the evidence block changes the answers, and the first-token readouts follow
-(Table~\ref{tab:main}, lower rows). Blacking it out turns the greedy answer to ``no'' on
+(Table~\ref{tab:main}, lower rows). Occlusion changes only the image, so it runs on the unedited
+model, with no clamp. Blacking it out turns the greedy answer to ``no'' on
 \val{fp.black.greedyno} of \val{n.fp} films and lowers the sampled yes rate from \val{fp.base.s} to
 \val{fp.black.s}; $\Pnorm$ says no on \val{fp.black.flipsnorm} films. Three controls tie the effect to
-the evidence rather than to the occlusion. An identical black square at a random border block leaves
+what the block covers. An identical black square at a random border block leaves
 the answers in place, so the effect is not the size of the perturbation. Mean fill, which leaves no
 sharp edge, still changes the answers, so it is not an edge artifact. And on the \val{occ.eff.n}
 films of the first set also called positive for effusion, occluding the cardiac block leaves that
@@ -275,19 +264,18 @@ first-token readout falls short of the answers when the evidence is removed.
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4pt}
-\input{tables/main}
 \caption{\textbf{Suppression and occlusion on the same false-positive radiographs.} Means over
 \val{n.fp} films. $\Delta$ is the yes-minus-no logit margin; ``below $0.5$'' counts films on which
 the readout says no. $s$ is the fraction of sampled answers that say yes; ``greedy no'' counts films
 whose greedy answer is no and, in parentheses, those on which $\Pnorm$ still says yes.}
 \label{tab:main}
+\input{tables/main}
 \end{table}
 
 \begin{table}[t]
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3pt}
-\input{tables/v1}
 \caption{\textbf{Does a first-token readout fall by as much as the written answers?} Difference: for
 each film, the readout's drop minus the drop in the sampled yes rate $s$; negative when the readout
 falls by less. Mean over \val{n.fp} films, $95\%$ film-bootstrap interval in brackets. Pre-registered
@@ -297,15 +285,29 @@ registered for the suppression rows; the occlusion rows apply it as a reference,
 \textsc{misreads} cells are readouts that fall slightly further than the answers, as expected of a
 block chosen by a first-token readout.}
 \label{tab:v1}
+\input{tables/v1}
 \end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics{fig_films.pdf}  % drawn at its printed size
+\caption{\textbf{Film by film, $\Pnorm$ misses the answers that suppression turns to ``no''.} Each
+point is one of the \val{n.fp} false-positive films under one intervention: the sampled yes rate $s$
+against $\Pnorm$ after the edit, coloured by the greedy answer. (a) The three suppression variants.
+(b) The three occlusions of the evidence block (black, mean fill, blur). A red point above the
+dashed line is an answer the edit turned to ``no'' on which $\Pnorm$ still says yes:
+\val{pf.clamp.gnoyes} of \val{pf.clamp.gno} under suppression, \val{pf.occ.gnoyes} of \val{pf.occ.gno}
+under occlusion. Unedited, every film's greedy answer is yes.}
+\label{fig:films}
+\end{figure}
 
 \paragraph{What the first token says.} Read through $\Pnorm$, suppression leaves the model's call
 nearly unchanged.\footnote{Our pilot study scored first-token readouts only and drew this
 conclusion. The written answers below show that the call does change.} We report
-\texttt{scale}~$-1$; \texttt{ablate} and \texttt{scale}~$-2$ agree throughout (Tables~\ref{tab:main}
-and~\ref{tab:v1}). Suppression lowers $\Praw$ from \val{fp.base.raw2} to \val{fp.scale1.raw2}, but
-almost none of the lost probability goes to ``no'' (mean $p_{\text{no}}$ at most
-\val{fp.clamp.pnomax} under every variant). It goes to ``Based'' (Figure~\ref{fig:split}). $\Pnorm$
+\texttt{scale}~$-1$; \texttt{ablate} and \texttt{scale}~$-2$ agree on $\Pnorm$ throughout (Tables~\ref{tab:main}
+and~\ref{tab:v1}). Suppression lowers $\Praw$ from \val{fp.base.raw2} to \val{fp.scale1.raw2}, and
+the lost probability goes mostly to ``Based'' (Figure~\ref{fig:split}); mean $p_{\text{no}}$ stays at
+most \val{fp.clamp.pnomax} under every variant. $\Pnorm$
 therefore moves only from \val{fp.base.norm} to \val{fp.scale1.norm}, and says no on
 \val{fp.scale1.flipsnorm} of \val{n.fp} films.
 
@@ -314,12 +316,14 @@ and the model writes:
 \begin{quote}\small
 \val{ex.clamp}
 \end{quote}
-Unedited, the same film gets ``\val{ex.base}'' Summed over the three variants,
-suppression turns \val{pf.clamp.gno} greedy answers to ``no'' (on \val{pf.clamp.gnofilms} distinct
-films), and $\Pnorm$ still says yes on \val{pf.clamp.gnoyes} of them\dag, each time at
-$\Pnorm \geq \val{pf.clamp.missmin}$. The three occlusions of the evidence block (Table~\ref{tab:main})
-turn \val{pf.occ.gno}, and $\Pnorm$ misses \val{pf.occ.gnoyes}\dag, a comparison that favours the readout, since a
-first-token readout chose the evidence blocks.
+Unedited, the same film gets ``\val{ex.base}'' Over the three variants and \val{n.fp} films
+(\val{pf.clamp.n} greedy answers, all ``yes'' unedited), suppression turns \val{pf.clamp.gno} to
+``no'' (on \val{pf.clamp.gnofilms} distinct films), and $\Pnorm$ still says yes on
+\val{pf.clamp.gnoyes} of them, on \val{pf.clamp.gnoyesfilms} of the \val{pf.clamp.gnofilms} films\dag\ (Figure~\ref{fig:films}), each time at $\Pnorm \geq \val{pf.clamp.missmin}$. The three
+occlusions of the evidence block (Table~\ref{tab:main}) turn \val{pf.occ.gno} of \val{pf.occ.n} to
+``no'', and $\Pnorm$ still says yes on only \val{pf.occ.gnoyes}\dag, a comparison that favours the readout, since a
+first-token readout chose the evidence blocks. Since occlusion runs without the clamp and is a
+different kind of edit, it shows only that the readout can follow the answers on these films.
 
 The sampled answers show the same gap, and the pre-registered tests confirm it. Under
 \texttt{scale}~$-1$, the sampled yes rate falls from \val{fp.base.s} to \val{fp.scale1.s}. Under
@@ -337,70 +341,83 @@ selected by greedy answer alone, which no first-token readout chose, the rule is
 \begin{table}[t]
 \centering
 \footnotesize
-\input{tables/routes}
 \caption{\textbf{Sampled answers by their first word,} pooled over \val{n.fp} films and
 \val{e4.nsamples} samples each. Answers that open with ``Yes'' or ``No'' give that answer by
-construction. Suppression moves answers to the reasoning route and changes where that route ends.}
+construction. Suppression moves answers to the reasoning route and changes where that route ends.
+Black occlusion does both, and also turns direct answers to ``no''.}
 \label{tab:routes}
+\input{tables/routes}
 \end{table}
 
-Why does the text move when $\Pnorm$ barely does? Sampled answers fall into two groups by their first
-word (Table~\ref{tab:routes}). Some open with ``Yes'' or ``No'' and answer at once; almost all of
-these say yes. The rest reason first, almost always opening with ``Based on the image''. Let $r$ be
-the share of samples that reason first and $y$ the share of those that conclude yes. A sample opens
-with ``Yes'' with probability about $\Praw$, so
+Why do the written answers move when $\Pnorm$ barely does? Sorting the sampled answers by their
+first word shows two routes (Table~\ref{tab:routes})\dag. On the direct route, the model opens with
+``Yes'' or ``No'', and almost always says yes. On the reasoning route, it opens (almost always) with
+``Based on the image'' and concludes later. A sample opens with ``Yes'' with probability about
+$\Praw$. If $r$ is the share of samples that reason first and $y$ the share of those that conclude
+yes, then
 \[
 s \;\approx\; \Praw + r\,y .
 \]
-Suppression changes both how the model answers and what it concludes. It moves first-token
-probability from ``Yes'' to ``Based'' (the probability of ``Based'' rises from \val{fp.base.based} to
-\val{fp.scale1.based}), which
-lowers $\Praw$ and raises $r$ from \val{route.base.reasoned} to \val{route.scale1.reasoned}. It also
-lowers $y$ from \val{route.base.ryes} to \val{route.scale1.ryes}. $\Pnorm$ compares ``yes'' with
-``no'' at the first token, where ``no'' is almost never chosen, so it registers neither change.
-Depending on the variant, it falls by less than $0.01$ on \val{ceil.tinymin} to \val{ceil.tinymax}
-of the \val{n.fp} films, while $s$ falls on those films by \val{ceil.sdroptinymin} to
-\val{ceil.sdroptinymax} on average. The margin $\Delta$ does register the suppression: its median
-change orders all seven interventions as the drop in $s$ does (Table~\ref{tab:main})\dag. But from a
-median of \val{fp.base.gapmedian} nats it rarely crosses zero, because the lost ``yes'' probability
-goes to ``Based'', which the margin leaves out, not to ``no''. The miss is therefore not just the
-sigmoid saturating.
+Suppression changes both which route the model takes and where the reasoning route ends. At the
+first token it moves probability from ``Yes'' to ``Based''
+(``Based'' rises from \val{fp.base.based} to \val{fp.scale1.based}), so $\Praw$ falls and more samples
+reason first ($r$ rises from \val{route.base.reasoned} to \val{route.scale1.reasoned}). The samples
+that reason also conclude yes less often ($y$ falls from \val{route.base.ryes} to
+\val{route.scale1.ryes}). $\Pnorm$ sees neither change, because it compares ``yes'' with ``no'' at
+the first token, and ``no'' gets almost no probability there. Black occlusion sends more samples to
+the reasoning route ($r = \val{route.black.reasoned}$) and fewer of them conclude yes
+($y = \val{route.black.ryes}$), but it also moves the first token to ``No'' (mean $p_{\text{no}}$
+\val{fp.black.pno}), so $\Pnorm$ falls with the answers. Depending on the variant, $\Pnorm$
+falls by less than $0.01$ on \val{ceil.tinymin} to \val{ceil.tinymax} of the \val{n.fp} films, while
+$s$ on those same films falls by \val{ceil.sdroptinymin} to \val{ceil.sdroptinymax} on average.
 
-$\Praw$ falls by about as much as $s$ (\val{fp.scale1.rawdrop} against \val{fp.scale1.sdrop}), but by
-coincidence. $\Praw$ is the first term alone, so $s - \Praw \approx r\,y$, and suppression changes
-$r\,y$ little (from \val{route.base.ryesall} to \val{route.scale1.ryesall}, \val{route.ablate.ryesall}
-and \val{route.scale2.ryesall} under the three variants) because it raises $r$ while lowering $y$. By the pre-registered rule, $\Praw$
-tracks the answers under one variant and is unresolved under the other two (Table~\ref{tab:v1}); with non-answers
-set aside, it overstates the effect under \texttt{scale}~$-1$ and $-2$ (by \val{fp.scale1.rawvsc} and
-\val{fp.scale2.rawvsc}).
+Before the sigmoid, the margin $\Delta$ does respond: its median change ranks all seven
+interventions in the same order as the drop in $s$ (Table~\ref{tab:main})\dag. It starts from a
+median of \val{fp.base.gapmedian} nats, though, and rarely crosses zero, because the ``yes''
+probability that suppression removes goes to ``Based'', which $\Delta$ ignores.
+
+$\Praw$ falls by about as much as $s$ (\val{fp.scale1.rawdrop} against \val{fp.scale1.sdrop}), but
+only by coincidence\dag. Since $s \approx \Praw + r\,y$, $\Praw$ and $s$ fall together only if $r\,y$
+barely moves, and it barely moves because the two changes largely offset: more samples reason, but
+fewer of them conclude yes ($r\,y$ is \val{route.base.ryesall} unedited, and \val{route.scale1.ryesall}, \val{route.ablate.ryesall} and
+\val{route.scale2.ryesall} under the three variants). By the pre-registered rule, $\Praw$ tracks the
+answers under \texttt{scale}~$-2$ and is unresolved under the other two variants
+(Table~\ref{tab:v1}). With non-answers set aside, it overstates the effect under \texttt{scale}~$-1$
+and $-2$ (by \val{fp.scale1.rawvsc} and \val{fp.scale2.rawvsc}).
 
 \subsection{Is the clamp the cause?}
 \label{sec:live}
 
-If the clamp is why the first token misses how the reasoning ends, editing the live model, in which
-every MLP block responds, should move the first token with the answers. Strength alone does not close
-the gap under the clamp: under \texttt{scale}~$-2$, $s$ falls by \val{fp.scale2.sdrop}, but $\Pnorm$
-only to \val{fp.scale2.norm}. We ran two pre-registered live tests on the same films, feature sets
-and seeds, adding each edit's change in the transcoder's output to the model's own MLP outputs
-(Appendix~\ref{app:live}). At the strengths of \S\ref{sec:clamp}, the live edit is far stronger than
-the clamp: \val{e8.none.min} to \val{e8.none.max} of samples give neither answer. $\Pnorm$ falls by
-less than $s$ under two variants, but by more than $s$ under all three once non-answers are excluded
-(\val{e8.verdict}). With most samples not answering, this test cannot decide. The second test weakened
-the edit, scaling each feature by $\lambda$ from $0.9$ down to $0.15$ ($\lambda=0.6$ changes each
-activation a fifth as much as \texttt{scale}~$-1$). A strength counted only if $s$ still fell
-(interval above $0.05$) and at most \val{e9.tau} of samples failed to answer (gave neither answer or said
-they could not see an image), the most under any intervention of \S\ref{sec:clamp}. The response is a cliff: $s$ falls by \val{e9.weak.sdrop} at
-$\lambda = \val{e9.weak.c}$ and by \val{e9.sdrop} at $\lambda = 0.6$, the only strength that
-qualified. There the first token moves with the answers. It puts \val{e9.pno} on ``no'', against at
-most \val{fp.clamp.pnomax} under the clamp, and $\Pnorm$ and $s$ fall by about the same amount
-(difference \val{e9.normvs}).
+Under the clamp, the MLP blocks where the first token is predicted cannot respond to the edit, while
+those at every later token can (\S\ref{sec:intro}). If this is why the first token misses how the
+reasoning ends, the first token should move with the answers once every block responds. A stronger
+edit under the clamp does not close the gap: under \texttt{scale}~$-2$, $s$ falls by
+\val{fp.scale2.sdrop}, yet $\Pnorm$ falls only to \val{fp.scale2.norm}. We therefore ran two
+pre-registered tests on the live model, with the same films, feature sets and seeds, adding each
+edit's change in the transcoder's output to the model's own MLP outputs (Appendix~\ref{app:live}).
 
-This is what the clamp hypothesis predicts, but it does not establish the clamp as the cause, for
-three reasons. (i)~Dose: the qualifying strength moves the answers \val{e9.ratio} times as much as
-the clamp, and no live strength as mild as the clamp still moved them, so the two are never compared
-at a matched effect. (ii)~Precision: the interval is wider than the $\pm0.05$ the rule needs to call
-agreement (\val{e9.verdict}). (iii)~Confound: the live edit frees the MLP blocks at image positions as
-well as at the answer position. Freeing only the answer position's blocks would isolate the
+\emph{Same strengths.} At the strengths of \S\ref{sec:clamp}, the live edit is far stronger than the
+clamp and mostly stops the model from answering: \val{e8.none.min} to \val{e8.none.max} of samples
+give neither answer. The result then turns on how non-answers are counted. Counted as not yes,
+$\Pnorm$ falls by less than $s$ under two variants (\val{e8.verdict}); with non-answers set aside,
+it falls by more than the answers do under all three. With most samples not answering, this test cannot decide\dag.
+
+\emph{Weaker strengths.} The second test scaled each feature by $\lambda$, from $0.9$ (mildest) down
+to $0.15$; at $\lambda=0.6$, each activation changes a fifth as much as under \texttt{scale}~$-1$. A
+strength qualified only if $s$ still fell (interval above $0.05$) and at most \val{e9.tau} of samples
+failed to answer (gave neither answer or said they could not see an image), the most under any
+intervention of \S\ref{sec:clamp}. Only $\lambda=0.6$ qualified. The response is a cliff: $s$ falls
+by \val{e9.weak.sdrop} at $\lambda = \val{e9.weak.c}$, by \val{e9.sdrop} at $\lambda = 0.6$, and every
+stronger edit leaves too many samples without an answer. At $\lambda=0.6$ the first token moves with
+the answers: it puts \val{e9.pno} on ``no'' (at most \val{fp.clamp.pnomax} under the clamp), and
+$\Pnorm$ and $s$ fall by about the same amount (difference \val{e9.normvs}).
+
+This is what the hypothesis predicts, but it does not show that the clamp is the cause, for three
+reasons. (i)~Dose: at $\lambda=0.6$ the answers move \val{e9.ratio} times as much as under the
+clamp, and no milder live edit moved them enough to qualify, so the two are never compared at the
+same effect size. (ii)~Precision: the interval of that difference is wider than the $\pm0.05$ the rule needs to call
+agreement (\val{e9.verdict}). (iii)~Confound: the live edit frees the MLP blocks at the image positions
+as well as at the answer position. Freeing only the answer position's blocks would isolate the
 hypothesis, and is the natural next test.
 
 \section{Scope}
@@ -408,20 +425,21 @@ hypothesis, and is the natural next test.
 
 \paragraph{Correct calls and other findings.} We repeated \texttt{scale}~$-1$ and the evidence
 occlusion on \val{n.tpcardiomegaly} correctly called positive films for each of three findings
-(Table~\ref{tab:tp}). Suppression lowers $s$ by \val{tpeffusion.scale1.sdrop} for effusion and by
-\val{tppneumothorax.scale1.sdrop} for pneumothorax, and by the pre-registered rule $\Pnorm$ misses the
-effect on both (\textsc{misreads}), as on the false positives. For cardiomegaly, $s$ falls by only
-\val{tpcardiomegaly.scale1.sdrop}, too little for the rule to separate $\Pnorm$ from the answers, so
-the verdict on generalisation is \val{v.V3s}. With non-answers set aside, $\Pnorm$ tracks the answers
-on cardiomegaly, and the verdict becomes \val{v.V3c}. We read this\dag\ as an edit too weak on these
-calls for any readout to miss: blacking out the evidence block moves them ($s$ falls by
-\val{tpcardiomegaly.black.sdrop}), but this suppression barely does.
+(Table~\ref{tab:tp}). On effusion and pneumothorax, suppression lowers $s$ by
+\val{tpeffusion.scale1.sdrop} and \val{tppneumothorax.scale1.sdrop}, and $\Pnorm$ misses the effect
+by the pre-registered rule (\textsc{misreads}), as on the false positives. Correct cardiomegaly calls
+respond only slightly, as $s$ falls by \val{tpcardiomegaly.scale1.sdrop}. The pre-registered test of
+generalisation asks $\Pnorm$ to miss on every finding whose answers the edit moves at all, and fails
+if it tracks on any. This small drop counts, but on it $\Pnorm$'s shortfall is too small to call a
+miss and too uncertain to call agreement, so the verdict is \val{v.V3s}. With non-answers set aside,
+$\Pnorm$ tracks the answers on cardiomegaly, and the verdict becomes \val{v.V3c}. We read this\dag\ as an edit too weak on these calls for any readout to miss:
+blacking out the evidence block moves them ($s$ falls by \val{tpcardiomegaly.black.sdrop}), but this
+suppression barely does.
 
 \begin{table}[t]
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3pt}
-\input{tables/tp}
 \caption{\textbf{Correctly called radiographs, three findings.} \val{n.tpcardiomegaly} per finding,
 labelled positive and answered yes. Difference: the readout's drop minus the drop in $s$, as in
 Table~\ref{tab:v1}; mean with $95\%$ film-bootstrap interval. Pre-registered verdicts for
@@ -429,25 +447,40 @@ $\Pnorm$: \val{tpcardiomegaly.scale1.normvs.v} for cardiomegaly, \val{tpeffusion
 effusion and \val{tppneumothorax.scale1.normvs.v} for pneumothorax; for $\Praw$,
 \val{tpcardiomegaly.scale1.rawvs.v} on all three.}
 \label{tab:tp}
+\input{tables/tp}
 \end{table}
 
-\paragraph{What the edit removes.} The suppression is not specific to cardiomegaly; it acts as a
-generic perturbation of image features. If the $80$ most active features were the model's
-cardiomegaly evidence, the same rule would pick different features for other findings. We built
-top-activation sets for cardiomegaly, effusion and pneumothorax from \val{e3.ndonor} \emph{donor}
-radiographs each, used only to choose features, one per patient, with no patient shared across sets
-or with the test films. The sets overlap almost completely: their mean pairwise Jaccard index is
-\val{e3.jac.activation.80}, against \val{e3.jac.contrast.80} for sets selected by contrast between
+\begin{figure}[t]
+\centering
+\includegraphics{fig_features.pdf}  % drawn at its printed size
+\caption{\textbf{The edit suppresses nearly the same features on every film.} Each row of the upper
+panel is one film, and a dark cell is one of the $80$ features suppressed on it (its $80$ most
+active). Over \val{feat.nfilms} films in four groups, the edits draw on \val{feat.pool} features,
+\val{feat.every} of them suppressed on every film, and any two films share \val{feat.pairmin} to
+\val{feat.pairmax} of their $80$. The lower panel shows the contrast sets of Table~\ref{tab:e5}, which
+differ between findings and take \val{feat.conoutmin} to \val{feat.conoutmax} of their $80$ features
+from outside the films' sets (right of the dashed line).}
+\label{fig:features}
+\end{figure}
+
+\paragraph{What the edit removes.} The suppressed features are not specific to the finding. If the $80$ most active features were cardiomegaly evidence,
+the same rule would pick different features for other findings. We built top-activation
+sets for cardiomegaly, effusion and pneumothorax, each from \val{e3.ndonor} \emph{donor} radiographs
+used only to choose features (one per patient, with no patient shared across sets or with the first
+\val{loc.n} films). The three sets nearly coincide: their mean pairwise Jaccard index is
+\val{e3.jac.activation.80}, against \val{e3.jac.contrast.80} for sets chosen by contrast between
 positive and negative donors, and the gap holds for sets of $20$ and $320$ features
-(Appendix~\ref{app:donors}). Top activation picks what is active on any
-chest radiograph. Contrast sets built from larger groups (\val{e5.ndonor} positive against
-\val{e5.ndonor} negative donors) are finding-specific (Jaccard \val{e5.jaccon} between the
-cardiomegaly and effusion sets), but suppressing them barely changes the answers. On correct calls
-of its own finding, neither set beats $80$ random active features by the pre-registered margin, nor
-does the cardiomegaly set on the false positives (\val{e5.S1}, \val{e5.S2}; Table~\ref{tab:e5}). Their
-features are all active on the false positives, but we did not record how strongly they fire, so
-weak firing could explain the small effect. The readout failure of \S\ref{sec:clamp} does
-not depend on the edit being specific.
+(Appendix~\ref{app:donors}). Top activation picks what is active on any chest radiograph
+(Figure~\ref{fig:features}).
+
+Contrast sets built from larger groups (\val{e5.ndonor} positive against \val{e5.ndonor} negative
+donors) are finding-specific (Jaccard \val{e5.jaccon} between the cardiomegaly and effusion sets),
+but suppressing them barely changes the answers. On correct calls of its own finding, neither set
+beats $80$ random active features by the pre-registered margin, and neither does the
+cardiomegaly set on the false positives (\val{e5.S1}, \val{e5.S2}; Table~\ref{tab:e5}). Nearly all
+their features are active on the false positives, but we did not record how strongly they fire, so
+weak firing could explain the small effect. Either way, the readout failure of \S\ref{sec:clamp}
+does not depend on the edit being specific.
 
 \section{Related work}
 \label{sec:related}
@@ -462,12 +495,11 @@ difference can lead to different conclusions in activation patching, and recomme
 difference. \citet{heimersheim2024patching} note that it is insensitive to components that move all
 compared logits together, the blind spot we measure. Steering work on multiple-choice questions uses
 the probability normalized over the options (in the released code of \citealp{rimsky2024caa}) or the
-logit difference \citep{tan2024steering}, and \citet{tan2024steering} argue that the model decides at
-the answer token; ours is a case where it does not. Steering vectors built from multiple-choice
-questions can fail on open-ended answers \citep{pres2024reliable}, model edits look far stronger
-under teacher forcing than in free generation \citep{yang2025mirage}, a first-token proxy for refusal
-is less accurate than full completions \citep{arditi2024refusal}, and a circuit-tracing intervention
-can reverse when attention is allowed to respond \citep{lindsey2025biology}. Concurrently,
+logit difference, as in \citet{tan2024steering}, who argue that the model decides at the answer
+token; ours is a case where it does not. Steering vectors built from multiple-choice questions can
+fail on open-ended answers \citep{pres2024reliable}, a first-token proxy for refusal is less accurate
+than full completions \citep{arditi2024refusal}, and a circuit-tracing intervention can reverse when
+attention is allowed to respond \citep{lindsey2025biology}. Concurrently,
 \citet{wang2026knowing} find, in general-domain VLMs prompted to reason first, that a direction patch
 that barely changes the first-position choice still lowers the accuracy of the generated answers by
 $13$ to $16$ points. We add a medical case under a direct yes/no prompt, where readout and answer
@@ -478,18 +510,14 @@ first token computed under constraints that do not apply to the rest of the answ
 all first-token probability on them \citep{wiegreffe2023mass}; MedGemma, told to answer yes or no,
 often does not. Under image swaps in MedGemma-27B, first-token and generated answers agree on $91$ to
 $99\%$ of cases \citep{cajas2026modalens}, while generated answers are the more robust of the two to
-question perturbations \citep{wang2024lookattext}. Alternative first tokens open reasoning paths that
-change the answer \citep{wang2024cotdecoding}, and steering can induce such reasoning
-\citep{zhang2024steeringcot}, including through sparse-autoencoder features \citep{he2026triggering}.
-In medical VLMs, \citet{nooralahzadeh2026universal} steer with sparse-autoencoder features and
-evaluate generated reports.
+question perturbations \citep{wang2024lookattext}.
 
 \section{Discussion}
 \label{sec:discussion}
 
 \paragraph{Recommendation.} When an intervention is evaluated on a closed question, score sampled
-answers, and report the first-token readouts and the share of answers that reason first alongside
-them. Scoring the answers would have caught both failures we saw: under the clamp, the first token
+answers, and report the first-token readouts and the shares of answers that reason first or give no answer
+alongside them. Scoring the answers would have caught both failures we saw: under the clamp, the first token
 missed how the reasoning ended, and under strong live edits, the readout reported a decision while
 the model mostly stopped answering. The answer mass $m$ alone is not enough. A fall in $m$ shows that
 the first token no longer carries most answers, but not which way they moved: it fell further under
@@ -500,12 +528,12 @@ circuit-tracer's generation function, constrains only the pass that predicts the
 Whether or not that caused the gap here (\S\ref{sec:live}), the first token and the rest of the
 answer should come from one configuration, or the difference should be stated.
 
-\paragraph{When first-token readouts suffice.} When the model answers at the first token ($m$ near
-$1$), the logit difference describes the decision and remains the right tool for the patching
+\paragraph{When first-token readouts suffice.} When the model still answers at the first token under the intervention ($m$ near
+$1$ after the edit), the logit difference describes the decision and remains the right tool for the patching
 studies it was recommended for. In our setting, too, the margin ranked the seven interventions as the answers
 did\dag, though it could not tell what the model answered. We do not judge whether the model's cardiomegaly calls
 are clinically right, or treat its written reasoning as an explanation of its computation
-\citep{lanham2023faithfulness,cox2026precommit}.
+\citep{lanham2023faithfulness}.
 
 \paragraph{Limitations.} We steer one model, with one transcoder, on one dataset. The steering
 comparisons use \val{n.fp} false-positive and \val{n.tp} true-positive radiographs, and the
@@ -514,8 +542,8 @@ radiographs, labels, occlusion maps or generated text, and the anatomical descri
 The parse rule reads the first ``yes'' or ``no'' within \val{e4.maxtok} tokens, and a model could
 revise its answer later; the author did the hand reading, blind but not independent. Per-film effects
 depend on near-ties at the top-$80$ cutoff (Appendix~\ref{app:repro}), so we report means and pooled
-counts. Sampling at temperature $1$ without truncation is not how a deployed model decodes, but the
-greedy answers tell the same story.
+counts. We sample at temperature $1$ without truncation, unlike a deployed model; the greedy answers
+tell the same story.
 
 \begin{ack}
 Compute for this work was provided by the YC Summer Fellowship. The author declares no
@@ -610,6 +638,27 @@ A separate pre-registered test, of how the readout affects an evaluation with no
 (MedGemma and CheXagent-2), asks a different question; its rules and results are in the code
 repository.
 
+\section{Where the evidence sits}
+\label{app:evidence}
+
+Figure~\ref{fig:location} shows the evidence blocks described in \S\ref{sec:evidence}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.92\textwidth]{fig_location.pdf}
+\caption{\textbf{Where the evidence for each call sits.} \textbf{(a)} For each of the first \val{loc.n}
+false-positive radiographs, the $2\times2$-token block whose black occlusion most lowers $\Praw$,
+counted on the $8\times8$ block grid and drawn over the mean of the \val{loc.n} images. All
+\val{loc.central} fall over the cardiac silhouette and the mediastinum. \textbf{(b)} One of the
+\val{loc.n}: blacking out the outlined block, at the left heart border, takes $\Pnorm$ from
+\val{loc.ex.base} to \val{loc.ex.black}. \textbf{(c)} The most damaging block on a separate set of
+\val{attn.tpeff.n} effusion- and \val{attn.tpptx.n} pneumothorax-positive radiographs from the pilot
+study, which may include several films per patient, for films where one block moves $\Pnorm$ by
+more than $0.15$. Effusion blocks lie at the lung bases; pneumothorax blocks lie in the upper zones
+or, on three films from one patient, over a chest tube.}
+\label{fig:location}
+\end{figure}
+
 \section{Radiographs and parsing}
 \label{app:sets}
 \label{app:parse}
@@ -666,8 +715,7 @@ prompt (KL \val{rep.live.kl}). Under our yes/no prompt it does not (\val{rep.yn.
 \val{rep.yn.n}, KL \val{rep.yn.kl}), so every intervention adds back the error term recorded on the
 unedited input. On text
 positions the dictionary is prompt-bound (fraction of variance unexplained \val{fvu.txt.train} on the
-training prompt, \val{fvu.txt.probes} on held-out yes/no prompts), a known failure under distribution
-shift \citep{lim2026geometry}. Image-token activations precede the text under causal masking and are
+training prompt, \val{fvu.txt.probes} on held-out yes/no prompts). Image-token activations precede the text under causal masking and are
 unaffected (\val{fvu.img} on every prompt), and every edit here is at image positions. Checkpoint and
 configuration: \url{https://doi.org/10.5281/zenodo.22105454} (CC BY 4.0; \texttt{clt\_ckpt.pt},
 $37{,}630{,}140{,}293$ bytes, MD5 \texttt{4c2747c75e4ce368bd48ccd194f9b8ef}).
@@ -724,7 +772,6 @@ effusion calls (no verdict).
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3pt}
-\input{tables/e5}
 \caption{\textbf{Suppressing $80$ features chosen in different ways} (\texttt{scale}~$-1$). Drop in
 $s$, mean with $95\%$ film-bootstrap interval, from a separate run with \val{e5.nsamples} samples per
 film (so the top-$80$ row differs slightly from Table~\ref{tab:v1}). Contrast sets: the $80$
@@ -733,6 +780,7 @@ negative donors. Anchored sets: the $80$ most active features over the film's ev
 border block. ``Active'': how many of the $80$ are active on the film; ``in top $80$'': overlap with
 the film's own set (both on the false positives).}
 \label{tab:e5}
+\input{tables/e5}
 \end{table}
 
 \end{document}

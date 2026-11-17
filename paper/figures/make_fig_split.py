@@ -1,17 +1,18 @@
 """Figure 1: what the first token says, and what the model then writes.
 
-For each intervention, two stacked bars over the same false-positive films. Top: the probability
-of the first output token, split into "yes", "no" and every other token (almost all "Based", the
-start of a reasoned answer). P_raw is the yes segment and P_norm is yes / (yes + no). Bottom: the
-answers the model writes when sampled at temperature 1, split by the first word: answers that
-open with "Yes" or "No" (solid) and answers that reason first (hatched), and answers that never
-say yes or no (grey). Right: the films whose greedy answer is no, and among them the films on
-which P_norm still calls yes (P_norm >= 0.5).
+Three interventions on the same false-positive films (every intervention is in Table 1). For each,
+two bars. Top: the probability of the first output token, split into "yes", "no" and every other
+token (almost all "Based", the start of a reasoned answer); P_norm = yes / (yes + no) is printed at
+right. Bottom: the answers the model writes when sampled at temperature 1, split by the first word:
+answers that open with "Yes" or "No" (dark), answers that reason first (light), and answers that
+never say yes or no (white); the sampled yes rate s is printed at right. The figure is
+drawn at its printed width so its text is not scaled down.
 
 Reads E4 (``readout_sampled_answers.json``, groups fp_banked + fp_fresh) when present, else E2
 (``readout_generation_check.json``, the 20 banked films).
 
-Palette: dataviz categorical slots 1-2 (#2a78d6, #eb6834) plus a neutral; colourblind-safe.
+Times to match the body text. Yes in greys, no in red (ColorBrewer Reds), so the eye goes to the
+"no" answers.
 Run from the repo root: .venv/bin/python paper/figures/make_fig_split.py
 """
 import json
@@ -28,19 +29,19 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.patches import Patch  # noqa: E402
 
-YES, NO, OTHER, NONE = "#2a78d6", "#eb6834", "#c9c8c2", "#f4f3ef"
-INK, INK2, MUTED = "#0b0b0b", "#52514e", "#8f8e89"
-plt.rcParams.update({"font.size": 8, "font.family": "sans-serif", "hatch.linewidth": 0.6})
+# dark: the answer itself, light: the same answer after reasoning
+YES, YES2, NO, NO2, OTHER = "#4d4d4d", "#b3b3b3", "#cb181d", "#fc9272", "#dedede"
+plt.rcParams.update({"font.family": "serif", "font.serif": ["Times New Roman", "STIXGeneral"],
+                     "mathtext.fontset": "stix", "font.size": 7.5, "axes.linewidth": 0.6,
+                     "xtick.major.width": 0.6, "ytick.major.width": 0.6, "xtick.major.size": 2.5,
+                     "ytick.major.size": 2.5, "pdf.fonttype": 42})
 R = Path("results/clt_scale")
 
 # Row names match Table 1.
-ARMS = [("No intervention", "base"),
-        ("Suppress, scale $-1$", "clamp_scale-1"),
-        ("Suppress, ablate", "clamp_ablate+0"),
-        ("Suppress, scale $-2$", "clamp_scale-2"),
-        ("Evidence block, blur", "blur"),
-        ("Evidence block, black", "black"),
-        ("Border block, black", "border")]
+ARMS = [("No\nintervention", "base"),
+        ("Suppress,\nscale $-1$", "clamp_scale-1"),
+        ("Evidence block,\nblack", "black")]
+ALL_ARMS = ["base", "clamp_scale-1", "clamp_ablate+0", "clamp_scale-2", "blur", "black", "border"]
 
 
 def load() -> tuple[list[dict], str]:
@@ -52,7 +53,7 @@ def load() -> tuple[list[dict], str]:
         return rows, "E4"
     rows = []
     for r in json.load(open(R / "readout_generation_check.json"))["rows"]:
-        arms = {k: dict(r[k]) for _, k in ARMS}
+        arms = {k: dict(r[k]) for k in ALL_ARMS}
         for a in arms.values():
             a["samples_open"] = [opening_word(t) for t in a["samples"]]
         rows.append(arms)
@@ -85,70 +86,46 @@ def written(recs: list[dict]) -> dict[str, float]:
 def main() -> None:
     rows, src = load()
     n_films = len(rows)
-    fig, ax = plt.subplots(figsize=(6.9, 3.5))
-    H, GAP = 0.34, 0.06
-    n = len(ARMS)
-    for i, (label, key) in enumerate(ARMS):
+    fig, ax = plt.subplots(figsize=(4.45, 2.25))  # drawn at its printed size
+    H, PAIR, STEP = 0.36, 0.42, 1.25
+    ticks, ticklabels = [], []
+    for i, (name, key) in enumerate(ARMS):
         recs = [r[key] for r in rows]
-        y0 = (n - 1 - i) * 1.0
-        yt, yb = y0 + (H + GAP) / 2, y0 - (H + GAP) / 2
-        # first token
+        yt = -i * STEP
+        yb = yt - PAIR
         yes, no = first_token(recs)
         ax.barh(yt, yes, color=YES, height=H, lw=0)
         ax.barh(yt, no, left=yes, color=NO, height=H, lw=0)
         ax.barh(yt, 1 - yes - no, left=yes + no, color=OTHER, height=H, lw=0)
-        # written answers
         w = written(recs)
         left = 0.0
-        for k, col, hatch in (("yes_direct", YES, None), ("yes_reasoned", YES, "////"),
-                              ("no_reasoned", NO, "////"), ("no_direct", NO, None),
-                              ("none", NONE, "....")):
-            fc = NONE if k == "none" else "white" if hatch else col
-            ec = MUTED if k == "none" else col
-            ax.barh(yb, w[k], left=left, color=fc, edgecolor=ec, hatch=hatch, height=H,
-                    lw=0.0 if not hatch else 0.4)
+        for k, fc in (("yes_direct", YES), ("yes_reasoned", YES2), ("no_reasoned", NO2),
+                      ("no_direct", NO), ("none", "white")):
+            ax.barh(yb, w[k], left=left, color=fc, height=H, lw=0)
             left += w[k]
-        ax.text(-0.088, y0, label, ha="right", va="center", fontsize=7.8, color=INK)
-        ax.text(-0.004, yt, "1st token", ha="right", va="center", fontsize=6.2, color=MUTED)
-        ax.text(-0.004, yb, "written", ha="right", va="center", fontsize=6.2, color=MUTED)
-        if yes > 0.1:
-            ax.text(yes / 2, yt, f"{yes:.2f}", ha="center", va="center", fontsize=6.6,
-                    color="white")
+        # one thin frame round the written bar, so its white "neither" end is visible
+        ax.barh(yb, 1, color="none", edgecolor="0.55", height=H, lw=0.4)
         s = w["yes_direct"] + w["yes_reasoned"]
-        ax.text(s / 2, yb, f"{s:.2f}", ha="center", va="center", fontsize=6.6, color=INK)
-        gno = [a for a in recs if a["greedy_parsed"] == "NO"]
-        missed = sum(a["norm"] >= 0.5 for a in gno)
         norm = float(np.mean([a["norm"] for a in recs]))
-        ax.text(1.065, yt, f"{norm:.3f}", ha="center", va="center", fontsize=7.6, color=INK)
-        ax.text(1.175, y0, f"{len(gno)}", ha="center", va="center", fontsize=7.6, color=INK2)
-        ax.text(1.285, y0, f"{missed}", ha="center", va="center", fontsize=7.6, color=INK,
-                fontweight="bold")
-    top = n - 0.45
-    ax.text(1.065, top, "$P_{\\mathrm{norm}}$\n(1st token)", ha="center", va="bottom",
-            fontsize=6.6, color=MUTED, linespacing=1.15)
-    ax.text(1.175, top, "greedy\nanswer no", ha="center", va="bottom", fontsize=6.6,
-            color=MUTED, linespacing=1.15)
-    ax.text(1.285, top, "$P_{\\mathrm{norm}}$\nstill yes", ha="center", va="bottom",
-            fontsize=6.6, color=MUTED, linespacing=1.15)
+        ax.text(1.02, yt, f"$P_{{\\mathrm{{norm}}}}={norm:.3f}$", va="center")
+        ax.text(1.02, yb, f"$s={s:.2f}$", va="center")
+        ax.annotate(name, xy=(0, (yt + yb) / 2), xycoords=("axes fraction", "data"),
+                    xytext=(-45, 0), textcoords="offset points", ha="right", va="center",
+                    linespacing=1.1)
+        ticks += [yt, yb]
+        ticklabels += ["first token", "written"]
+    ax.set_yticks(ticks, ticklabels)
+    ax.set_ylim(-(len(ARMS) - 1) * STEP - PAIR - 0.35, 0.35)
     ax.set_xlim(0, 1)
-    ax.set_ylim(-0.6, n - 0.45)
-    ax.set_yticks([])
-    ax.set_xticks([0, 0.25, 0.5, 0.75, 1])
-    ax.tick_params(axis="x", colors=INK2, length=0, pad=2, labelsize=7)
-    for sp in ("top", "right", "left"):
+    for sp in ("top", "right"):
         ax.spines[sp].set_visible(False)
-    ax.spines["bottom"].set_color(OTHER)
-    ax.set_xlabel(f"first token: probability; written: share of samples (mean over {n_films} films)",
-                  fontsize=7.4, color=INK2, labelpad=2)
-    handles = [Patch(color=YES, label="yes"), Patch(color=NO, label="no"),
-               Patch(color=OTHER, label="other first token (mostly “Based”)"),
-               Patch(facecolor="white", edgecolor=INK2, hatch="////", lw=0.4,
-                     label="written after reasoning"),
-               Patch(facecolor=NONE, edgecolor=MUTED, hatch="....", lw=0.4,
-                     label="no yes/no in the text")]
-    ax.legend(handles=handles, loc="lower left", bbox_to_anchor=(0, 1.0), ncol=5,
-              frameon=False, fontsize=6.6, handlelength=1.1, handletextpad=0.4,
-              columnspacing=0.9, borderaxespad=0.1)
+    ax.set_xlabel(f"fraction (mean over {n_films} films)")
+    key = [Patch(fc=YES, label="yes"), Patch(fc=YES2, label="yes, after reasoning"),
+           Patch(fc=NO, label="no"), Patch(fc=NO2, label="no, after reasoning"),
+           Patch(fc=OTHER, label="other first token"),
+           Patch(fc="white", ec="0.55", lw=0.4, label="neither")]
+    ax.legend(handles=key, ncol=3, loc="lower left", bbox_to_anchor=(0, 1.01), frameon=False,
+              handlelength=1.6, columnspacing=1.2, borderaxespad=0)
     fig.savefig("paper/figures/fig1_split.pdf", bbox_inches="tight", pad_inches=0.02)
     fig.savefig("paper/figures/fig1_split.png", dpi=200, bbox_inches="tight", pad_inches=0.02)
     print(f"wrote fig1_split from {src} ({n_films} films)")

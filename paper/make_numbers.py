@@ -216,10 +216,17 @@ def e4() -> None:  # noqa: PLR0915
         warnings.append(f"occlusion MISREADS cells are {sorted(occ_mis)}; prose names black "
                         "P_norm and blur P_raw, both overshooting")
     # film by film (post hoc): of the films whose greedy answer is no, how many P_norm still calls yes
+    # the prose says these answers "turn to no", which needs every unedited greedy answer to be yes
+    if any(r["arms"]["base"]["greedy_parsed"] != "YES" for r in fp_rows):
+        warnings.append("an unedited false-positive greedy answer is not yes; prose says 'turn to no'")
     for name, arms in (("clamp", CLAMP_OPS), ("occ", ("black", "mean", "blur"))):
         recs = [r["arms"][a] for r in fp_rows for a in arms]
+        put(f"pf.{name}.n", len(recs))
         put(f"pf.{name}.gno", sum(x["greedy_parsed"] == "NO" for x in recs))
         put(f"pf.{name}.gnoyes", len(missed(recs)))
+        # the same as a share, for the abstract: of the answers turned to no, % P_norm still calls yes
+        put(f"pf.{name}.misspct",
+            int(100 * len(missed(recs)) / sum(x["greedy_parsed"] == "NO" for x in recs) + 0.5))
         # the counts are over (film, variant) pairs; also count the distinct films behind them
         put(f"pf.{name}.gnofilms", sum(any(r["arms"][a]["greedy_parsed"] == "NO" for a in arms)
                                        for r in fp_rows))
@@ -531,6 +538,25 @@ def e5() -> None:
           "\\cmidrule(lr){4-" + str(3 + len(cols)) + "}\n" + top
           + "Feature set & active & in top $80$ & " + " & ".join(head[g] for g in cols)
           + " \\\\\n\\midrule\n" + "\n".join(lines) + "\n\\bottomrule\n\\end{tabular}")
+
+
+# --------------------------------------------------------------------------------------------
+# The features each E4 film's edit suppresses (the feature-map figure, make_fig_features.py)
+# --------------------------------------------------------------------------------------------
+def feats() -> None:
+    films = [{tuple(f) for f in r["clamp_pairs"]}
+             for r in json.loads((R / "readout_sampled_answers.json").read_text())["rows"]]
+    count = Counter(f for s in films for f in s)
+    shared = [len(a & b) for i, a in enumerate(films) for b in films[i + 1:]]
+    put("feat.nfilms", len(films))
+    put("feat.pool", len(count))
+    put("feat.every", sum(c == len(films) for c in count.values()))
+    put("feat.pairmin", min(shared))
+    put("feat.pairmax", max(shared))
+    sets = json.loads((R / "clamp_contrastive_answers.json").read_text())["sets"]
+    out = [len({tuple(f) for f in sets[k]} - set(count)) for k in ("con_card", "con_eff")]
+    put("feat.conoutmin", min(out))
+    put("feat.conoutmax", max(out))
 
 
 # --------------------------------------------------------------------------------------------
@@ -1006,7 +1032,7 @@ TABLES = {"e3": ("amplify", "jaccard"), "e4": ("main", "v1", "routes", "tp"), "e
 
 
 def main() -> None:
-    for step in (e2, hand, occlusion, e3, e4, e5, e6, e7, checks, e8, e9, prompts, attention,
+    for step in (e2, hand, occlusion, e3, e4, e5, feats, e6, e7, checks, e8, e9, prompts, attention,
                  dictionary, extras, compute):
         try:
             step()
