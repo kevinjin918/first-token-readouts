@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>When First-Token Readouts Misread Feature Steering</title>
+<meta name="description" content="In MedGemma, suppressing transcoder features changes the answers the model writes while the first-token readout barely moves. Paper, code and transcoder weights.">
+<meta property="og:title" content="When First-Token Readouts Misread Feature Steering in a Medical Vision–Language Model">
+<meta property="og:description" content="A first-token score can miss most of an intervention's effect on the answer a model writes. GenAI for Health Workshop, NeurIPS 2026.">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the article</a>
+
+<header class="site-header">
+  <a class="brand" href="#top" aria-label="First-token readouts, back to top">
+    <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="4.5" rx="2" fill="#46464c"/><rect x="2" y="13.5" width="11" height="4.5" rx="2" fill="#46464c"/><rect x="14.5" y="13.5" width="7.5" height="4.5" rx="2" fill="#c81e1e"/></svg>
+    <span>First-token readouts</span>
+  </a>
+  <div class="toc-wrap">
+    <button class="toc-btn" type="button" aria-expanded="false" aria-controls="toc"><span class="toc-label">Contents</span>
+      <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3"/></svg></button>
+    <ul class="toc" id="toc" hidden>
+      <li><a href="#summary">Summary</a></li>
+      <li><a href="#measure">What we measure</a></li>
+      <li><a href="#edit">The edit</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#routes">Two routes</a></li>
+      <li><a href="#clamp">Is the clamp the cause?</a></li>
+      <li><a href="#scope">Scope</a></li>
+      <li><a href="#recommendation">Recommendation</a></li>
+      <li><a href="#release">Code and weights</a></li>
+      <li><a href="#citation">Citation</a></li>
+    </ul>
+  </div>
+  <nav class="top-nav" aria-label="Links">
+    <a href="paper.pdf">Paper</a>
+    <a href="https://github.com/kevinjin918/first-token-readouts">Code</a>
+    <a href="https://doi.org/10.5281/zenodo.22105454">Weights</a>
+  </nav>
+</header>
+
+<div class="hero" id="top">
+  <h1>When First-Token Readouts Misread Feature Steering in a Medical Vision–Language Model</h1>
+  <p class="dek">A first-token score can miss most of an intervention's effect on the answer a model writes.</p>
+  <p class="byline">Kevin Jin <span class="aff">· Duke University</span></p>
+  <p class="venue">The Third Workshop on GenAI for Health <span class="nw">· NeurIPS 2026</span></p>
+  <div class="pills">
+    <a class="pill" href="paper.pdf">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M4 1.5h5.5L13 5v9.5H4z"/><path d="M9.5 1.5V5H13"/><path d="M6 8.5h5M6 11h5"/></svg>
+      Paper</a>
+    <a class="pill" href="https://github.com/kevinjin918/first-token-readouts">
+      <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      Code</a>
+    <a class="pill" href="https://doi.org/10.5281/zenodo.22105454">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><ellipse cx="8" cy="3.5" rx="5.5" ry="2"/><path d="M2.5 3.5v9c0 1.1 2.46 2 5.5 2s5.5-.9 5.5-2v-9"/><path d="M2.5 8c0 1.1 2.46 2 5.5 2s5.5-.9 5.5-2"/></svg>
+      Transcoder weights</a>
+    <a class="pill" href="#citation">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M5.5 4L2 8l3.5 4M10.5 4L14 8l-3.5 4"/></svg>
+      BibTeX</a>
+  </div>
+</div>
+
+<main class="post" id="main">
+
+  <figure class="wide" id="f1">
+    <div class="fig-box">
+      <div class="f1-top">
+        <div>
+          <div class="f1-title">What the first token says, and what the model then writes</div>
+          <div class="f1-sub">MedGemma 1.5 (4B), 40 cardiomegaly false positives, 50 sampled answers each</div>
+        </div>
+        <div class="ctl-row">
+          <div class="seg-ctl" role="group" aria-label="Interventions shown">
+            <button type="button" data-set="three" aria-pressed="true">Three</button>
+            <button type="button" data-set="all" aria-pressed="false">All eight</button>
+          </div>
+          <div class="seg-ctl" role="group" aria-label="View">
+            <button type="button" data-view="chart" aria-pressed="true">Chart</button>
+            <button type="button" data-view="table" aria-pressed="false">Table</button>
+          </div>
+        </div>
+      </div>
+      <ul class="legend">
+        <li><span class="sw c-yes"></span>yes</li>
+        <li><span class="sw c-yes2"></span>yes, after reasoning</li>
+        <li><span class="sw c-mid"></span>other first token · neither answer</li>
+        <li><span class="sw c-no2"></span>no, after reasoning</li>
+        <li><span class="sw c-no"></span>no</li>
+      </ul>
+      <div class="f1-chart"></div>
+      <div class="f1-table" hidden></div>
+    </div>
+    <figcaption><b>Figure 1.</b> For each intervention, the upper bar splits the probability of the first
+      output token into “yes”, “no” and every other token (mostly “Based”); <span class="m">P<sub>norm</sub></span>
+      is the “yes” share of “yes” plus “no”. The lower bar splits sampled answers by what they conclude and how:
+      dark segments answer directly, light segments reason first, and the pale middle gives neither answer;
+      <span class="m">s</span> is the share that say yes. Suppression moves the first token from “yes” to
+      reasoning, and the reasoning now often concludes “no”; <span class="m">P<sub>norm</sub></span> misses both.
+      Blacking out the evidence block does both too, and also moves the first token to “no”, so
+      <span class="m">P<sub>norm</sub></span> falls with <span class="m">s</span>. The printed
+      <span class="m">P<sub>norm</sub></span> is a mean of per-film values. Hover a segment for its value.</figcaption>
+  </figure>
+
+  <section id="summary">
+    <h2>Summary</h2>
+    <p class="lede">Interventions on vision–language models are commonly scored on yes/no questions by the
+      model's first output token, often as the probability of “yes” normalized over “yes” and “no”, the
+      probability form of the logit difference that interpretability work recommends. We show that this score
+      can miss most of an intervention's effect on the model's written answer.</p>
+    <p>We train a transcoder for MedGemma 1.5 (4B) and use it to suppress the 80 most active features on 40
+      chest radiographs that the model calls positive for cardiomegaly although they are labelled negative.
+      The normalized score barely moves, but the share of sampled answers saying yes falls.</p>
+
+    <div class="stats">
+      <div class="stat"><div class="num">0.976<span class="arrow">→</span>0.933</div>
+        <div class="lbl">first-token score <span class="m">P<sub>norm</sub></span>, before and after suppression</div></div>
+      <div class="stat"><div class="num">0.95<span class="arrow">→</span>0.73</div>
+        <div class="lbl">share of sampled answers that say yes, <span class="m">s</span></div></div>
+      <div class="stat"><div class="num">88%</div>
+        <div class="lbl">of greedy answers the edit turns to “no” that the score still calls yes (28 of 32); 6% under occlusion</div></div>
+    </div>
+
+    <p>The generated text shows why. After suppression the model more often opens with “Based on the image,
+      …” as opposed to “Yes”, and that reasoning more often ends in “No”, but its first token almost never
+      becomes “No”. On one radiograph:</p>
+
+    <div class="transcript">
+      <div class="tcard">
+        <div class="thead"><span>Unedited</span></div>
+        <div class="tq">Yes, the chest X-ray shows cardiomegaly. The heart appears enlarged.</div>
+      </div>
+      <div class="tcard after">
+        <div class="thead"><span>After suppression</span><span class="badge"><span class="m">P<sub>norm</sub></span> = 0.982</span></div>
+        <div class="tq">Based on the image, the chest X-ray shows a normal heart size. Therefore, the answer is <span class="ans-no">**No**</span>.</div>
+      </div>
+    </div>
+
+    <p>When we instead cover the part of the image the model relies on, the first token often does become “No”,
+      so the score sees that edit. The gap replicates on radiographs selected by their written answer alone and
+      on correct effusion and pneumothorax calls. We hypothesize that it comes from how circuit-tracing tools
+      apply edits, which constrain the first token but not the rest of the answer. An edit that looks inert by
+      this score can still change what the model tells a clinician, so such interventions should be scored on
+      sampled answers.</p>
+  </section>
+
+  <section id="measure">
+    <h2>What we measure</h2>
+    <p>We steer MedGemma 1.5-4b-it on a 4,999-image subset of NIH ChestX-ray14 (1,335 patients). Each
+      radiograph is shown in a single turn with the question “Does this chest X-ray show cardiomegaly? Answer
+      yes or no.” Let <span class="m">ℓ</span> be the logits where the answer would begin and
+      <span class="m">p</span> their softmax. We compare three first-token readouts with the answers the model
+      writes.</p>
+    <dl class="defs">
+      <div class="row"><dt><span class="m">P<sub>raw</sub> = p<sub>yes</sub></span></dt>
+        <dd>The probability that the next token is “yes”, taking the largest of its surface forms (yes, Yes, YES, with and without a leading space).</dd></div>
+      <div class="row"><dt><span class="m">P<sub>norm</sub> = σ(Δ)</span></dt>
+        <dd><span class="m">p<sub>yes</sub> / (p<sub>yes</sub> + p<sub>no</sub>)</span>, a sigmoid of the margin
+          <span class="m">Δ = ℓ<sub>yes</sub> − ℓ<sub>no</sub></span>: the probability form of the logit difference
+          recommended for activation patching. Unedited, the median <span class="m">Δ</span> is 12.2 nats, odds of
+          about 200,000 to 1.</dd></div>
+      <div class="row"><dt><span class="m">s</span></dt>
+        <dd>The sampled yes rate: the share of 50 answers, sampled at temperature 1 for up to 128 tokens, whose
+          first whole-word “yes” or “no” is yes. A blind hand reading agreed with this rule on 94 of 100 samples.</dd></div>
+    </dl>
+    <p>The main comparison uses 40 radiographs from 39 patients that the model calls positive for cardiomegaly
+      although ChestX-ray14 labels them negative. All are anteroposterior, a projection that magnifies the
+      heart, so it can look enlarged when it is not. Half were selected by <span class="m">P<sub>raw</sub></span>
+      ≥ 0.5 in our pilot study; the other half by the greedy answer alone, so that no readout under test chose
+      them. Every steering comparison compares the model with itself.</p>
+  </section>
+
+  <section id="edit">
+    <h2>The edit, and a reference</h2>
+    <p>A cross-layer transcoder reads the input to each MLP block and reconstructs the outputs of that block
+      and all later ones from a sparse set of features. Ours covers all 34 layers with 2,048 features per
+      layer. On each radiograph we pick the 80 features with the highest mean activation over the image tokens
+      and edit them there: <code>scale −1</code> reverses their sign, <code>scale −2</code> reverses and
+      doubles it, and <code>ablate</code> sets them to zero.</p>
+    <p>We apply the edit as circuit-tracing tools do. As the model reads the prompt, each MLP block keeps the
+      output it computed on the unedited input, plus the edit's decoded change, instead of recomputing from its
+      changed input; attention is recomputed throughout. We call this the <strong>clamp</strong>. With no edit
+      it reproduces the model exactly.</p>
+
+    <figure class="wide">
+      <div class="fig-box">
+        <div class="pipe">
+          <div class="phase">Prompt pass, under the clamp</div>
+          <div class="phase gen">Generation</div>
+          <div class="stage">
+            <div class="toks" aria-hidden="true"><i class="tk"></i><i class="tk ed"></i><i class="tk"></i><i class="tk ed"></i><i class="tk ed"></i><i class="tk"></i><i class="tk ed"></i><i class="tk"></i><i class="tk ed"></i><i class="tk"></i><i class="tk ed"></i><i class="tk"></i></div>
+            <b>Image tokens</b>
+            <span class="d">256 per radiograph. The 80 selected features are edited here.</span>
+            <span class="mlp">MLPs held, plus the edit</span>
+          </div>
+          <div class="stage">
+            <div class="toks" aria-hidden="true"><i class="wd">Does</i><i class="wd">this</i><i class="wd">…</i><i class="wd">no?</i></div>
+            <b>Question</b>
+            <span class="d">No edit here. The edit reaches these positions only through attention.</span>
+            <span class="mlp">MLPs held</span>
+          </div>
+          <div class="stage held">
+            <div class="toks" aria-hidden="true"><i class="wd first">Yes</i><i class="wd">Based</i></div>
+            <b>First answer token</b>
+            <span class="d">Predicted at the last prompt position. <span class="m">P<sub>raw</sub></span>,
+              <span class="m">P<sub>norm</sub></span> and <span class="m">Δ</span> are read here.</span>
+            <span class="mlp">MLPs held</span>
+          </div>
+          <div class="stage">
+            <div class="toks" aria-hidden="true"><i class="wd">on</i><i class="wd">the</i><i class="wd">image</i><i class="wd">…</i><i class="wd">No</i></div>
+            <b>Rest of the answer</b>
+            <span class="d">Each later token is a new position, whose MLP blocks respond to the edit.</span>
+            <span class="mlp free">MLPs recompute</span>
+          </div>
+        </div>
+      </div>
+      <figcaption><b>Figure 2.</b> Where the clamp holds the model fixed. A held MLP block keeps the output it computed on the unedited input; at the image tokens it also adds the edit's decoded change. The readouts are taken where the MLP
+        blocks cannot respond to the edit; every token after the first is predicted where they can. The
+        circuit-tracer library likewise applies its constraints only while predicting the first new
+        token.</figcaption>
+    </figure>
+
+    <p>We hypothesize that this mismatch lets the first token miss what the rest of the answer says.</p>
+    <p>To know what a readout <em>should</em> register, we also need an edit that changes the call by removing
+      its evidence. MedGemma encodes each image as a 16×16 grid of tokens. We occlude one 2×2 block of that grid
+      at a time and take the block whose occlusion most lowers the first-token readout as the film's
+      <strong>evidence block</strong>. On all of the first 20 films it lies in the central 4×4 blocks, and on 16
+      in the two columns just right of the image midline, the patient's left, where most of the cardiac
+      silhouette lies. Occlusion changes only the image, so it runs on the unedited model, with no clamp. An
+      identical black square at a random border block leaves the answers in place.</p>
+  </section>
+
+  <section id="results">
+    <h2>The answers move; the score barely does</h2>
+    <p>Read through <span class="m">P<sub>norm</sub></span>, suppression leaves the model's call nearly
+      unchanged: under <code>scale −1</code> it moves from 0.976 to 0.933 and says no on 2 of 40 films. The
+      lost “yes” probability goes mostly to “Based”, and mean <span class="m">p<sub>no</sub></span> stays at
+      most 0.007 under every variant. Yet the sampled yes rate falls from 0.95 to 0.73.</p>
+    <p>Over the three variants (120 greedy answers, all “yes” unedited), suppression turns 32 to “no”, and
+      <span class="m">P<sub>norm</sub></span> still says yes on 28 of them. The three occlusions of the
+      evidence block turn 53 of 120 to “no”, and <span class="m">P<sub>norm</sub></span> still says yes on only
+      3, a comparison that favours the readout, since a first-token readout chose the evidence blocks.</p>
+
+    <figure class="wide">
+      <div class="fig-box">
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr class="grp"><th></th><th colspan="4">first token</th><th colspan="2">written answer</th></tr>
+              <tr><th>Intervention</th><th><span class="m">P<sub>raw</sub></span></th><th><span class="m">P<sub>norm</sub></span></th>
+                <th>median <span class="m">Δ</span> change</th><th>below 0.5<br>(<span class="m">P<sub>raw</sub></span> / <span class="m">P<sub>norm</sub></span>)</th>
+                <th><span class="m">s</span></th><th>greedy no<br>(<span class="m">P<sub>norm</sub></span> yes)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>None</td><td>0.824</td><td>0.976</td><td>–</td><td>5 / 1</td><td>0.95</td><td>0 (0)</td></tr>
+              <tr class="sep"><td>Suppress, <code>scale −1</code></td><td>0.555</td><td class="hl">0.933</td><td>−2.9</td><td>16 / 2</td><td class="hl">0.73</td><td>11 (9)</td></tr>
+              <tr><td>Suppress, <code>ablate</code></td><td>0.604</td><td class="hl">0.952</td><td>−2.1</td><td>14 / 1</td><td class="hl">0.74</td><td>12 (11)</td></tr>
+              <tr><td>Suppress, <code>scale −2</code></td><td>0.523</td><td class="hl">0.916</td><td>−3.1</td><td>17 / 3</td><td class="hl">0.65</td><td>9 (8)</td></tr>
+              <tr class="sep"><td>Evidence block, black</td><td>0.198</td><td>0.261</td><td>−14.3</td><td>31 / 31</td><td>0.29</td><td>28 (0)</td></tr>
+              <tr><td>Evidence block, mean fill</td><td>0.296</td><td>0.469</td><td>−9.6</td><td>28 / 21</td><td>0.44</td><td>21 (3)</td></tr>
+              <tr><td>Evidence block, blur</td><td>0.677</td><td>0.880</td><td>−1.1</td><td>12 / 5</td><td>0.86</td><td>4 (0)</td></tr>
+              <tr><td>Border block, black</td><td>0.822</td><td>0.964</td><td>+0.0</td><td>6 / 1</td><td>0.94</td><td>1 (0)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <figcaption><b>Table 1.</b> Suppression and occlusion on the same 40 false-positive radiographs (means).
+        <span class="m">Δ</span> is the yes-minus-no logit margin in nats; “below 0.5” counts films on which the
+        readout says no. “Greedy no” counts films whose greedy answer is no and, in parentheses, those on which
+        <span class="m">P<sub>norm</sub></span> still says yes.</figcaption>
+    </figure>
+
+    <p>By the pre-registered rule, <span class="m">P<sub>norm</sub></span> falls short of the drop in
+      <span class="m">s</span> by 0.18 to 0.24 under each variant, a miss under all three
+      (<span class="sc">misreads</span>). On the 20 films selected by greedy answer alone, which no first-token
+      readout chose, the gap replicates.</p>
+
+    <figure class="wide chart">
+      <div class="fig-box"><img src="figures/films.svg" width="720" height="291" alt="Two scatter plots of the sampled yes rate s against P_norm after the edit, one point per film, coloured by greedy answer. Under suppression, many films whose greedy answer turned to no still have P_norm near 1. Under occlusion, films whose answer turned to no mostly have P_norm near 0." loading="lazy"></div>
+      <figcaption><b>Figure 3.</b> Film by film, <span class="m">P<sub>norm</sub></span> misses the answers that
+        suppression turns to “no”. Each point is one of the 40 false-positive films under one intervention: the
+        sampled yes rate <span class="m">s</span> against <span class="m">P<sub>norm</sub></span> after the edit,
+        coloured by the greedy answer. (a) The three suppression variants. (b) The three occlusions of the evidence
+        block. A red point above the dashed line is an answer the edit turned to “no” on which
+        <span class="m">P<sub>norm</sub></span> still says yes: 28 of 32 under suppression, 3 of 53 under
+        occlusion.</figcaption>
+    </figure>
+  </section>
+
+  <section id="routes">
+    <h2>Two routes to the answer</h2>
+    <p>Why do the written answers move when <span class="m">P<sub>norm</sub></span> barely does? Sorting the
+      sampled answers by their first word shows two routes. On the direct route, the model opens with “Yes” or
+      “No”, and almost always says yes. On the reasoning route, it opens (almost always) with “Based on the
+      image” and concludes later. A sample opens with “Yes” with probability about
+      <span class="m">P<sub>raw</sub></span>, so if <span class="m">r</span> is the share of samples that reason
+      first and <span class="m">y</span> the share of those that conclude yes,</p>
+    <p class="eq"><span class="m">s ≈ P<sub>raw</sub> + r · y</span></p>
+    <p>Suppression changes both terms. At the first token it moves probability from “Yes” to “Based” (0.15 to
+      0.40), so more samples reason first (<span class="m">r</span> rises from 0.18 to 0.44), and those that
+      reason conclude yes less often (<span class="m">y</span> falls from 0.73 to 0.39).
+      <span class="m">P<sub>norm</sub></span> sees neither change, because it compares “yes” with “no” at the
+      first token, and “no” gets almost no probability there. Black occlusion also sends samples to the
+      reasoning route, but it moves the first token to “No” as well (mean <span class="m">p<sub>no</sub></span>
+      0.159), so <span class="m">P<sub>norm</sub></span> falls with the answers.</p>
+
+    <figure class="wide">
+      <div class="fig-box">
+        <div class="table-wrap">
+          <table class="data">
+            <thead>
+              <tr class="grp"><th></th><th colspan="2">answers directly</th><th colspan="2">reasons first</th></tr>
+              <tr><th>Intervention</th><th>share</th><th>says yes</th><th>share (<span class="m">r</span>)</th><th>says yes (<span class="m">y</span>) / no / neither</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>None</td><td>0.82</td><td>1.00</td><td>0.18</td><td>0.73 / 0.16 / 0.12</td></tr>
+              <tr class="sep"><td>Suppress, <code>scale −1</code></td><td>0.56</td><td>0.99</td><td class="hl">0.44</td><td>0.39 / 0.42 / 0.19</td></tr>
+              <tr><td>Suppress, <code>ablate</code></td><td>0.61</td><td>0.99</td><td class="hl">0.39</td><td>0.33 / 0.59 / 0.08</td></tr>
+              <tr><td>Suppress, <code>scale −2</code></td><td>0.53</td><td>0.99</td><td class="hl">0.47</td><td>0.26 / 0.41 / 0.33</td></tr>
+              <tr class="sep"><td>Evidence block, black</td><td>0.36</td><td>0.56</td><td class="hl">0.64</td><td>0.14 / 0.68 / 0.18</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <figcaption><b>Table 2.</b> Sampled answers by their first word, pooled over 40 films and 50 samples each.
+        Answers that open with “Yes” or “No” give that answer by construction. Suppression moves answers to the
+        reasoning route and changes where that route ends.</figcaption>
+    </figure>
+
+    <p>Before the sigmoid, the margin <span class="m">Δ</span> does respond: its median change ranks all seven
+      interventions in the same order as the drop in <span class="m">s</span>. It starts from a median of 12.2
+      nats, though, and rarely crosses zero, because the “yes” probability that suppression removes goes to
+      “Based”, which <span class="m">Δ</span> ignores. <span class="m">P<sub>raw</sub></span> falls by about as
+      much as <span class="m">s</span> (0.27 against 0.22), but only by coincidence: more samples reason, but
+      fewer of them conclude yes, and the two changes largely offset.</p>
+  </section>
+
+  <section id="clamp">
+    <h2>Is the clamp the cause?</h2>
+    <p>If the clamp is why the first token misses how the reasoning ends, the first token should move with the
+      answers once every MLP block responds. We ran two pre-registered tests on the live model, with the same
+      films, feature sets and seeds, adding each edit's change in the transcoder's output to the model's own MLP
+      outputs.</p>
+    <p>At the original strengths, the live edit is far stronger than the clamp and mostly stops the model from
+      answering: 66% to 87% of samples give neither answer, so the test cannot decide. Among weaker strengths,
+      only scaling each feature by 0.6 kept the answers moving while most samples still answered. There the
+      first token moves with the answers: it puts 0.26 on “no”, and <span class="m">P<sub>norm</sub></span> and
+      <span class="m">s</span> fall by about the same amount.</p>
+    <p>This is what the hypothesis predicts, but it does not show that the clamp is the cause. The two edits
+      are never compared at the same effect size, the interval is wider than the rule needs to call agreement,
+      and the live edit frees the MLP blocks at the image positions as well as at the answer position. Freeing
+      only the answer position's blocks would isolate the hypothesis, and is the natural next test.</p>
+  </section>
+
+  <section id="scope">
+    <h2>Scope</h2>
+    <p><strong>Other findings.</strong> We repeated <code>scale −1</code> and the evidence occlusion on 20
+      correctly called positive films for each of three findings. On pleural effusion and pneumothorax,
+      suppression lowers <span class="m">s</span> by 0.17 and 0.21, and <span class="m">P<sub>norm</sub></span>
+      misses the effect (<span class="sc">misreads</span>), as on the false positives. Correct cardiomegaly calls
+      barely respond (<span class="m">s</span> falls by 0.04), so the pre-registered test of generalisation is
+      inconclusive.</p>
+    <p><strong>What the edit removes.</strong> The suppressed features are not specific to the finding.
+      Top-activation sets built for cardiomegaly, effusion and pneumothorax from separate donor radiographs nearly
+      coincide (mean pairwise Jaccard index 0.944, against 0.284 for sets chosen by contrast between positive and
+      negative donors). Top activation picks what is active on any chest radiograph. The readout failure does not
+      depend on the edit being specific.</p>
+
+    <figure class="wide chart">
+      <div class="fig-box"><img src="figures/features.svg" width="720" height="302" alt="A membership matrix. Each row is one film and a dark cell is one of the 80 features suppressed on it. The dark region is nearly identical across the four groups of films. Two lower rows show contrast sets, which use many features outside the films' sets." loading="lazy"></div>
+      <figcaption><b>Figure 4.</b> The edit suppresses nearly the same features on every film. Each row of the
+        upper panel is one film, and a dark cell is one of the 80 features suppressed on it. Over 100 films in four
+        groups, the edits draw on 110 features, 55 of them suppressed on every film, and any two films share 67 to
+        79 of their 80. The lower panel shows contrast sets, which differ between findings and take 40 to 45 of
+        their 80 features from outside the films' sets (right of the dashed line).</figcaption>
+    </figure>
+  </section>
+
+  <section id="recommendation">
+    <h2>Recommendation</h2>
+    <p>When an intervention is evaluated on a closed question, <strong>score sampled answers</strong>, and report
+      the first-token readouts and the shares of answers that reason first or give no answer alongside them.
+      Scoring the answers would have caught both failures we saw: under the clamp, the first token missed how
+      the reasoning ended, and under strong live edits, the readout reported a decision while the model mostly
+      stopped answering.</p>
+    <p>The answer mass <span class="m">m = p<sub>yes</sub> + p<sub>no</sub></span> alone is not enough. It shows
+      that the first token no longer carries most answers, but not which way they moved: it fell further under
+      black occlusion (0.36), where <span class="m">P<sub>norm</sub></span> followed the answers, than under
+      suppression (0.56). And the first token and the rest of the answer should come from one configuration, or
+      the difference should be stated.</p>
+    <p>When the model still answers at the first token under the intervention (<span class="m">m</span> near 1
+      after the edit), the logit difference describes the decision and remains the right tool for the patching
+      studies it was recommended for.</p>
+    <h3>Limitations</h3>
+    <p>We steer one model, with one transcoder, on one dataset, with 40 false-positive and 60 true-positive
+      radiographs. No radiologist reviewed the radiographs, labels, occlusion maps or generated text. We sample at
+      temperature 1 without truncation, unlike a deployed model; the greedy answers tell the same story. The
+      results show that a recommended readout can miss an intervention's effect in a realistic medical setting,
+      and by what route, but not how often this affects published results.</p>
+  </section>
+
+  <section id="release">
+    <h2>Code and weights</h2>
+    <p>We release the transcoder, the code for every experiment, and a result file behind every number. Every
+      number in the paper regenerates from those files on a CPU in minutes, and CI repeats the regeneration on
+      every push.</p>
+    <div class="cards">
+      <a class="card" href="https://doi.org/10.5281/zenodo.22105454">
+        <span class="k">Weights · Zenodo</span><span class="t">Cross-layer transcoder</span>
+        <span class="d">For MedGemma 1.5-4b-it. 34 layers, 2,048 features per layer, Top-K sparsity (K = 32). CC BY 4.0.</span>
+        <span class="go">doi.org/10.5281/zenodo.22105454 →</span></a>
+      <a class="card" href="https://github.com/kevinjin918/first-token-readouts">
+        <span class="k">Code · GitHub</span><span class="t">first-token-readouts</span>
+        <span class="d">The library, one script per experiment, the result files, and the paper source. Apache 2.0.</span>
+        <span class="go">github.com/kevinjin918/first-token-readouts →</span></a>
+      <a class="card" href="paper.pdf">
+        <span class="k">Paper · PDF</span><span class="t">Camera-ready</span>
+        <span class="d">GenAI for Health Workshop at NeurIPS 2026, with the pre-registered rules and every amendment in Appendix A.</span>
+        <span class="go">paper.pdf →</span></a>
+    </div>
+
+    <h3>The transcoder</h3>
+    <dl class="spec">
+      <div><dt>Base model</dt><dd>MedGemma 1.5-4b-it (bfloat16)</dd></div>
+      <div><dt>Shape</dt><dd>34 layers × 2,048 features, full cross-layer span</dd></div>
+      <div><dt>Parameters</dt><dd>3.30B trained (6.24B allocated, plus optimizer state)</dd></div>
+      <div><dt>Training data</dt><dd>MedGemma activations on ChestX-ray14 radiographs and, as separate inputs, CheXpert Plus report texts</dd></div>
+      <div><dt>File</dt><dd><code>clt_ckpt.pt</code>, 37,630,140,293 bytes</dd></div>
+      <div><dt>MD5</dt><dd><code>4c2747c75e4ce368bd48ccd194f9b8ef</code></dd></div>
+    </dl>
+    <p><code>CrossLayerTranscoder.load_checkpoint</code> reads the checkpoint directly, and
+      <code>scripts/export_clt_safetensors.py</code> writes the trained parameters to a weights-only
+      <code>.safetensors</code> file.</p>
+
+    <h3>Reproduce the paper from the result files</h3>
+    <pre><code>git clone https://github.com/kevinjin918/first-token-readouts
+cd first-token-readouts
+python3.11 -m venv .venv &amp;&amp; source .venv/bin/activate
+pip install -e ".[analysis,viz,dev]"
+python paper/make_numbers.py   <span class="c"># rewrites paper/numbers.tex and paper/tables/ from results/</span>
+git diff --stat paper/         <span class="c"># empty: every number in the paper regenerates</span></code></pre>
+    <h3>Rerun an experiment (one 80 GB GPU)</h3>
+    <pre><code>pip install -e ".[models,data,analysis]"
+python scripts/download_nih.py --sample   <span class="c"># ChestX-ray14 images_001: 4,999 images</span>
+mkdir -p ckpt &amp;&amp; curl -L -o ckpt/clt_ckpt.pt \
+  "https://zenodo.org/records/22105454/files/clt_ckpt.pt?download=1"   <span class="c"># 37.6 GB</span>
+python scripts/readout_sampled_answers.py --ckpt ckpt/clt_ckpt.pt \
+  --out results/clt_scale/readout_sampled_answers.json</code></pre>
+    <p>MedGemma is gated on Hugging Face: accept its terms and log in first.</p>
+  </section>
+
+  <section id="citation">
+    <h2>Citation</h2>
+    <div class="cite">
+      <button class="copy" type="button" data-target="bibtex">Copy</button>
+<pre id="bibtex">@inproceedings{jin2026firsttoken,
+  title     = {When First-Token Readouts Misread Feature
+               Steering in a Medical Vision--Language Model},
+  author    = {Jin, Kevin},
+  booktitle = {The Third Workshop on GenAI for Health: Agentic
+               Systems, Clinical Trust, and Future Potential
+               (NeurIPS 2026 Workshop)},
+  year      = {2026}
+}</pre>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="in">
+    <p>Radiographs: NIH ChestX-ray14 (Wang et al., CVPR 2017), which is public and not redistributed here. The
+      transcoder was also trained on CheXpert Plus report texts (Chambon et al., 2024), distributed by Stanford
+      AIMI under a research use agreement; no report text is released. MedGemma is subject to the Health AI
+      Developer Foundations terms of use.</p>
+    <p>Compute was provided by the YC Summer Fellowship. Code: Apache 2.0. Result files, paper text and
+      transcoder weights: CC BY 4.0.</p>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
